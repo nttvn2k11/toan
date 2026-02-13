@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giải Phương Trình & Hệ Phương Trình</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .header {
+            padding: 25px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: center;
+            background: #ffffff;
+        }
+        
+        .main-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0066cc;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #666666;
+        }
+        
+        .content {
+            padding: 25px;
+        }
+        
+        .type-selector {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .type-btn {
+            padding: 15px 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #000000;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .type-btn:hover {
+            background: #f0f8ff;
+            border-color: #0066cc;
+        }
+        
+        .type-btn.active {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        
+        .input-section {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .input-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #000000;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #0066cc;
+        }
+        
+        .equation-display {
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            color: #000000;
+            line-height: 1.8;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .input-group {
+            text-align: center;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333333;
+            font-size: 14px;
+        }
+        
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #000000;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+        }
+        
+        .matrix-input {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .matrix-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .matrix-cell {
+            width: 80px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .matrix-cell:focus {
+            outline: none;
+            border-color: #0066cc;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 15px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn-solve {
+            background: #0066cc;
+            color: white;
+        }
+        
+        .btn-solve:hover {
+            background: #0055aa;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 102, 204, 0.2);
+        }
+        
+        .btn-clear {
+            background: #ff6600;
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background: #e65500;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(255, 102, 0, 0.2);
+        }
+        
+        .btn-example {
+            background: #009933;
+            color: white;
+        }
+        
+        .btn-example:hover {
+            background: #008822;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 153, 51, 0.2);
+        }
+        
+        .btn-random {
+            background: #6633cc;
+            color: white;
+        }
+        
+        .btn-random:hover {
+            background: #5522bb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 51, 204, 0.2);
+        }
+        
+        .result-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            display: none;
+        }
+        
+        .result-section.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #0066cc;
+        }
+        
+        .result-header h2 {
+            font-size: 20px;
+            color: #000000;
+        }
+        
+        .type-indicator {
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #0066cc;
+            color: white;
+        }
+        
+        .steps-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        
+        .step {
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #0066cc;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .step-number {
+            font-weight: 700;
+            color: #0066cc;
+            margin-right: 10px;
+        }
+        
+        .solutions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .solution-card {
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            font-weight: bold;
+            background: #e6f2ff;
+            color: #0066cc;
+            border: 2px solid #0066cc;
+        }
+        
+        .analysis-container {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .analysis-container h3 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .analysis-item {
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #0066cc;
+        }
+        
+        .analysis-label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        
+        .analysis-value {
+            font-size: 14px;
+            color: #000000;
+        }
+        
+        .solution-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .solution-table th {
+            background: #e6f2ff;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            font-weight: 600;
+            color: #0066cc;
+        }
+        
+        .solution-table td {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            color: #000000;
+        }
+        
+        .system-display {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+        
+        .equation-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .no-solution {
+            background: #ffe6e6;
+            color: #cc0000;
+            border: 2px solid #cc0000;
+        }
+        
+        .infinite-solution {
+            background: #fff9e6;
+            color: #ff9900;
+            border: 2px solid #ff9900;
+        }
+        
+        .unique-solution {
+            background: #e6f7e9;
+            color: #009933;
+            border: 2px solid #009933;
+        }
+        
+        .solution-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .method-explanation {
+            padding: 15px;
+            background: #e6f2ff;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .method-explanation h4 {
+            color: #0066cc;
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            padding: 20px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            background: #ffffff;
+            font-size: 14px;
+            color: #666666;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 1200px) {
+            .type-selector {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .button-group {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .type-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .button-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .equation-display {
+                font-size: 16px;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .type-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body><div class="flex items-center space-x-3">
+            <button onclick="window.print()" class="p-2.5 bg-gray-50 hover:bg-gray-200 rounded-xl transition-all" title="In đề thi">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-2 4H8v-4h8v4z"/></svg>
+            </button>
+        </div>
+    <div class="container">
+        <div class="header">
+            <div class="main-title">Giải Phương Trình & Hệ Phương Trình</div>
+            <div class="subtitle">Công cụ giải toán đa dạng - Từ đơn giản đến phức tạp</div>
+        </div>
+        
+        <div class="content">
+            <div class="type-selector">
+                <button class="type-btn active" data-type="quadratic">Phương trình bậc 2</button>
+                <button class="type-btn" data-type="linear">Phương trình bậc 1</button>
+                <button class="type-btn" data-type="system2">Hệ 2 phương trình</button>
+                <button class="type-btn" data-type="system3">Hệ 3 phương trình</button>
+                <button class="type-btn" data-type="cubic">Phương trình bậc 3</button>
+            </div>
+            
+            <!-- Phương trình bậc 2 -->
+            <div class="input-section" id="quadratic-section">
+                <h2>Phương trình bậc hai: ax² + bx + c = 0</h2>
+                
+                <div class="equation-display" id="quadratic-equation">
+                    x² - 3x + 2 = 0
+                </div>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="quadratic-a">Hệ số a (≠ 0)</label>
+                        <input type="number" id="quadratic-a" step="any" value="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="quadratic-b">Hệ số b</label>
+                        <input type="number" id="quadratic-b" step="any" value="-3">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="quadratic-c">Hệ số c</label>
+                        <input type="number" id="quadratic-c" step="any" value="2">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-solve" onclick="solveQuadratic()">Giải phương trình</button>
+                    <button class="btn btn-example" onclick="generateQuadraticExample()">Ví dụ ngẫu nhiên</button>
+                    <button class="btn btn-clear" onclick="clearQuadratic()">Xóa hệ số</button>
+                    <button class="btn btn-random" onclick="generateRandomEquation()">Bài tập mới</button>
+                </div>
+            </div>
+            
+            <!-- Phương trình bậc 1 -->
+            <div class="input-section hidden" id="linear-section">
+                <h2>Phương trình bậc nhất: ax + b = 0</h2>
+                
+                <div class="equation-display" id="linear-equation">
+                    x - 3 = 0
+                </div>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="linear-a">Hệ số a (≠ 0)</label>
+                        <input type="number" id="linear-a" step="any" value="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="linear-b">Hệ số b</label>
+                        <input type="number" id="linear-b" step="any" value="-3">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-solve" onclick="solveLinear()">Giải phương trình</button>
+                    <button class="btn btn-example" onclick="generateLinearExample()">Ví dụ ngẫu nhiên</button>
+                    <button class="btn btn-clear" onclick="clearLinear()">Xóa hệ số</button>
+                </div>
+            </div>
+            
+            <!-- Hệ 2 phương trình -->
+            <div class="input-section hidden" id="system2-section">
+                <h2>Hệ 2 phương trình bậc nhất 2 ẩn</h2>
+                
+                <div class="equation-display" id="system2-equation">
+                    <div>a₁x + b₁y = c₁</div>
+                    <div>a₂x + b₂y = c₂</div>
+                </div>
+                
+                <div class="matrix-input">
+                    <h3>Nhập hệ số:</h3>
+                    
+                    <div class="matrix-row">
+                        <input type="number" class="matrix-cell" id="s2-a1" placeholder="a₁" value="2">
+                        <span style="align-self: center;">x +</span>
+                        <input type="number" class="matrix-cell" id="s2-b1" placeholder="b₁" value="3">
+                        <span style="align-self: center;">y =</span>
+                        <input type="number" class="matrix-cell" id="s2-c1" placeholder="c₁" value="8">
+                    </div>
+                    
+                    <div class="matrix-row">
+                        <input type="number" class="matrix-cell" id="s2-a2" placeholder="a₂" value="1">
+                        <span style="align-self: center;">x +</span>
+                        <input type="number" class="matrix-cell" id="s2-b2" placeholder="b₂" value="2">
+                        <span style="align-self: center;">y =</span>
+                        <input type="number" class="matrix-cell" id="s2-c2" placeholder="c₂" value="3">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-solve" onclick="solveSystem2()">Giải hệ phương trình</button>
+                    <button class="btn btn-example" onclick="generateSystem2Example()">Ví dụ ngẫu nhiên</button>
+                    <button class="btn btn-clear" onclick="clearSystem2()">Xóa hệ số</button>
+                </div>
+            </div>
+            
+            <!-- Hệ 3 phương trình -->
+            <div class="input-section hidden" id="system3-section">
+                <h2>Hệ 3 phương trình bậc nhất 3 ẩn</h2>
+                
+                <div class="equation-display" id="system3-equation">
+                    <div>a₁x + b₁y + c₁z = d₁</div>
+                    <div>a₂x + b₂y + c₂z = d₂</div>
+                    <div>a₃x + b₃y + c₃z = d₃</div>
+                </div>
+                
+                <div class="matrix-input">
+                    <h3>Nhập hệ số:</h3>
+                    
+                    <div class="matrix-row">
+                        <input type="number" class="matrix-cell" id="s3-a1" placeholder="a₁" value="2">
+                        <span style="align-self: center;">x +</span>
+                        <input type="number" class="matrix-cell" id="s3-b1" placeholder="b₁" value="1">
+                        <span style="align-self: center;">y +</span>
+                        <input type="number" class="matrix-cell" id="s3-c1" placeholder="c₁" value="3">
+                        <span style="align-self: center;">=</span>
+                        <input type="number" class="matrix-cell" id="s3-d1" placeholder="d₁" value="9">
+                    </div>
+                    
+                    <div class="matrix-row">
+                        <input type="number" class="matrix-cell" id="s3-a2" placeholder="a₂" value="1">
+                        <span style="align-self: center;">x +</span>
+                        <input type="number" class="matrix-cell" id="s3-b2" placeholder="b₂" value="3">
+                        <span style="align-self: center;">y +</span>
+                        <input type="number" class="matrix-cell" id="s3-c2" placeholder="c₂" value="2">
+                        <span style="align-self: center;">=</span>
+                        <input type="number" class="matrix-cell" id="s3-d2" placeholder="d₂" value="10">
+                    </div>
+                    
+                    <div class="matrix-row">
+                        <input type="number" class="matrix-cell" id="s3-a3" placeholder="a₃" value="3">
+                        <span style="align-self: center;">x +</span>
+                        <input type="number" class="matrix-cell" id="s3-b3" placeholder="b₃" value="2">
+                        <span style="align-self: center;">y +</span>
+                        <input type="number" class="matrix-cell" id="s3-c3" placeholder="c₃" value="1">
+                        <span style="align-self: center;">=</span>
+                        <input type="number" class="matrix-cell" id="s3-d3" placeholder="d₃" value="11">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-solve" onclick="solveSystem3()">Giải hệ phương trình</button>
+                    <button class="btn btn-example" onclick="generateSystem3Example()">Ví dụ ngẫu nhiên</button>
+                    <button class="btn btn-clear" onclick="clearSystem3()">Xóa hệ số</button>
+                </div>
+            </div>
+            
+            <!-- Phương trình bậc 3 -->
+            <div class="input-section hidden" id="cubic-section">
+                <h2>Phương trình bậc ba: ax³ + bx² + cx + d = 0</h2>
+                
+                <div class="equation-display" id="cubic-equation">
+                    x³ - 6x² + 11x - 6 = 0
+                </div>
+                
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="cubic-a">Hệ số a (≠ 0)</label>
+                        <input type="number" id="cubic-a" step="any" value="1">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cubic-b">Hệ số b</label>
+                        <input type="number" id="cubic-b" step="any" value="-6">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cubic-c">Hệ số c</label>
+                        <input type="number" id="cubic-c" step="any" value="11">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="cubic-d">Hệ số d</label>
+                        <input type="number" id="cubic-d" step="any" value="-6">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn btn-solve" onclick="solveCubic()">Giải phương trình</button>
+                    <button class="btn btn-example" onclick="generateCubicExample()">Ví dụ ngẫu nhiên</button>
+                    <button class="btn btn-clear" onclick="clearCubic()">Xóa hệ số</button>
+                </div>
+            </div>
+            
+            <!-- Kết quả -->
+            <div class="result-section" id="resultSection">
+                <div class="result-header">
+                    <h2 id="resultTitle">Kết Quả Giải</h2>
+                    <div class="type-indicator" id="typeIndicator">Phương trình bậc 2</div>
+                </div>
+                
+                <div class="steps-container" id="stepsContainer">
+                    <!-- Các bước giải sẽ được thêm vào đây -->
+                </div>
+                
+                <div class="solutions-container" id="solutionsContainer">
+                    <!-- Nghiệm sẽ được thêm vào đây -->
+                </div>
+                
+                <div class="analysis-container" id="analysisContainer">
+                    <h3>Phân Tích Kết Quả</h3>
+                    <div class="analysis-grid" id="analysisGrid">
+                        <!-- Phân tích sẽ được thêm vào đây -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <div>nguyễn tấn tài 9/1</div>
+        </footer>
+    </div>
+
+    <script>
+        let currentType = 'quadratic';
+        
+        // Hàm chuyển đổi loại phương trình
+        function switchType(type) {
+            currentType = type;
+            
+            // Ẩn tất cả các section
+            document.getElementById('quadratic-section').classList.add('hidden');
+            document.getElementById('linear-section').classList.add('hidden');
+            document.getElementById('system2-section').classList.add('hidden');
+            document.getElementById('system3-section').classList.add('hidden');
+            document.getElementById('cubic-section').classList.add('hidden');
+            
+            // Hiển thị section được chọn
+            document.getElementById(type + '-section').classList.remove('hidden');
+            
+            // Cập nhật nút active
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.type === type) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Ẩn kết quả cũ
+            document.getElementById('resultSection').classList.remove('show');
+        }
+        
+        // Hàm định dạng số
+        function formatNumber(num) {
+            if (isNaN(num) || !isFinite(num)) return 'Không xác định';
+            
+            const rounded = Math.round(num * 10000) / 10000;
+            return parseFloat(rounded.toFixed(4)).toString();
+        }
+        
+        // Hàm hiển thị kết quả
+        function displayResult(result) {
+            const resultSection = document.getElementById('resultSection');
+            const stepsContainer = document.getElementById('stepsContainer');
+            const solutionsContainer = document.getElementById('solutionsContainer');
+            const analysisGrid = document.getElementById('analysisGrid');
+            const typeIndicator = document.getElementById('typeIndicator');
+            const resultTitle = document.getElementById('resultTitle');
+            
+            // Cập nhật tiêu đề và chỉ báo
+            resultTitle.textContent = 'Kết Quả Giải';
+            typeIndicator.textContent = getTypeName(currentType);
+            
+            // Hiển thị section kết quả
+            resultSection.classList.add('show');
+            
+            // Hiển thị các bước giải
+            stepsContainer.innerHTML = '<h3>Chi Tiết Giải:</h3>';
+            if (result.steps && result.steps.length > 0) {
+                result.steps.forEach((step, index) => {
+                    const stepElement = document.createElement('div');
+                    stepElement.className = 'step';
+                    stepElement.innerHTML = `<span class="step-number">Bước ${index + 1}:</span> ${step}`;
+                    stepsContainer.appendChild(stepElement);
+                });
+            } else {
+                stepsContainer.innerHTML += '<div class="step">Không có bước giải chi tiết</div>';
+            }
+            
+            // Hiển thị nghiệm
+            solutionsContainer.innerHTML = '<h3>Nghiệm:</h3>';
+            if (result.solutions && result.solutions.length > 0) {
+                result.solutions.forEach((solution, index) => {
+                    const solutionElement = document.createElement('div');
+                    solutionElement.className = 'solution-card';
+                    
+                    if (result.type === 'no_solution') {
+                        solutionElement.classList.add('no-solution');
+                    } else if (result.type === 'infinite') {
+                        solutionElement.classList.add('infinite-solution');
+                    } else {
+                        solutionElement.classList.add('unique-solution');
+                    }
+                    
+                    solutionElement.textContent = solution;
+                    solutionsContainer.appendChild(solutionElement);
+                });
+            } else {
+                solutionsContainer.innerHTML += '<div class="solution-card no-solution">Không tìm thấy nghiệm</div>';
+            }
+            
+            // Hiển thị phân tích
+            analysisGrid.innerHTML = '';
+            if (result.analysis && result.analysis.length > 0) {
+                result.analysis.forEach(item => {
+                    const parts = item.split(': ');
+                    if (parts.length === 2) {
+                        const analysisItem = document.createElement('div');
+                        analysisItem.className = 'analysis-item';
+                        analysisItem.innerHTML = `
+                            <div class="analysis-label">${parts[0]}</div>
+                            <div class="analysis-value">${parts[1]}</div>
+                        `;
+                        analysisGrid.appendChild(analysisItem);
+                    }
+                });
+            }
+            
+            // Cuộn đến kết quả
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Hàm lấy tên loại
+        function getTypeName(type) {
+            switch(type) {
+                case 'quadratic': return 'Phương trình bậc 2';
+                case 'linear': return 'Phương trình bậc 1';
+                case 'system2': return 'Hệ 2 phương trình';
+                case 'system3': return 'Hệ 3 phương trình';
+                case 'cubic': return 'Phương trình bậc 3';
+                default: return 'Phương trình';
+            }
+        }
+        
+        // ==================== PHƯƠNG TRÌNH BẬC 2 ====================
+        function solveQuadratic() {
+            const a = parseFloat(document.getElementById('quadratic-a').value) || 0;
+            const b = parseFloat(document.getElementById('quadratic-b').value) || 0;
+            const c = parseFloat(document.getElementById('quadratic-c').value) || 0;
+            
+            // Cập nhật hiển thị phương trình
+            updateQuadraticEquation();
+            
+            const result = {
+                steps: [],
+                solutions: [],
+                type: '',
+                analysis: []
+            };
+            
+            if (a === 0) {
+                result.steps.push("a = 0, đây là phương trình bậc nhất");
+                const x = -c / b;
+                result.steps.push(`x = -c/b = -(${formatNumber(c)})/(${formatNumber(b)}) = ${formatNumber(x)}`);
+                result.solutions.push(`x = ${formatNumber(x)}`);
+                result.type = 'linear';
+                result.analysis.push("Loại: Phương trình bậc nhất");
+                result.analysis.push(`Nghiệm duy nhất: x = ${formatNumber(x)}`);
+            } else {
+                const delta = b * b - 4 * a * c;
+                result.steps.push(`Δ = b² - 4ac = (${formatNumber(b)})² - 4×${formatNumber(a)}×${formatNumber(c)} = ${formatNumber(delta)}`);
+                
+                if (delta > 0) {
+                    const sqrtDelta = Math.sqrt(delta);
+                    const x1 = (-b + sqrtDelta) / (2 * a);
+                    const x2 = (-b - sqrtDelta) / (2 * a);
+                    
+                    result.steps.push(`Δ > 0: Phương trình có 2 nghiệm phân biệt`);
+                    result.steps.push(`x₁ = (-b + √Δ)/(2a) = (${formatNumber(-b)} + ${formatNumber(sqrtDelta)})/(${formatNumber(2*a)}) = ${formatNumber(x1)}`);
+                    result.steps.push(`x₂ = (-b - √Δ)/(2a) = (${formatNumber(-b)} - ${formatNumber(sqrtDelta)})/(${formatNumber(2*a)}) = ${formatNumber(x2)}`);
+                    
+                    result.solutions.push(`x₁ = ${formatNumber(x1)}`);
+                    result.solutions.push(`x₂ = ${formatNumber(x2)}`);
+                    result.type = 'two_real';
+                    result.analysis.push("Loại: Hai nghiệm thực phân biệt");
+                    result.analysis.push(`Biệt thức Δ = ${formatNumber(delta)} > 0`);
+                } else if (delta === 0) {
+                    const x = -b / (2 * a);
+                    
+                    result.steps.push(`Δ = 0: Phương trình có nghiệm kép`);
+                    result.steps.push(`x = -b/(2a) = ${formatNumber(-b)}/(${formatNumber(2*a)}) = ${formatNumber(x)}`);
+                    
+                    result.solutions.push(`x₁ = x₂ = ${formatNumber(x)}`);
+                    result.type = 'double';
+                    result.analysis.push("Loại: Nghiệm kép");
+                    result.analysis.push(`Biệt thức Δ = 0`);
+                } else {
+                    const realPart = -b / (2 * a);
+                    const imagPart = Math.sqrt(-delta) / (2 * a);
+                    
+                    result.steps.push(`Δ < 0: Phương trình có 2 nghiệm phức`);
+                    result.steps.push(`Phần thực: -b/(2a) = ${formatNumber(realPart)}`);
+                    result.steps.push(`Phần ảo: √|Δ|/(2a) = ${formatNumber(imagPart)}`);
+                    
+                    result.solutions.push(`x₁ = ${formatNumber(realPart)} + ${formatNumber(imagPart)}i`);
+                    result.solutions.push(`x₂ = ${formatNumber(realPart)} - ${formatNumber(imagPart)}i`);
+                    result.type = 'complex';
+                    result.analysis.push("Loại: Hai nghiệm phức liên hợp");
+                    result.analysis.push(`Biệt thức Δ = ${formatNumber(delta)} < 0`);
+                }
+                
+                // Tính đỉnh parabol
+                const vertexX = -b / (2 * a);
+                const vertexY = a * vertexX * vertexX + b * vertexX + c;
+                result.analysis.push(`Đỉnh parabol: (${formatNumber(vertexX)}, ${formatNumber(vertexY)})`);
+                
+                if (a > 0) {
+                    result.analysis.push("Parabol mở lên trên");
+                } else {
+                    result.analysis.push("Parabol mở xuống dưới");
+                }
+            }
+            
+            displayResult(result);
+        }
+        
+        function updateQuadraticEquation() {
+            const a = parseFloat(document.getElementById('quadratic-a').value) || 0;
+            const b = parseFloat(document.getElementById('quadratic-b').value) || 0;
+            const c = parseFloat(document.getElementById('quadratic-c').value) || 0;
+            
+            let equation = '';
+            if (a !== 0) {
+                equation += (a === 1 ? '' : a === -1 ? '-' : formatNumber(a)) + 'x²';
+            }
+            
+            if (b !== 0) {
+                const sign = b > 0 ? ' + ' : ' - ';
+                const absB = Math.abs(b);
+                equation += sign + (absB === 1 ? '' : formatNumber(absB)) + 'x';
+            }
+            
+            if (c !== 0 || (a === 0 && b === 0)) {
+                const sign = c > 0 ? ' + ' : ' - ';
+                equation += sign + formatNumber(Math.abs(c));
+            }
+            
+            equation = equation.replace(/^\+ /, '').replace(/^\-\s?/, '-');
+            if (equation === '' || equation === '-') equation = '0';
+            
+            document.getElementById('quadratic-equation').textContent = equation + ' = 0';
+        }
+        
+        function generateQuadraticExample() {
+            const examples = [
+                {a: 1, b: -5, c: 6},      // x² - 5x + 6 = 0
+                {a: 2, b: -4, c: 2},       // 2x² - 4x + 2 = 0
+                {a: 1, b: 0, c: -9},       // x² - 9 = 0
+                {a: 1, b: 2, c: 5},        // x² + 2x + 5 = 0
+                {a: 1, b: -4, c: 0},       // x² - 4x = 0
+            ];
+            
+            const example = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('quadratic-a').value = example.a;
+            document.getElementById('quadratic-b').value = example.b;
+            document.getElementById('quadratic-c').value = example.c;
+            
+            updateQuadraticEquation();
+        }
+        
+        function clearQuadratic() {
+            document.getElementById('quadratic-a').value = '';
+            document.getElementById('quadratic-b').value = '';
+            document.getElementById('quadratic-c').value = '';
+            document.getElementById('quadratic-equation').textContent = 'Nhập hệ số để hiển thị phương trình';
+        }
+        
+        // ==================== PHƯƠNG TRÌNH BẬC 1 ====================
+        function solveLinear() {
+            const a = parseFloat(document.getElementById('linear-a').value) || 0;
+            const b = parseFloat(document.getElementById('linear-b').value) || 0;
+            
+            updateLinearEquation();
+            
+            const result = {
+                steps: [],
+                solutions: [],
+                type: '',
+                analysis: []
+            };
+            
+            if (a === 0) {
+                if (b === 0) {
+                    result.steps.push("0 = 0: Phương trình có vô số nghiệm");
+                    result.solutions.push("∀x ∈ ℝ");
+                    result.type = 'infinite';
+                    result.analysis.push("Loại: Vô số nghiệm");
+                } else {
+                    result.steps.push(`${formatNumber(b)} = 0: Phương trình vô nghiệm`);
+                    result.solutions.push("Không có nghiệm");
+                    result.type = 'no_solution';
+                    result.analysis.push("Loại: Vô nghiệm");
+                }
+            } else {
+                const x = -b / a;
+                result.steps.push(`x = -b/a = -(${formatNumber(b)})/(${formatNumber(a)}) = ${formatNumber(x)}`);
+                result.solutions.push(`x = ${formatNumber(x)}`);
+                result.type = 'unique';
+                result.analysis.push("Loại: Nghiệm duy nhất");
+                result.analysis.push(`Nghiệm: x = ${formatNumber(x)}`);
+            }
+            
+            displayResult(result);
+        }
+        
+        function updateLinearEquation() {
+            const a = parseFloat(document.getElementById('linear-a').value) || 0;
+            const b = parseFloat(document.getElementById('linear-b').value) || 0;
+            
+            let equation = '';
+            if (a !== 0) {
+                equation += (a === 1 ? '' : a === -1 ? '-' : formatNumber(a)) + 'x';
+            }
+            
+            if (b !== 0) {
+                const sign = b > 0 ? ' + ' : ' - ';
+                equation += sign + formatNumber(Math.abs(b));
+            }
+            
+            equation = equation.replace(/^\+ /, '').replace(/^\-\s?/, '-');
+            if (equation === '' || equation === '-') equation = '0';
+            
+            document.getElementById('linear-equation').textContent = equation + ' = 0';
+        }
+        
+        function generateLinearExample() {
+            const examples = [
+                {a: 2, b: -6},      // 2x - 6 = 0
+                {a: -3, b: 12},     // -3x + 12 = 0
+                {a: 1, b: 0},       // x = 0
+                {a: 0, b: 0},       // 0 = 0
+                {a: 0, b: 5},       // 5 = 0
+            ];
+            
+            const example = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('linear-a').value = example.a;
+            document.getElementById('linear-b').value = example.b;
+            
+            updateLinearEquation();
+        }
+        
+        function clearLinear() {
+            document.getElementById('linear-a').value = '';
+            document.getElementById('linear-b').value = '';
+            document.getElementById('linear-equation').textContent = 'Nhập hệ số để hiển thị phương trình';
+        }
+        
+        // ==================== HỆ 2 PHƯƠNG TRÌNH ====================
+        function solveSystem2() {
+            const a1 = parseFloat(document.getElementById('s2-a1').value) || 0;
+            const b1 = parseFloat(document.getElementById('s2-b1').value) || 0;
+            const c1 = parseFloat(document.getElementById('s2-c1').value) || 0;
+            const a2 = parseFloat(document.getElementById('s2-a2').value) || 0;
+            const b2 = parseFloat(document.getElementById('s2-b2').value) || 0;
+            const c2 = parseFloat(document.getElementById('s2-c2').value) || 0;
+            
+            updateSystem2Equation();
+            
+            const result = {
+                steps: [],
+                solutions: [],
+                type: '',
+                analysis: []
+            };
+            
+            // Tính định thức
+            const D = a1 * b2 - a2 * b1;
+            const Dx = c1 * b2 - c2 * b1;
+            const Dy = a1 * c2 - a2 * c1;
+            
+            result.steps.push(`Tính các định thức:`);
+            result.steps.push(`D = a₁b₂ - a₂b₁ = ${formatNumber(a1)}×${formatNumber(b2)} - ${formatNumber(a2)}×${formatNumber(b1)} = ${formatNumber(D)}`);
+            result.steps.push(`Dx = c₁b₂ - c₂b₁ = ${formatNumber(c1)}×${formatNumber(b2)} - ${formatNumber(c2)}×${formatNumber(b1)} = ${formatNumber(Dx)}`);
+            result.steps.push(`Dy = a₁c₂ - a₂c₁ = ${formatNumber(a1)}×${formatNumber(c2)} - ${formatNumber(a2)}×${formatNumber(c1)} = ${formatNumber(Dy)}`);
+            
+            if (D !== 0) {
+                const x = Dx / D;
+                const y = Dy / D;
+                
+                result.steps.push(`D ≠ 0: Hệ có nghiệm duy nhất`);
+                result.steps.push(`x = Dx/D = ${formatNumber(Dx)}/${formatNumber(D)} = ${formatNumber(x)}`);
+                result.steps.push(`y = Dy/D = ${formatNumber(Dy)}/${formatNumber(D)} = ${formatNumber(y)}`);
+                
+                result.solutions.push(`x = ${formatNumber(x)}`);
+                result.solutions.push(`y = ${formatNumber(y)}`);
+                result.type = 'unique';
+                result.analysis.push("Loại: Nghiệm duy nhất");
+                result.analysis.push(`Định thức D = ${formatNumber(D)} ≠ 0`);
+            } else {
+                if (Dx === 0 && Dy === 0) {
+                    result.steps.push(`D = Dx = Dy = 0: Hệ có vô số nghiệm`);
+                    result.solutions.push("Hệ có vô số nghiệm");
+                    result.type = 'infinite';
+                    result.analysis.push("Loại: Vô số nghiệm");
+                } else {
+                    result.steps.push(`D = 0 nhưng Dx ≠ 0 hoặc Dy ≠ 0: Hệ vô nghiệm`);
+                    result.solutions.push("Hệ vô nghiệm");
+                    result.type = 'no_solution';
+                    result.analysis.push("Loại: Vô nghiệm");
+                }
+            }
+            
+            displayResult(result);
+        }
+        
+        function updateSystem2Equation() {
+            const a1 = parseFloat(document.getElementById('s2-a1').value) || 0;
+            const b1 = parseFloat(document.getElementById('s2-b1').value) || 0;
+            const c1 = parseFloat(document.getElementById('s2-c1').value) || 0;
+            const a2 = parseFloat(document.getElementById('s2-a2').value) || 0;
+            const b2 = parseFloat(document.getElementById('s2-b2').value) || 0;
+            const c2 = parseFloat(document.getElementById('s2-c2').value) || 0;
+            
+            let eq1 = formatEquation2(a1, b1, c1);
+            let eq2 = formatEquation2(a2, b2, c2);
+            
+            document.getElementById('system2-equation').innerHTML = 
+                `<div>${eq1}</div><div>${eq2}</div>`;
+        }
+        
+        function formatEquation2(a, b, c) {
+            let eq = '';
+            if (a !== 0) eq += (a === 1 ? '' : a === -1 ? '-' : formatNumber(a)) + 'x';
+            if (b !== 0) {
+                const sign = b > 0 ? ' + ' : ' - ';
+                const absB = Math.abs(b);
+                eq += sign + (absB === 1 ? '' : formatNumber(absB)) + 'y';
+            }
+            eq = eq.replace(/^\+ /, '').replace(/^\-\s?/, '-');
+            if (eq === '') eq = '0';
+            
+            return eq + ' = ' + formatNumber(c);
+        }
+        
+        function generateSystem2Example() {
+            const examples = [
+                {a1:2, b1:3, c1:8, a2:1, b2:2, c2:3},
+                {a1:1, b1:1, c1:5, a2:2, b2:1, c2:8},
+                {a1:3, b1:2, c1:7, a2:6, b2:4, c2:14},
+                {a1:2, b1:4, c1:8, a2:1, b2:2, c2:5},
+                {a1:1, b1:2, c1:3, a2:2, b2:4, c2:6}
+            ];
+            
+            const example = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('s2-a1').value = example.a1;
+            document.getElementById('s2-b1').value = example.b1;
+            document.getElementById('s2-c1').value = example.c1;
+            document.getElementById('s2-a2').value = example.a2;
+            document.getElementById('s2-b2').value = example.b2;
+            document.getElementById('s2-c2').value = example.c2;
+            
+            updateSystem2Equation();
+        }
+        
+        function clearSystem2() {
+            document.getElementById('s2-a1').value = '';
+            document.getElementById('s2-b1').value = '';
+            document.getElementById('s2-c1').value = '';
+            document.getElementById('s2-a2').value = '';
+            document.getElementById('s2-b2').value = '';
+            document.getElementById('s2-c2').value = '';
+            document.getElementById('system2-equation').textContent = 'Nhập hệ số để hiển thị phương trình';
+        }
+        
+        // ==================== HỆ 3 PHƯƠNG TRÌNH ====================
+        function solveSystem3() {
+            const a1 = parseFloat(document.getElementById('s3-a1').value) || 0;
+            const b1 = parseFloat(document.getElementById('s3-b1').value) || 0;
+            const c1 = parseFloat(document.getElementById('s3-c1').value) || 0;
+            const d1 = parseFloat(document.getElementById('s3-d1').value) || 0;
+            const a2 = parseFloat(document.getElementById('s3-a2').value) || 0;
+            const b2 = parseFloat(document.getElementById('s3-b2').value) || 0;
+            const c2 = parseFloat(document.getElementById('s3-c2').value) || 0;
+            const d2 = parseFloat(document.getElementById('s3-d2').value) || 0;
+            const a3 = parseFloat(document.getElementById('s3-a3').value) || 0;
+            const b3 = parseFloat(document.getElementById('s3-b3').value) || 0;
+            const c3 = parseFloat(document.getElementById('s3-c3').value) || 0;
+            const d3 = parseFloat(document.getElementById('s3-d3').value) || 0;
+            
+            updateSystem3Equation();
+            
+            const result = {
+                steps: [],
+                solutions: [],
+                type: '',
+                analysis: []
+            };
+            
+            // Tính định thức D
+            const D = a1*(b2*c3 - b3*c2) - b1*(a2*c3 - a3*c2) + c1*(a2*b3 - a3*b2);
+            
+            result.steps.push(`Tính định thức D:`);
+            result.steps.push(`D = a₁(b₂c₃ - b₃c₂) - b₁(a₂c₃ - a₃c₂) + c₁(a₂b₃ - a₃b₂)`);
+            result.steps.push(`D = ${formatNumber(D)}`);
+            
+            if (D !== 0) {
+                // Tính định thức Dx, Dy, Dz
+                const Dx = d1*(b2*c3 - b3*c2) - b1*(d2*c3 - d3*c2) + c1*(d2*b3 - d3*b2);
+                const Dy = a1*(d2*c3 - d3*c2) - d1*(a2*c3 - a3*c2) + c1*(a2*d3 - a3*d2);
+                const Dz = a1*(b2*d3 - b3*d2) - b1*(a2*d3 - a3*d2) + d1*(a2*b3 - a3*b2);
+                
+                const x = Dx / D;
+                const y = Dy / D;
+                const z = Dz / D;
+                
+                result.steps.push(`D ≠ 0: Hệ có nghiệm duy nhất`);
+                result.steps.push(`x = Dx/D = ${formatNumber(Dx)}/${formatNumber(D)} = ${formatNumber(x)}`);
+                result.steps.push(`y = Dy/D = ${formatNumber(Dy)}/${formatNumber(D)} = ${formatNumber(y)}`);
+                result.steps.push(`z = Dz/D = ${formatNumber(Dz)}/${formatNumber(D)} = ${formatNumber(z)}`);
+                
+                result.solutions.push(`x = ${formatNumber(x)}`);
+                result.solutions.push(`y = ${formatNumber(y)}`);
+                result.solutions.push(`z = ${formatNumber(z)}`);
+                result.type = 'unique';
+                result.analysis.push("Loại: Nghiệm duy nhất");
+                result.analysis.push(`Định thức D = ${formatNumber(D)} ≠ 0`);
+            } else {
+                result.steps.push(`D = 0: Hệ có thể vô nghiệm hoặc vô số nghiệm`);
+                result.solutions.push("Hệ vô nghiệm hoặc vô số nghiệm");
+                result.type = 'infinite_or_none';
+                result.analysis.push("Loại: Vô nghiệm hoặc vô số nghiệm");
+                result.analysis.push(`Định thức D = 0`);
+            }
+            
+            displayResult(result);
+        }
+        
+        function updateSystem3Equation() {
+            const a1 = parseFloat(document.getElementById('s3-a1').value) || 0;
+            const b1 = parseFloat(document.getElementById('s3-b1').value) || 0;
+            const c1 = parseFloat(document.getElementById('s3-c1').value) || 0;
+            const d1 = parseFloat(document.getElementById('s3-d1').value) || 0;
+            const a2 = parseFloat(document.getElementById('s3-a2').value) || 0;
+            const b2 = parseFloat(document.getElementById('s3-b2').value) || 0;
+            const c2 = parseFloat(document.getElementById('s3-c2').value) || 0;
+            const d2 = parseFloat(document.getElementById('s3-d2').value) || 0;
+            const a3 = parseFloat(document.getElementById('s3-a3').value) || 0;
+            const b3 = parseFloat(document.getElementById('s3-b3').value) || 0;
+            const c3 = parseFloat(document.getElementById('s3-c3').value) || 0;
+            const d3 = parseFloat(document.getElementById('s3-d3').value) || 0;
+            
+            let eq1 = formatEquation3(a1, b1, c1, d1);
+            let eq2 = formatEquation3(a2, b2, c2, d2);
+            let eq3 = formatEquation3(a3, b3, c3, d3);
+            
+            document.getElementById('system3-equation').innerHTML = 
+                `<div>${eq1}</div><div>${eq2}</div><div>${eq3}</div>`;
+        }
+        
+        function formatEquation3(a, b, c, d) {
+            let eq = '';
+            if (a !== 0) eq += (a === 1 ? '' : a === -1 ? '-' : formatNumber(a)) + 'x';
+            if (b !== 0) {
+                const sign = b > 0 ? ' + ' : ' - ';
+                const absB = Math.abs(b);
+                eq += sign + (absB === 1 ? '' : formatNumber(absB)) + 'y';
+            }
+            if (c !== 0) {
+                const sign = c > 0 ? ' + ' : ' - ';
+                const absC = Math.abs(c);
+                eq += sign + (absC === 1 ? '' : formatNumber(absC)) + 'z';
+            }
+            eq = eq.replace(/^\+ /, '').replace(/^\-\s?/, '-');
+            if (eq === '') eq = '0';
+            
+            return eq + ' = ' + formatNumber(d);
+        }
+        
+        function generateSystem3Example() {
+            const examples = [
+                {a1:2, b1:1, c1:3, d1:9, a2:1, b2:3, c2:2, d2:10, a3:3, b3:2, c3:1, d3:11},
+                {a1:1, b1:1, c1:1, d1:6, a2:1, b2:2, c2:3, d2:14, a3:3, b3:2, c3:1, d3:10},
+                {a1:2, b1:3, c1:1, d1:9, a2:1, b2:2, c2:3, d2:14, a3:3, b3:1, c3:2, d3:11},
+                {a1:1, b1:2, c1:3, d1:6, a2:3, b2:1, c2:2, d2:6, a3:2, b3:3, c3:1, d3:6}
+            ];
+            
+            const example = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('s3-a1').value = example.a1;
+            document.getElementById('s3-b1').value = example.b1;
+            document.getElementById('s3-c1').value = example.c1;
+            document.getElementById('s3-d1').value = example.d1;
+            document.getElementById('s3-a2').value = example.a2;
+            document.getElementById('s3-b2').value = example.b2;
+            document.getElementById('s3-c2').value = example.c2;
+            document.getElementById('s3-d2').value = example.d2;
+            document.getElementById('s3-a3').value = example.a3;
+            document.getElementById('s3-b3').value = example.b3;
+            document.getElementById('s3-c3').value = example.c3;
+            document.getElementById('s3-d3').value = example.d3;
+            
+            updateSystem3Equation();
+        }
+        
+        function clearSystem3() {
+            document.getElementById('s3-a1').value = '';
+            document.getElementById('s3-b1').value = '';
+            document.getElementById('s3-c1').value = '';
+            document.getElementById('s3-d1').value = '';
+            document.getElementById('s3-a2').value = '';
+            document.getElementById('s3-b2').value = '';
+            document.getElementById('s3-c2').value = '';
+            document.getElementById('s3-d2').value = '';
+            document.getElementById('s3-a3').value = '';
+            document.getElementById('s3-b3').value = '';
+            document.getElementById('s3-c3').value = '';
+            document.getElementById('s3-d3').value = '';
+            document.getElementById('system3-equation').textContent = 'Nhập hệ số để hiển thị phương trình';
+        }
+        
+        // ==================== PHƯƠNG TRÌNH BẬC 3 ====================
+        function solveCubic() {
+            const a = parseFloat(document.getElementById('cubic-a').value) || 0;
+            const b = parseFloat(document.getElementById('cubic-b').value) || 0;
+            const c = parseFloat(document.getElementById('cubic-c').value) || 0;
+            const d = parseFloat(document.getElementById('cubic-d').value) || 0;
+            
+            updateCubicEquation();
+            
+            const result = {
+                steps: [],
+                solutions: [],
+                type: '',
+                analysis: []
+            };
+            
+            if (a === 0) {
+                result.solutions.push("a phải khác 0 cho phương trình bậc 3");
+                result.type = 'error';
+            } else {
+                // Tìm nghiệm hữu tỉ đơn giản (nếu có)
+                let foundRational = false;
+                
+                // Thử các giá trị đơn giản
+                const testValues = [-3, -2, -1, 0, 1, 2, 3];
+                for (const x of testValues) {
+                    const value = a*x*x*x + b*x*x + c*x + d;
+                    if (Math.abs(value) < 0.0001) {
+                        result.steps.push(`Tìm thấy nghiệm hữu tỉ: x = ${x}`);
+                        foundRational = true;
+                        
+                        // Chia đa thức để tìm phương trình bậc 2
+                        const newA = a;
+                        const newB = b + a*x;
+                        const newC = c + newB*x;
+                        
+                        result.steps.push(`Chia đa thức cho (x - ${x})`);
+                        result.steps.push(`Phương trình còn lại: ${formatNumber(newA)}x² + ${formatNumber(newB)}x + ${formatNumber(newC)} = 0`);
+                        
+                        // Giải phương trình bậc 2
+                        const delta = newB*newB - 4*newA*newC;
+                        
+                        if (delta > 0) {
+                            const sqrtDelta = Math.sqrt(delta);
+                            const x2 = (-newB + sqrtDelta) / (2*newA);
+                            const x3 = (-newB - sqrtDelta) / (2*newA);
+                            
+                            result.solutions.push(`x₁ = ${formatNumber(x)}`);
+                            result.solutions.push(`x₂ = ${formatNumber(x2)}`);
+                            result.solutions.push(`x₃ = ${formatNumber(x3)}`);
+                            result.type = 'three_real';
+                            result.analysis.push("Loại: Ba nghiệm thực phân biệt");
+                        } else if (delta === 0) {
+                            const x2 = -newB / (2*newA);
+                            result.solutions.push(`x₁ = ${formatNumber(x)}`);
+                            result.solutions.push(`x₂ = x₃ = ${formatNumber(x2)}`);
+                            result.type = 'one_single_one_double';
+                            result.analysis.push("Loại: Một nghiệm đơn và một nghiệm kép");
+                        } else {
+                            const realPart = -newB / (2*newA);
+                            const imagPart = Math.sqrt(-delta) / (2*newA);
+                            
+                            result.solutions.push(`x₁ = ${formatNumber(x)}`);
+                            result.solutions.push(`x₂ = ${formatNumber(realPart)} + ${formatNumber(imagPart)}i`);
+                            result.solutions.push(`x₃ = ${formatNumber(realPart)} - ${formatNumber(imagPart)}i`);
+                            result.type = 'one_real_two_complex';
+                            result.analysis.push("Loại: Một nghiệm thực và hai nghiệm phức");
+                        }
+                        break;
+                    }
+                }
+                
+                if (!foundRational) {
+                    result.steps.push("Không tìm thấy nghiệm hữu tỉ đơn giản");
+                    result.solutions.push("Sử dụng công thức Cardano phức tạp");
+                    result.solutions.push("Hoặc dùng phương pháp số để tìm nghiệm gần đúng");
+                    result.type = 'complex';
+                    result.analysis.push("Loại: Cần phương pháp số phức tạp");
+                }
+            }
+            
+            displayResult(result);
+        }
+        
+        function updateCubicEquation() {
+            const a = parseFloat(document.getElementById('cubic-a').value) || 0;
+            const b = parseFloat(document.getElementById('cubic-b').value) || 0;
+            const c = parseFloat(document.getElementById('cubic-c').value) || 0;
+            const d = parseFloat(document.getElementById('cubic-d').value) || 0;
+            
+            let equation = '';
+            if (a !== 0) {
+                equation += (a === 1 ? '' : a === -1 ? '-' : formatNumber(a)) + 'x³';
+            }
+            
+            if (b !== 0) {
+                const sign = b > 0 ? ' + ' : ' - ';
+                const absB = Math.abs(b);
+                equation += sign + (absB === 1 ? '' : formatNumber(absB)) + 'x²';
+            }
+            
+            if (c !== 0) {
+                const sign = c > 0 ? ' + ' : ' - ';
+                const absC = Math.abs(c);
+                equation += sign + (absC === 1 ? '' : formatNumber(absC)) + 'x';
+            }
+            
+            if (d !== 0) {
+                const sign = d > 0 ? ' + ' : ' - ';
+                equation += sign + formatNumber(Math.abs(d));
+            }
+            
+            equation = equation.replace(/^\+ /, '').replace(/^\-\s?/, '-');
+            if (equation === '' || equation === '-') equation = '0';
+            
+            document.getElementById('cubic-equation').textContent = equation + ' = 0';
+        }
+        
+        function generateCubicExample() {
+            const examples = [
+                {a:1, b:-6, c:11, d:-6},     // (x-1)(x-2)(x-3) = 0
+                {a:1, b:-3, c:3, d:-1},       // (x-1)³ = 0
+                {a:1, b:0, c:0, d:-8},        // x³ - 8 = 0
+                {a:1, b:-2, c:-5, d:6},       // (x+2)(x-1)(x-3) = 0
+                {a:1, b:-4, c:5, d:-2},       // (x-1)²(x-2) = 0
+            ];
+            
+            const example = examples[Math.floor(Math.random() * examples.length)];
+            document.getElementById('cubic-a').value = example.a;
+            document.getElementById('cubic-b').value = example.b;
+            document.getElementById('cubic-c').value = example.c;
+            document.getElementById('cubic-d').value = example.d;
+            
+            updateCubicEquation();
+        }
+        
+        function clearCubic() {
+            document.getElementById('cubic-a').value = '';
+            document.getElementById('cubic-b').value = '';
+            document.getElementById('cubic-c').value = '';
+            document.getElementById('cubic-d').value = '';
+            document.getElementById('cubic-equation').textContent = 'Nhập hệ số để hiển thị phương trình';
+        }
+        
+        // Hàm tạo bài tập ngẫu nhiên
+        function generateRandomEquation() {
+            const types = ['quadratic', 'linear', 'system2', 'system3', 'cubic'];
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            
+            switchType(randomType);
+            
+            switch(randomType) {
+                case 'quadratic': generateQuadraticExample(); break;
+                case 'linear': generateLinearExample(); break;
+                case 'system2': generateSystem2Example(); break;
+                case 'system3': generateSystem3Example(); break;
+                case 'cubic': generateCubicExample(); break;
+            }
+        }
+        
+        // Khởi tạo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cập nhật phương trình ban đầu
+            updateQuadraticEquation();
+            updateLinearEquation();
+            updateSystem2Equation();
+            updateSystem3Equation();
+            updateCubicEquation();
+            
+            // Sự kiện cho nút chuyển loại
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    switchType(this.dataset.type);
+                    document.getElementById('resultSection').classList.remove('show');
+                });
+            });
+            
+            // Sự kiện cập nhật phương trình khi thay đổi hệ số
+            document.querySelectorAll('#quadratic-a, #quadratic-b, #quadratic-c').forEach(input => {
+                input.addEventListener('input', updateQuadraticEquation);
+            });
+            
+            document.querySelectorAll('#linear-a, #linear-b').forEach(input => {
+                input.addEventListener('input', updateLinearEquation);
+            });
+            
+            document.querySelectorAll('#s2-a1, #s2-b1, #s2-c1, #s2-a2, #s2-b2, #s2-c2').forEach(input => {
+                input.addEventListener('input', updateSystem2Equation);
+            });
+            
+            document.querySelectorAll('#s3-a1, #s3-b1, #s3-c1, #s3-d1, #s3-a2, #s3-b2, #s3-c2, #s3-d2, #s3-a3, #s3-b3, #s3-c3, #s3-d3').forEach(input => {
+                input.addEventListener('input', updateSystem3Equation);
+            });
+            
+            document.querySelectorAll('#cubic-a, #cubic-b, #cubic-c, #cubic-d').forEach(input => {
+                input.addEventListener('input', updateCubicEquation);
+            });
+        });
+    </script>
+</body>
+</html>
