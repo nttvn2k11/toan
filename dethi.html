@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anonymous</title>
+  <!-- Google Fonts hiện đại -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0b0f17; /* nền đen pha xanh than */
+      color: #e0e5f0;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+      padding: 2rem 1rem;
+    }
+
+    /* container chính dạng responsive cho 4K */
+    .exam-container {
+      max-width: 1600px;
+      margin: 0 auto;
+      background-color: #0f172a; /* xanh đen */
+      border-radius: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 30, 60, 0.8);
+      overflow: hidden;
+      border: 1px solid #1e2c47;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(15px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* header & footer */
+    .exam-header {
+      background: linear-gradient(145deg, #0a121f 0%, #0d1a2f 100%);
+      padding: 2rem 3rem;
+      border-bottom: 3px solid #1f4a8c;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .title-section h1 {
+      font-weight: 600;
+      font-size: 2.2rem;
+      letter-spacing: -0.02em;
+      color: white;
+      margin-bottom: 0.3rem;
+      text-shadow: 0 2px 5px rgba(0,80,200,0.3);
+    }
+
+    .title-section .sub {
+      color: #8fb1e0;
+      font-weight: 500;
+      font-size: 1rem;
+      border-left: 4px solid #1f4a8c;
+      padding-left: 1rem;
+    }
+
+    .info-panel {
+      background: rgba(0, 20, 50, 0.6);
+      backdrop-filter: blur(4px);
+      padding: 1.2rem 2rem;
+      border-radius: 60px;
+      border: 1px solid #1f4a8c;
+      display: flex;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      font-weight: 500;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .info-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      color: #7a93b5;
+      letter-spacing: 0.5px;
+    }
+
+    .info-value {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #c7dcff;
+    }
+
+    .info-value.sbd {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0a253a;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      border: 1px solid #2a5490;
+    }
+
+    /* footer */
+    .exam-footer {
+      background: #0c1422;
+      padding: 1.8rem 3rem;
+      border-top: 1px solid #1e3450;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #5e7ea0;
+      font-size: 0.95rem;
+    }
+
+    .footer-links span {
+      margin-right: 2rem;
+      cursor: default;
+    }
+
+    /* phần nội dung chính */
+    .exam-body {
+      padding: 2.5rem 3rem;
+    }
+
+    /* style cho từng phần */
+    .section {
+      margin-bottom: 3.5rem;
+      border-left: 6px solid #1f4a8c;
+      background: rgba(16, 26, 45, 0.5);
+      border-radius: 0 24px 24px 0;
+      padding: 1.8rem 2rem;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+
+    .section:hover {
+      border-left-width: 8px;
+      border-left-color: #2a6fc9;
+      background: rgba(20, 33, 55, 0.7);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px dashed #1f3a60;
+      padding-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #b6d4ff;
+      letter-spacing: -0.01em;
+    }
+
+    .section-score {
+      background: #1f4a8c;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white;
+    }
+
+    .question-block {
+      margin: 1.8rem 0 1rem 0;
+    }
+
+    .mcq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .mcq-item {
+      background: #0d1729;
+      border: 1px solid #253c5c;
+      border-radius: 18px;
+      padding: 1.5rem 1.3rem;
+      transition: 0.2s;
+    }
+
+    .mcq-item:hover {
+      border-color: #3d6eb0;
+      box-shadow: 0 8px 18px -8px #0a1c33;
+    }
+
+    .mcq-question {
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #d0e2ff;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .mcq-num {
+      color: #4f8cd1;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .mcq-options {
+      list-style: none;
+      font-size: 0.95rem;
+    }
+
+    .mcq-options li {
+      padding: 0.4rem 0 0.4rem 1.8rem;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%233b6cb0" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>') left center no-repeat;
+      background-size: 16px;
+      margin-bottom: 0.2rem;
+    }
+
+    /* code block */
+    .code-block {
+      background: #0b101c;
+      border-radius: 20px;
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      border: 1px solid #1e3b60;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #cbd5e8;
+      margin: 1.2rem 0;
+    }
+
+    .architecture-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .arch-item {
+      background: #101e32;
+      border-radius: 40px;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid #235197;
+      font-weight: 500;
+    }
+
+    .answer-summary {
+      background: #0d1b30;
+      border-radius: 24px;
+      padding: 1.8rem;
+      border: 1px solid #235197;
+      margin-top: 2rem;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      margin: 1rem 0;
+    }
+
+    .answer-item {
+      background: #132235;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      text-align: center;
+      border: 1px solid #23487a;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #1f4a8c, transparent);
+      margin: 2rem 0;
+    }
+
+    /* responsive */
+    @media (max-width: 900px) {
+      .exam-header, .exam-body, .exam-footer {
+        padding: 1.5rem;
+      }
+      .info-panel {
+        gap: 1.5rem;
+        padding: 1rem 1.5rem;
+      }
+      .mcq-grid {
+        grid-template-columns: 1fr;
+      }
+      .answer-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .answer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .section-header {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+
+    /* hiệu ứng phụ */
+    .glow-text {
+      color: #9bc0ff;
+    }
+    .badge {
+      background: #1a344f;
+      border-radius: 30px;
+      padding: 0.2rem 1rem;
+      font-size: 0.9rem;
+      border: 1px solid #325885;
+    }
+  </style>
+</head>
+<body>
+  <div class="exam-container">
+
+    <!-- BODY ĐỀ THI -->
+    <div class="exam-body">
+      <!-- PHẦN I – TRẮC NGHIỆM (20 câu) -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">PHẦN I – TRẮC NGHIỆM</span>
+          <span class="section-score">4,0 điểm (20 × 0,2)</span>
+        </div>
+        <p class="glow-text" style="margin-bottom: 1rem;"><span class="badge">Chủ đề: XSS, SQLi, DDoS, Botnet, Firewall, WAF, IDS/IPS, HTTPS/TLS, Hashing/MFA, OWASP Top 10</span></p>
+        <div class="mcq-grid">
+          <!-- Câu 1 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 1:</span> Kỹ thuật nào sau đây là biện pháp phòng chống XSS hiệu quả nhất?</div><ul class="mcq-options"><li>A. Mã hóa dữ liệu đầu ra (output encoding)</li><li>B. Sử dụng WAF mà không kiểm tra input</li><li>C. Vô hiệu hóa JavaScript trên trình duyệt</li><li>D. Dùng mật khẩu mạnh</li></ul></div>
+          <!-- Câu 2 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 2:</span> Để ngăn chặn SQL Injection, phương án tối ưu là:</div><ul class="mcq-options"><li>A. Lọc từ khóa 'SELECT' trong input</li><li>B. Sử dụng Prepared Statement / tham số hóa</li><li>C. Chỉ dùng mysqli_escape_string</li><li>D. Tắt báo lỗi SQL</li></ul></div>
+          <!-- Câu 3 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 3:</span> Tấn công DDoS tầng ứng dụng (Layer 7) thường nhắm vào:</div><ul class="mcq-options"><li>A. Băng thông mạng</li><li>B. Giao thức TCP SYN</li><li>C. Tài nguyên CPU / database của web server</li><li>D. Định tuyến BGP</li></ul></div>
+          <!-- Câu 4 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 4:</span> Botnet thường được điều khiển thông qua giao thức:</div><ul class="mcq-options"><li>A. SNMP</li><li>B. IRC / HTTP</li><li>C. FTP</li><li>D. ARP</li></ul></div>
+          <!-- Câu 5 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 5:</span> Chức năng chính của WAF (Web Application Firewall) là:</div><ul class="mcq-options"><li>A. Lọc truy cập dựa trên IP</li><li>B. Phân tích và chặn các tấn công web như XSS, SQLi</li><li>C. Mã hóa toàn bộ dữ liệu truyền tải</li><li>D. Cách ly mạng nội bộ</li></ul></div>
+          <!-- Câu 6 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 6:</span> IDS/IPS khác nhau cơ bản ở điểm nào?</div><ul class="mcq-options"><li>A. IDS phát hiện, IPS ngăn chặn chủ động</li><li>B. IDS dùng signature, IPS dùng anomaly</li><li>C. IPS chỉ hoạt động ở tầng mạng</li><li>D. Không có sự khác biệt</li></ul></div>
+          <!-- Câu 7 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 7:</span> Giao thức TLS cung cấp:</div><ul class="mcq-options"><li>A. Xác thực thực thể và mã hóa kênh truyền</li><li>B. Chống DDoS</li><li>C. Quản lý khóa công khai</li><li>D. Lọc gói tin</li></ul></div>
+          <!-- Câu 8 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 8:</span> MFA (xác thực đa yếu tố) giúp giảm thiểu rủi ro từ:</div><ul class="mcq-options"><li>A. Keylogger</li><li>B. Đánh cắp mật khẩu</li><li>C. Tấn công MITM</li><li>D. Tất cả các yếu tố trên đều được hỗ trợ</li></ul></div>
+          <!-- Câu 9 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 9:</span> OWASP Top 10 là tài liệu về:</div><ul class="mcq-options"><li>A. Các lỗ hổng bảo mật web phổ biến</li><li>B. Chuẩn mã hóa dữ liệu</li><li>C. Quy trình kiểm thử xâm nhập</li><li>D. Cấu hình firewall tốt nhất</li></ul></div>
+          <!-- Câu 10 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 10:</span> Hàm băm (hash) được dùng trong bảo mật để:</div><ul class="mcq-options"><li>A. Mã hóa dữ liệu có thể đảo ngược</li><li>B. Lưu trữ mật khẩu an toàn</li><li>C. Tăng tốc độ truy vấn</li><li>D. Nén dữ liệu</li></ul></div>
+          <!-- Câu 11 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 11:</span> Tấn công nào thuộc lớp DDoS tầng 3/4?</div><ul class="mcq-options"><li>A. HTTP Flood</li><li>B. Slowloris</li><li>C. SYN Flood</li><li>D. SQL Injection</li></ul></div>
+          <!-- Câu 12 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 12:</span> Để phát hiện tấn công XSS phản ánh, kỹ thuật hiệu quả là:</div><ul class="mcq-options"><li>A. Giám sát log với từ khóa &lt;script&gt;</li><li>B. Chỉ dùng HTTPS</li><li>C. Vô hiệu hóa cookie</li><li>D. Kiểm tra chữ ký số</li></ul></div>
+          <!-- Câu 13 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 13:</span> Thành phần nào trong kiến trúc phòng thủ có nhiệm vụ giới hạn số request từ một IP?</div><ul class="mcq-options"><li>A. IDS</li><li>B. Load Balancer</li><li>C. Rate Limiter</li><li>D. HSM</li></ul></div>
+          <!-- Câu 14 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 14:</span> Lỗ hổng liên quan đến “thiếu kiểm soát truy cập” nằm trong mục nào của OWASP Top 10?</div><ul class="mcq-options"><li>A. A01:2021 – Broken Access Control</li><li>B. A03:2021 – Injection</li><li>C. A07:2021 – XSS</li><li>D. A09:2021 – Security Logging Failures</li></ul></div>
+          <!-- Câu 15 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 15:</span> Mục đích của việc logging và monitoring là:</div><ul class="mcq-options"><li>A. Tuân thủ pháp lý</li><li>B. Phát hiện bất thường và điều tra sự cố</li><li>C. Giảm tải server</li><li>D. Mã hóa dữ liệu</li></ul></div>
+          <!-- Câu 16 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 16:</span> Chứng chỉ số SSL/TLS giúp xác thực:</div><ul class="mcq-options"><li>A. Máy chủ web</li><li>B. Người dùng</li><li>C. Gói tin IP</li><li>D. Địa chỉ MAC</li></ul></div>
+          <!-- Câu 17 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 17:</span> Để ngăn chặn tấn công Brute Force vào API, nên áp dụng:</div><ul class="mcq-options"><li>A. Captcha + rate-limiting</li><li>B. Tăng kích thước buffer</li><li>C. Sử dụng giao thức UDP</li><li>D. Tường lửa tầng mạng</li></ul></div>
+          <!-- Câu 18 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 18:</span> Loại firewall nào hoạt động ở tầng ứng dụng (Layer 7)?</div><ul class="mcq-options"><li>A. Packet-filtering firewall</li><li>B. Stateful firewall</li><li>C. WAF (Web Application Firewall)</li><li>D. NAT</li></ul></div>
+          <!-- Câu 19 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 19:</span> Yếu tố quan trọng nhất trong bảo vệ dữ liệu lưu trữ là:</div><ul class="mcq-options"><li>A. Mã hóa dữ liệu nhạy cảm</li><li>B. Sao lưu hàng ngày</li><li>C. RAID 5</li><li>D. Mạng riêng ảo</li></ul></div>
+          <!-- Câu 20 -->
+          <div class="mcq-item"><div class="mcq-question"><span class="mcq-num">Câu 20:</span> Biện pháp nào KHÔNG thuộc phòng thủ trước tấn công từ chối dịch vụ?</div><ul class="mcq-options"><li>A. Anycast CDN</li><li>B. Blackhole routing</li><li>C. Tắt các dịch vụ không cần thiết</li><li>D. Sử dụng mật khẩu mạnh</li></ul></div>
+        </div>
+        <p style="text-align: right; margin-top: 1rem; font-style: italic;">(Thí sinh tô đáp án vào phiếu trả lời trắc nghiệm)</p>
+      </section>
+
+      <!-- PHẦN II – Phân tích tình huống bảo mật -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">PHẦN II – PHÂN TÍCH TÌNH HUỐNG</span>
+          <span class="section-score">2,0 điểm</span>
+        </div>
+        <div style="background: #0b1b2e; border-radius: 24px; padding: 2rem;">
+          <p><strong>Bối cảnh:</strong> Công ty XYZ vận hành một website thương mại điện tử (dùng PHP/MySQL) cho phép khách hàng tìm kiếm sản phẩm qua tham số <code>?q=</code> và đăng nhập bằng form. Gần đây, đội ngũ phát hiện log ghi nhận các truy vấn SQL bất thường và cảnh báo từ WAF về tấn công XSS. Ngoài ra, server thường xuyên quá tải vào giờ cao điểm do một lượng lớn request từ nhiều IP khác nhau gửi đến trang tìm kiếm.</p>
+          <p><strong>Yêu cầu:</strong> Phân tích rủi ro theo mô hình CIA (Confidentiality, Integrity, Availability). Chỉ ra ít nhất 3 nguy cơ tương ứng với từng khía cạnh và đề xuất biện pháp giảm thiểu.</p>
+        </div>
+      </section>
+
+      <!-- PHẦN III – Phân tích đoạn code (PHP lỗi) -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">PHẦN III – PHÂN TÍCH MÃ NGUỒN</span>
+          <span class="section-score">2,0 điểm</span>
+        </div>
+        <p>Đoạn code xử lý đăng nhập trong hệ thống cũ:</p>
+        <div class="code-block">
+// Kết nối MySQL (đã có $conn)
+$username = $_POST['username'];
+$password = $_POST['password'];
+$query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+$result = mysqli_query($conn, $query);
+if (mysqli_num_rows($result) > 0) {
+    $_SESSION['user'] = $username;
+    echo "Đăng nhập thành công!";
+} else {
+    echo "Sai tài khoản hoặc mật khẩu";
+}
+        </div>
+        <ol style="margin-left: 2rem; list-style-type: upper-alpha;">
+          <li>Chỉ ra lỗ hổng bảo mật trong đoạn code trên (0,5 điểm).</li>
+          <li>Viết lại đoạn code theo chuẩn an toàn sử dụng Prepared Statement (1,0 điểm).</li>
+          <li>Giải thích nguyên lý phòng chống mà kỹ thuật đó mang lại (0,5 điểm).</li>
+        </ol>
+      </section>
+
+      <!-- PHẦN IV – Thiết kế kiến trúc phòng thủ -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">PHẦN IV – THIẾT KẾ KIẾN TRÚC PHÒNG THỦ</span>
+          <span class="section-score">1,0 điểm</span>
+        </div>
+        <p>Hãy đề xuất kiến trúc bảo mật tổng thể cho một hệ thống gồm: Web Server (Nginx), Database (MySQL), API (RESTful). Yêu cầu trình bày rõ vị trí và vai trò của các thành phần sau (có thể mô tả bằng văn bản hoặc sơ đồ ký tự):</p>
+        <div class="architecture-list">
+          <span class="arch-item">Firewall</span>
+          <span class="arch-item">WAF</span>
+          <span class="arch-item">IDS/IPS</span>
+          <span class="arch-item">Rate limiting</span>
+          <span class="arch-item">Logging & Monitoring</span>
+          <span class="arch-item">Backup</span>
+        </div>
+        <p><em>Mô tả luồng dữ liệu và cách từng thành phần ngăn chặn tấn công.</em></p>
+      </section>
+
+      <!-- PHẦN V – Tự luận chuyên sâu -->
+      <section class="section">
+        <div class="section-header">
+          <span class="section-title">PHẦN V – TỰ LUẬN CHUYÊN SÂU</span>
+          <span class="section-score">1,0 điểm</span>
+        </div>
+        <ol style="margin-left: 1.5rem;">
+          <li>So sánh tấn công DCCC Layer 3/4 và Layer 7 về đặc điểm, mục tiêu và phương pháp phòng thủ.</li>
+          <li>Trình bày cách phát hiện Botnet trong môi trường doanh nghiệp (dấu hiệu, công cụ, phân tích log).</li>
+          <li>Phân tích vai trò của Ethical Hacking (kiểm thử xâm nhập) và trách nhiệm pháp lý của người làm bảo mật.</li>
+        </ol>
+      </section>
+
+      <!-- ĐÁP ÁN TÓM TẮT (CUỐI ĐỀ) -->
+      <hr>
+      <div class="answer-summary">
+        <h3 style="color:#9bbaff; font-weight:600; margin-bottom:1.2rem;">ĐÁP ÁN TÓM TẮT (HƯỚNG DẪN CHẤM)</h3>
+        <p><strong>PHẦN I – Trắc nghiệm:</strong> (mỗi câu 0,2đ)</p>
+        <div class="answer-grid">
+          <div class="answer-item">1.A</div><div class="answer-item">2.B</div><div class="answer-item">3.C</div><div class="answer-item">4.B</div>
+          <div class="answer-item">5.B</div><div class="answer-item">6.A</div><div class="answer-item">7.A</div><div class="answer-item">8.D</div>
+          <div class="answer-item">9.A</div><div class="answer-item">10.B</div><div class="answer-item">11.C</div><div class="answer-item">12.A</div>
+          <div class="answer-item">13.C</div><div class="answer-item">14.A</div><div class="answer-item">15.B</div><div class="answer-item">16.A</div>
+          <div class="answer-item">17.A</div><div class="answer-item">18.C</div><div class="answer-item">19.A</div><div class="answer-item">20.D</div>
+        </div>
+        <p><strong>PHẦN II:</strong> Gợi ý: Mất tính bảo mật (Confidentiality) do SQLi lộ dữ liệu; Toàn vẹn (Integrity) do XSS sửa nội dung; Sẵn sàng (Availability) do DDoS. Giải pháp: prepared statement, CSP, rate-limit, WAF.</p>
+        <p><strong>PHẦN III:</strong> Lỗi SQL Injection; Code an toàn dùng <code>mysqli_prepare</code> + bind_param; Prepared Statement tách biệt câu lệnh và dữ liệu, ngăn chặn injection.</p>
+        <p><strong>PHẦN IV:</strong> Triển khai WAF trước web server, firewall giới hạn port, IDS/IPS giám sát, rate limiting tại gateway, log tập trung (ELK), backup định kỳ.</p>
+        <p><strong>PHẦN V:</strong> Layer 3/4 tấn công băng thông/giao thức (SYN flood) -> phòng thủ bằng anycast, bộ lọc; Layer 7 tấn công tài nguyên ứng dụng -> WAF, rate limit. Phát hiện botnet: phân tích truy cập lạ, DNS request lạ, dùng NetFlow, AI phát hiện C2. Ethical Hacking cần có hợp đồng, phạm vi rõ ràng, tuân thủ pháp luật.</p>
+        <p style="margin-top: 1rem;">— HẾT —</p>
+      </div>
+    </div>
+
+    <!-- FOOTER chuyên nghiệp -->
+    <div class="exam-footer">
+      <div class="footer-links">
+        <span>Anonymous </span>
+      </div>
+      <div>Đề thi có 05 trang • Thí sinh không được sử dụng tài liệu</div>
+    </div>
+  </div>
+</body>
+</html>
