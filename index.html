@@ -1,146 +1,146 @@
 <!DOCTYPE html>
 <html lang="vi">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ôn Thi Tuyển Sinh 10 (2026) - Nguyễn Tấn Tài</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
-
-            body {
-                font-family: 'Inter', sans-serif;
-                background-color: #ffffff;
-                color: #1a1a1a;
-                scroll-behavior: smooth;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Thi Tuyển Sinh 10 (2026) - Nguyễn Tấn Tài</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            scroll-behavior: smooth;
+        }
+        .question-card {
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .option-item {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            border-radius: 12px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid #f3f4f6;
+            margin-bottom: 0.75rem;
+        }
+        .option-circle {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+        .is-correct {
+            background-color: #f0fdf4 !important;
+            border-color: #22c55e !important;
+            color: #166534 !important;
+        }
+        .is-correct .option-circle {
+            background-color: #22c55e;
+            border-color: #22c55e;
+            color: white;
+        }
+        .is-wrong {
+            background-color: #fef2f2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b !important;
+        }
+        .is-wrong .option-circle {
+            background-color: #ef4444;
+            border-color: #ef4444;
+            color: white;
+        }
+        .option-item:hover:not(.locked) {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+        .locked {
+            cursor: default;
+            pointer-events: none;
+        }
+        .menu-card {
+            border: 3px solid #000;
+            padding: 30px;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+            position: relative;
+        }
+        .menu-card:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 10px 10px 0px #000;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        /* animation cho phần giải thích */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slideDown {
+            animation: slideDown 0.3s ease-out;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
             }
-
             .question-card {
-                border-bottom: 2px solid #f3f4f6;
-                padding-bottom: 2.5rem;
-                margin-bottom: 2.5rem;
+                page-break-inside: avoid;
+                border-bottom: 1px solid #ccc;
             }
+        }
+    </style>
+</head>
+<body class="antialiased">
 
-            .option-item {
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                padding: 14px 18px;
-                border-radius: 12px;
-                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-                border: 2px solid #f3f4f6;
-                margin-bottom: 0.75rem;
-            }
-
-            .option-circle {
-                width: 30px;
-                height: 30px;
-                border: 2px solid #d1d5db;
-                border-radius: 50%;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 14px;
-                font-size: 14px;
-                font-weight: 800;
-                flex-shrink: 0;
-            }
-
-            .is-correct {
-                background-color: #f0fdf4 !important;
-                border-color: #22c55e !important;
-                color: #166534 !important;
-            }
-            .is-correct .option-circle {
-                background-color: #22c55e;
-                border-color: #22c55e;
-                color: white;
-            }
-
-            .is-wrong {
-                background-color: #fef2f2 !important;
-                border-color: #ef4444 !important;
-                color: #991b1b !important;
-            }
-            .is-wrong .option-circle {
-                background-color: #ef4444;
-                border-color: #ef4444;
-                color: white;
-            }
-
-            .option-item:hover:not(.locked) {
-                border-color: #2563eb;
-                background-color: #eff6ff;
-            }
-            .locked {
-                cursor: default;
-                pointer-events: none;
-            }
-
-            .menu-card {
-                border: 3px solid #000;
-                padding: 30px;
-                transition: all 0.3s ease;
-                background: white;
-                cursor: pointer;
-                position: relative;
-            }
-            .menu-card:hover {
-                transform: translate(-6px, -6px);
-                box-shadow: 10px 10px 0px #000;
-            }
-
-            .badge {
-                display: inline-block;
-                padding: 4px 12px;
-                border-radius: 6px;
-                font-size: 11px;
-                font-weight: 800;
-                text-transform: uppercase;
-                margin-bottom: 12px;
-            }
-
-            @media print {
-                .no-print {
-                    display: none !important;
-                }
-                .question-card {
-                    page-break-inside: avoid;
-                    border-bottom: 1px solid #ccc;
-                }
-            }
-        </style>
-    </head>
-    <body class="antialiased">
-
-        <!-- Navbar -->
-        <nav class="no-print sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-gray-100 z-50 px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-black text-white p-2 rounded-xl">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2v20m-7-15 14 10M5 17l14-10"/></svg>
-                </div>
-                <div>
-                    <span class="font-black text-xl block leading-tight tracking-tight">TOÁN 10 <span class="text-blue-600">AI</span></span>
-                    <span class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Tuyển sinh 2026-2027</span>
-                </div>
+    <!-- Navbar -->
+    <nav class="no-print sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-gray-100 z-50 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="bg-black text-white p-2 rounded-xl">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2v20m-7-15 14 10M5 17l14-10"/></svg>
             </div>
-            <div class="flex items-center space-x-3">
-                <button id="backToMenu" class="hidden text-xs font-black px-6 py-2.5 border-2 border-black hover:bg-black hover:text-white transition-all uppercase" onclick="showMainMenu()">Menu</button>
-                <button onclick="window.print()" class="p-2.5 bg-gray-50 hover:bg-gray-200 rounded-xl transition-all" title="In đề thi">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-2 4H8v-4h8v4z"/></svg>
-                </button>
+            <div>
+                <span class="font-black text-xl block leading-tight tracking-tight">TOÁN 10 <span class="text-blue-600">AI</span></span>
+                <span class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Tuyển sinh 2026-2027</span>
             </div>
-        </nav>
-   <main class="max-w-5xl mx-auto px-6 py-10">
-        <!-- Main Menu Section -->
+        </div>
+        <div class="flex items-center space-x-3">
+            <button id="backToMenu" class="hidden text-xs font-black px-6 py-2.5 border-2 border-black hover:bg-black hover:text-white transition-all uppercase" onclick="showMainMenu()">Menu</button>
+            <button onclick="window.print()" class="p-2.5 bg-gray-50 hover:bg-gray-200 rounded-xl transition-all" title="In đề thi">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-2 4H8v-4h8v4z"/></svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 py-10">
+        <!-- MAIN MENU (bao gồm cả ghi chú & footer) -->
         <div id="mainMenu">
             <div class="text-center mb-10">
                 <h1 class="text-5xl font-black mb-4 tracking-tighter italic">Hệ Thống Ôn Thi Thông Minh</h1>
                 <p class="text-xl text-gray-500 font-medium tracking-tight">Phát triển bởi Nguyễn Tấn Tài</p>
             </div>
 
+            <!-- Grid chức năng -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                <!-- Chức năng 1 -->
+                <!-- 1. Giải PT & HPT -->
                 <div class="menu-card" onclick="window.location.href = 'code1.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Giải Phương Trình & Hệ Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-blue-500 font-bold tracking-widest">Đại số cơ bản</div>
@@ -151,8 +151,7 @@
                         <p>• Phương trình quy về bậc hai</p>
                     </div>
                 </div>
-
-                <!-- Chức năng 2 -->
+                <!-- 2. Đồ thị hàm số y = ax² -->
                 <div class="menu-card" onclick="window.location.href = 'code2.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Đồ Thị Hàm Số y = ax²</div>
                     <div class="text-sm mb-4 font-mono text-purple-500 font-bold tracking-widest">Hàm số bậc hai</div>
@@ -163,8 +162,7 @@
                         <p>• Bài toán thực tế về parabol</p>
                     </div>
                 </div>
-
-                <!-- Chức năng 3 -->
+                <!-- 3. Bất đẳng thức & Bất PT -->
                 <div class="menu-card" onclick="window.location.href = 'code3.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Bất Đẳng Thức & Bất Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-green-500 font-bold tracking-widest">Đại số nâng cao</div>
@@ -175,32 +173,29 @@
                         <p>• Phương pháp khoảng, bảng xét dấu</p>
                     </div>
                 </div>
-                
-                <!-- Chức năng 4 -->
+                <!-- 4. HÌNH HỌC (sửa lại class) -->
                 <div class="menu-card" onclick="window.location.href = 'code5.html'">
-                    <div class="title">HÌNH HỌC</div>
-                    <div class="subtitle" style="color: #f97316;">hình học căn bản</div>
-                    <div class="desc">
-                        • Tam giác (đồng dạng, vuông, cân)<br>
-                        • Đường tròn (tiếp tuyến, cung, góc nội tiếp)<br>
-                        • Hệ thức lượng trong tam giác vuông<br>
-                        • Chứng minh hình học
+                    <div class="text-xl font-bold mb-2 text-black uppercase">Hình Học</div>
+                    <div class="text-sm mb-4 font-mono text-orange-500 font-bold tracking-widest">hình học căn bản</div>
+                    <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
+                        <p>• Tam giác (đồng dạng, vuông, cân)</p>
+                        <p>• Đường tròn (tiếp tuyến, cung, góc nội tiếp)</p>
+                        <p>• Hệ thức lượng trong tam giác vuông</p>
+                        <p>• Chứng minh hình học</p>
                     </div>
                 </div>
-                
-                <!-- Chức năng 5 -->
+                <!-- 5. THỐNG KÊ VÀ XÁC SUẤT (sửa lại class) -->
                 <div class="menu-card" onclick="window.location.href = 'code6.html'">
-                    <div class="title">THỐNG KÊ VÀ XÁC SUẤT</div>
-                    <div class="subtitle" style="color: #10b981;">Thống kê và xác suất cơ bản</div>
-                    <div class="desc">
-                        • Các số đặc trưng mẫu số liệu<br>
-                        • Quy tắc cộng, nhân, tổ hợp<br>
-                        • Tính xác suất cơ bản<br>
-                        &nbsp;
+                    <div class="text-xl font-bold mb-2 text-black uppercase">Thống Kê & Xác Suất</div>
+                    <div class="text-sm mb-4 font-mono text-emerald-500 font-bold tracking-widest">Thống kê và xác suất cơ bản</div>
+                    <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
+                        <p>• Các số đặc trưng mẫu số liệu</p>
+                        <p>• Quy tắc cộng, nhân, tổ hợp</p>
+                        <p>• Tính xác suất cơ bản</p>
+                        <p>• Biểu đồ, bảng tần số</p>
                     </div>
                 </div>
-                
-                <!-- Chức năng 6 (AI) -->
+                <!-- 6. AI Gemini (Luyện đề) -->
                 <div class="menu-card" onclick="startExam()">
                     <div class="text-xl font-bold mb-2 text-blue-600 uppercase">AI Gemini</div>
                     <div class="text-sm mb-4 font-mono text-red-500 font-bold tracking-widest">Luyện đề vào lớp 10</div>
@@ -212,83 +207,86 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Ghi chú quan trọng + footer (nằm trong mainMenu) -->
+            <div class="bg-gray-50 border-2 border-black p-8 rounded-2xl">
+                <h2 class="text-2xl font-black mb-8 border-b-2 border-black pb-4 flex items-center uppercase italic">
+                    <svg class="mr-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                    Ghi chú quan trọng
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-blue-600 font-black text-sm mb-3 uppercase tracking-wider">1. Đại số 10</div>
+                        <div class="text-xs text-gray-600 space-y-2 font-medium">
+                            <p>• Tam thức bậc hai</p>
+                            <p>• Bất phương trình bậc hai</p>
+                            <p>• Phương trình quy về bậc hai</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-purple-600 font-black text-sm mb-3 uppercase tracking-wider">2. Hình học 10</div>
+                        <div class="text-xs text-gray-600 space-y-2 font-medium">
+                            <p>• Hệ thức lượng trong tam giác</p>
+                            <p>• Vectơ và các phép toán</p>
+                            <p>• Tọa độ trong mặt phẳng Oxy</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-red-600 font-black text-sm mb-3 uppercase tracking-wider">3. Thống kê & XS</div>
+                        <div class="text-xs text-gray-600 space-y-2 font-medium">
+                            <p>• Các số đặc trưng mẫu số liệu</p>
+                            <p>• Quy tắc cộng, nhân, tổ hợp</p>
+                            <p>• Tính xác suất cơ bản</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <div class="text-xs font-black uppercase tracking-[0.3em] text-gray-300 mb-2">Hệ thống phát triển bởi</div>
+                <div class="text-lg font-black italic">NGUYỄN TẤN TÀI</div>
+                <div class="mt-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">© 2026 - Công cụ hỗ trợ ôn tập Toán học Việt Nam</div>
+            </div>
+        </div> <!-- end mainMenu -->
+
+        <!-- EXAM SECTION (ẩn ban đầu) -->
+        <div id="examSection" class="hidden">
+            <div id="introHeader" class="text-center py-20 border-4 border-dashed border-gray-200 rounded-3xl mb-10">
+                <div class="mb-6 inline-block p-4 bg-blue-50 text-blue-600 rounded-full">
+                    <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h2 class="text-4xl font-black mb-4 tracking-tighter uppercase">Sẵn sàng luyện đề?</h2>
+                <p class="text-gray-500 mb-8 font-medium">AI sẽ biên soạn ngẫu nhiên 50 câu hỏi bám sát cấu trúc ôn tập 2026 của bạn.</p>
+                <button id="generateBtn" class="bg-black text-white px-12 py-5 rounded-2xl font-black hover:scale-105 transition-all shadow-2xl active:scale-95 text-lg uppercase tracking-widest">
+                    <span id="btnText">Bắt đầu ngay</span>
+                </button>
+            </div>
+            <div id="editor" class="max-w-3xl mx-auto"></div>
         </div>
     </main>
-                <!-- Hướng dẫn nhanh / Ma trận -->
-                <div class="bg-gray-50 border-2 border-black p-8 rounded-2xl">
-                    <h2 class="text-2xl font-black mb-8 border-b-2 border-black pb-4 flex items-center uppercase italic">
-                        <svg class="mr-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-                        Ghi chú quan trọng
-                    </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div>
-                            <div class="text-blue-600 font-black text-sm mb-3 uppercase tracking-wider">1. Đại số 10</div>
-                            <div class="text-xs text-gray-600 space-y-2 font-medium">
-                                <p>• Tam thức bậc hai</p>
-                                <p>• Bất phương trình bậc hai</p>
-                                <p>• Phương trình quy về bậc hai</p>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-purple-600 font-black text-sm mb-3 uppercase tracking-wider">2. Hình học 10</div>
-                            <div class="text-xs text-gray-600 space-y-2 font-medium">
-                                <p>• Hệ thức lượng trong tam giác</p>
-                                <p>• Vectơ và các phép toán</p>
-                                <p>• Tọa độ trong mặt phẳng Oxy</p>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="text-red-600 font-black text-sm mb-3 uppercase tracking-wider">3. Thống kê & XS</div>
-                            <div class="text-xs text-gray-600 space-y-2 font-medium">
-                                <p>• Các số đặc trưng mẫu số liệu</p>
-                                <p>• Quy tắc cộng, nhân, tổ hợp</p>
-                                <p>• Tính xác suất cơ bản</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="mt-16 text-center">
-                    <div class="text-xs font-black uppercase tracking-[0.3em] text-gray-300 mb-2">Hệ thống phát triển bởi</div>
-                    <div class="text-lg font-black italic">NGUYỄN TẤN TÀI</div>
-                    <div class="mt-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">© 2026 - Công cụ hỗ trợ ôn tập Toán học Việt Nam</div>
-                </div>
-            </div>
-
-            <!-- Exam Section -->
-            <div id="examSection" class="hidden">
-                <div id="introHeader" class="text-center py-20 border-4 border-dashed border-gray-200 rounded-3xl mb-10">
-                    <div class="mb-6 inline-block p-4 bg-blue-50 text-blue-600 rounded-full">
-                        <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                    </div>
-                    <h2 class="text-4xl font-black mb-4 tracking-tighter uppercase">Sẵn sàng luyện đề?</h2>
-                    <p class="text-gray-500 mb-8 font-medium">AI sẽ biên soạn ngẫu nhiên 50 câu hỏi bám sát cấu trúc ôn tập 2026 của bạn.</p>
-                    <button id="generateBtn" class="bg-black text-white px-12 py-5 rounded-2xl font-black hover:scale-105 transition-all shadow-2xl active:scale-95 text-lg uppercase tracking-widest">
-                        <span id="btnText">Bắt đầu ngay</span>
-                    </button>
-                </div>
-                <div id="editor" class="max-w-3xl mx-auto"></div>
-            </div>
-        </main>
-
-        <!-- Loading Screen -->
-        <div id="loadingOverlay" class="hidden fixed inset-0 bg-white/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-center">
-            <div class="relative mb-8">
-                <div class="w-24 h-24 border-[10px] border-gray-100 border-t-black rounded-full animate-spin"></div>
-                <div class="absolute inset-0 flex items-center justify-center font-black text-xs uppercase">AI</div>
-            </div>
-            <p class="font-black text-2xl tracking-tighter uppercase italic">Đang biên soạn ma trận 50 câu...</p>
-            <p class="text-gray-400 mt-2 font-medium">Bản quyền 2026 - Nguyễn Tấn Tài</p>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-white/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-center">
+        <div class="relative mb-8">
+            <div class="w-24 h-24 border-[10px] border-gray-100 border-t-black rounded-full animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center font-black text-xs uppercase">AI</div>
         </div>
+        <p class="font-black text-2xl tracking-tighter uppercase italic">Đang biên soạn ma trận 50 câu...</p>
+        <p class="text-gray-400 mt-2 font-medium">Bản quyền 2026 - Nguyễn Tấn Tài</p>
+    </div>
 
-        <script>
-            const apiKey = "AIzaSyCbxAyipoZt0hhYQ28l2oh7KnMvUkYV9Mc";
+    <script>
+        // Cấu hình API – thay model bằng phiên bản ổn định
+        const apiKey = "AIzaSyCbxAyipoZt0hhYQ28l2oh7KnMvUkYV9Mc";
+        // Sử dụng gemini-1.5-flash (nhanh, ổn định) thay vì preview
+        const modelName = "gemini-1.5-flash";
 
-            const generateBtn = document.getElementById('generateBtn');
-            const editor = document.getElementById('editor');
-            const loadingOverlay = document.getElementById('loadingOverlay');
+        const generateBtn = document.getElementById('generateBtn');
+        const editor = document.getElementById('editor');
+        const loadingOverlay = document.getElementById('loadingOverlay');
 
-            const SYSTEM_PROMPT = `Hãy tạo khác nhau đề thi tuyển sinh lớp 10 môn Toán theo đúng ma trận cấu trúc sau:
+        // System prompt giữ nguyên (đã được tối ưu)
+        const SYSTEM_PROMPT = `Hãy tạo khác nhau đề thi tuyển sinh lớp 10 môn Toán theo đúng ma trận cấu trúc sau:
 
 Tổng số câu: 50 câu
 Tổng điểm: 10 điểm
@@ -352,128 +350,136 @@ Câu hỏi rõ ràng, đúng chương trình lớp 9
 Không ghi đáp án
 
 Xuất mỗi đề theo định dạng:
-            ĐỊNH DẠNG PHẢN HỒI: Chỉ trả về duy nhất mã JSON theo cấu trúc:
-            { "exam": [ { "q": "Câu hỏi số x: [Nội dung]", "options": ["A", "B", "C", "D"], "correct": 0, "explain": "Giải thích chi tiết" } ] }`;
+ĐỊNH DẠNG PHẢN HỒI: Chỉ trả về duy nhất mã JSON theo cấu trúc:
+{ "exam": [ { "q": "Câu hỏi số x: [Nội dung]", "options": ["A", "B", "C", "D"], "correct": 0, "explain": "Giải thích chi tiết" } ] }`;
 
-            function startExam() {
-                document.getElementById('mainMenu').classList.add('hidden');
-                document.getElementById('examSection').classList.remove('hidden');
-                document.getElementById('backToMenu').classList.remove('hidden');
-                window.scrollTo(0, 0);
-            }
+        function startExam() {
+            document.getElementById('mainMenu').classList.add('hidden');
+            document.getElementById('examSection').classList.remove('hidden');
+            document.getElementById('backToMenu').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
 
-            function showMainMenu() {
-                document.getElementById('mainMenu').classList.remove('hidden');
-                document.getElementById('examSection').classList.add('hidden');
-                document.getElementById('backToMenu').classList.add('hidden');
-                window.scrollTo(0, 0);
-            }
+        function showMainMenu() {
+            document.getElementById('mainMenu').classList.remove('hidden');
+            document.getElementById('examSection').classList.add('hidden');
+            document.getElementById('backToMenu').classList.add('hidden');
+            // Reset editor và introHeader nếu cần
+            editor.innerHTML = '';
+            document.getElementById('introHeader').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
 
-            async function fetchExam() {
-                let retryCount = 0;
-                const maxRetries = 5;
+        async function fetchExam() {
+            let retryCount = 0;
+            const maxRetries = 3;
 
-                async function attemptFetch() {
-                    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            contents: [{parts: [{text: "Hãy soạn 50 câu hỏi trắc nghiệm Toán 10 tổng hợp cho kỳ thi tuyển sinh 2026."}]}],
-                            systemInstruction: {parts: [{text: SYSTEM_PROMPT}]},
-                            generationConfig: {
-                                responseMimeType: "application/json",
-                                temperature: 0.85
-                            }
-                        })
-                    });
-
-                    if (!response.ok)
-                        throw new Error('API Error');
-                    const data = await response.json();
-                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-                    return JSON.parse(text);
-                }
-
-                while (retryCount < maxRetries) {
-                    try {
-                        return await attemptFetch();
-                    } catch (e) {
-                        retryCount++;
-                        const waitTime = Math.pow(2, retryCount) * 1000;
-                        await new Promise(r => setTimeout(r, waitTime));
-                    }
-                }
-                throw new Error('Failed after retries');
-            }
-
-            generateBtn.addEventListener('click', async () => {
-                loadingOverlay.classList.remove('hidden');
-                try {
-                    const data = await fetchExam();
-                    renderExam(data.exam);
-                    document.getElementById('introHeader').classList.add('hidden');
-                } catch (error) {
-                    alert("Lỗi kết nối AI. Hãy chắc chắn API Key hợp lệ và kết nối mạng ổn định.");
-                } finally {
-                    loadingOverlay.classList.add('hidden');
-                }
-            });
-
-            function renderExam(questions) {
-                editor.innerHTML = '';
-                questions.forEach((item, index) => {
-                    const card = document.createElement('div');
-                    card.className = "question-card";
-                    card.dataset.correct = item.correct;
-
-                    const optionsHtml = item.options.map((opt, i) => `
-                        <div class="option-item" onclick="checkAnswer(this, ${i}, ${index})">
-                            <span class="option-circle">${String.fromCharCode(65 + i)}</span>
-                            <span class="font-bold text-gray-700">${opt}</span>
-                        </div>
-                    `).join('');
-
-                    card.innerHTML = `
-                        <div class="mb-6">
-                            <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-lg mb-4 uppercase tracking-widest">Câu hỏi ${index + 1}</span>
-                            <h3 class="text-2xl font-black leading-tight text-gray-900">${item.q}</h3>
-                        </div>
-                        <div class="grid grid-cols-1 gap-2">${optionsHtml}</div>
-                        <div id="explain-${index}" class="hidden mt-6 animate-slideDown">
-                            <div class="bg-gray-50 p-6 rounded-2xl border-2 border-blue-100">
-                                <div class="flex items-center space-x-2 mb-3 text-blue-600 font-black text-xs uppercase">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                    <span>Phân tích đáp án</span>
-                                </div>
-                                <div class="text-gray-600 font-medium leading-relaxed">${item.explain}</div>
-                            </div>
-                        </div>
-                    `;
-                    editor.appendChild(card);
+            async function attemptFetch() {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        contents: [{parts: [{text: "Hãy soạn 50 câu hỏi trắc nghiệm Toán 10 tổng hợp cho kỳ thi tuyển sinh 2026."}]}],
+                        systemInstruction: {parts: [{text: SYSTEM_PROMPT}]},
+                        generationConfig: {
+                            responseMimeType: "application/json",
+                            temperature: 0.85,
+                            maxOutputTokens: 8192
+                        }
+                    })
                 });
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            }
 
-            window.checkAnswer = function (element, selectedIdx, qIdx) {
-                const card = element.closest('.question-card');
-                if (card.classList.contains('answered'))
-                    return;
-
-                const correctIdx = parseInt(card.dataset.correct);
-                const options = card.querySelectorAll('.option-item');
-
-                card.classList.add('answered');
-                options.forEach(opt => opt.classList.add('locked'));
-
-                if (selectedIdx === correctIdx) {
-                    element.classList.add('is-correct');
-                } else {
-                    element.classList.add('is-wrong');
-                    options[correctIdx].classList.add('is-correct');
+                if (!response.ok) {
+                    const errText = await response.text();
+                    throw new Error(`API Error: ${response.status} ${errText}`);
                 }
-
-                document.getElementById(`explain-${qIdx}`).classList.remove('hidden');
+                const data = await response.json();
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!text) throw new Error('No content from API');
+                return JSON.parse(text);
             }
-        </script>
-    </body>
+
+            while (retryCount < maxRetries) {
+                try {
+                    return await attemptFetch();
+                } catch (e) {
+                    retryCount++;
+                    console.warn(`Attempt ${retryCount} failed:`, e);
+                    const waitTime = Math.pow(2, retryCount) * 1000;
+                    await new Promise(r => setTimeout(r, waitTime));
+                }
+            }
+            throw new Error('Không thể tạo đề sau nhiều lần thử. Vui lòng kiểm tra API key hoặc kết nối.');
+        }
+
+        generateBtn.addEventListener('click', async () => {
+            loadingOverlay.classList.remove('hidden');
+            try {
+                const data = await fetchExam();
+                renderExam(data.exam);
+                document.getElementById('introHeader').classList.add('hidden');
+            } catch (error) {
+                alert("Lỗi: " + error.message);
+                console.error(error);
+            } finally {
+                loadingOverlay.classList.add('hidden');
+            }
+        });
+
+        function renderExam(questions) {
+            editor.innerHTML = '';
+            questions.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = "question-card";
+                card.dataset.correct = item.correct;
+
+                const optionsHtml = item.options.map((opt, i) => `
+                    <div class="option-item" onclick="checkAnswer(this, ${i}, ${index})">
+                        <span class="option-circle">${String.fromCharCode(65 + i)}</span>
+                        <span class="font-bold text-gray-700">${opt}</span>
+                    </div>
+                `).join('');
+
+                card.innerHTML = `
+                    <div class="mb-6">
+                        <span class="inline-block bg-blue-600 text-white text-[10px] font-black px-4 py-1.5 rounded-lg mb-4 uppercase tracking-widest">Câu hỏi ${index + 1}</span>
+                        <h3 class="text-2xl font-black leading-tight text-gray-900">${item.q}</h3>
+                    </div>
+                    <div class="grid grid-cols-1 gap-2">${optionsHtml}</div>
+                    <div id="explain-${index}" class="hidden mt-6 animate-slideDown">
+                        <div class="bg-gray-50 p-6 rounded-2xl border-2 border-blue-100">
+                            <div class="flex items-center space-x-2 mb-3 text-blue-600 font-black text-xs uppercase">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <span>Phân tích đáp án</span>
+                            </div>
+                            <div class="text-gray-600 font-medium leading-relaxed">${item.explain}</div>
+                        </div>
+                    </div>
+                `;
+                editor.appendChild(card);
+            });
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        window.checkAnswer = function (element, selectedIdx, qIdx) {
+            const card = element.closest('.question-card');
+            if (card.classList.contains('answered')) return;
+
+            const correctIdx = parseInt(card.dataset.correct);
+            const options = card.querySelectorAll('.option-item');
+
+            card.classList.add('answered');
+            options.forEach(opt => opt.classList.add('locked'));
+
+            if (selectedIdx === correctIdx) {
+                element.classList.add('is-correct');
+            } else {
+                element.classList.add('is-wrong');
+                options[correctIdx].classList.add('is-correct');
+            }
+
+            document.getElementById(`explain-${qIdx}`).classList.remove('hidden');
+        };
+    </script>
+</body>
 </html>
