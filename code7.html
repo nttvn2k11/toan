@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phương trình bậc hai ngẫu nhiên (tham số m)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #f2f4f8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 750px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            padding: 32px 30px;
+            border: 1px solid #e6eaf0;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            color: #1e293b;
+            text-align: center;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        .sub {
+            text-align: center;
+            color: #475569;
+            margin-bottom: 30px;
+            font-style: italic;
+            border-bottom: 1px solid #e0e6ed;
+            padding-bottom: 18px;
+        }
+        .random-btn {
+            background: #1e2b37;
+            color: white;
+            border: none;
+            padding: 18px 32px;
+            width: 100%;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 10px 0 30px;
+            transition: background 0.2s, transform 0.1s;
+            letter-spacing: 0.5px;
+        }
+        .random-btn:hover {
+            background: #0f1a24;
+        }
+        .random-btn:active {
+            transform: scale(0.98);
+        }
+        .result {
+            background: #f8fafc;
+            border-radius: 26px;
+            padding: 26px;
+            border-left: 6px solid #1e2b37;
+        }
+        .step {
+            background: white;
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+            border: 1px solid #edf2f7;
+        }
+        .step strong {
+            color: #144272;
+            display: inline-block;
+            min-width: 120px;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+        .math {
+            font-family: 'Courier New', monospace;
+            background: #eef2f7;
+            padding: 5px 16px;
+            border-radius: 30px;
+            font-size: 1.15rem;
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .error-message {
+            color: #b91c1c;
+            background: #ffe6e6;
+            padding: 16px 20px;
+            border-radius: 20px;
+        }
+        .info-box {
+            background: #ecf1f7;
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin-top: 22px;
+            font-size: 0.95rem;
+            color: #253545;
+            line-height: 1.6;
+        }
+        .info-box code {
+            background: #d7e0e9;
+            padding: 4px 10px;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+        hr {
+            border: none;
+            border-top: 1px dashed #cbd5e1;
+            margin: 25px 0 15px;
+        }
+        .footer {
+            color: #5f6c80;
+            font-size: 0.9rem;
+            text-align: right;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PHƯƠNG TRÌNH BẬC HAI</h1>
+        <div class="sub">Ngẫu nhiên tham số m • Định lý Vi-ét (từng bước)</div>
+
+        <!-- Nút tạo ngẫu nhiên -->
+        <button class="random-btn" id="randomBtn">Tạo đề ngẫu nhiên</button>
+
+        <!-- Khu vực hiển thị kết quả -->
+        <div id="resultArea" class="result">
+            <div class="step" style="color: #475569;">
+                Nhấn nút bên trên để tạo một phương trình ngẫu nhiên.
+        </div>
+
+        <!-- Ghi chú về cách thức -->
+        <hr>
+        <div class="info-box">
+            <p><strong>Chú thích:</strong></p>
+            <p>• Giá trị <code>m</code> được chọn ngẫu nhiên trong khoảng [-5, 5].</p>
+            <p>• Biểu thức <code>a(m)</code>, <code>b(m)</code>, <code>c(m)</code> được lấy ngẫu nhiên từ các dạng cơ bản, đảm bảo <code>a ≠ 0</code> sau khi thay m.</p>
+            <p>• Các bước giải hiển thị chi tiết công thức và kết quả số (làm tròn 4 chữ số).</p>
+            <p>• Định lý Vi‑ét: <strong>S = –b/a</strong> (tổng), <strong>P = c/a</strong> (tích).</p>
+        </div>
+        <div class="footer">
+            Hoàn toàn ngẫu nhiên – không nhập liệu
+        </div>
+    </div>
+
+    <script>
+        // ---------- HÀM TÍNH BIỂU THỨC VỚI m ----------
+        function evalExpr(expr, mVal) {
+            // Thay ^ bằng ** (lũy thừa JavaScript)
+            let prepared = expr.replace(/\^/g, '**');
+            // Thay m bằng giá trị (đặt trong ngoặc)
+            prepared = prepared.replace(/m/g, `(${mVal})`);
+            try {
+                const fn = new Function(`return (${prepared})`);
+                const result = fn();
+                if (typeof result !== 'number' || isNaN(result) || !isFinite(result)) return null;
+                return result;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // ---------- SINH BIỂU THỨC NGẪU NHIÊN CHO a, b, c ----------
+        // Các dạng biểu thức đơn giản, đảm bảo khi thay m có thể ≠ 0
+        const exprTemplates = [
+            'm', 'm+1', 'm-1', '2*m', '-m', '-m+2', '2*m+1', '3*m-2',
+            'm^2', 'm^2+1', 'm^2-1', '2*m^2', '-m^2', 'm+3', '5-m',
+            'm/2', '(m+1)/2', '-(m+2)', '4', '-3', '2', '-1', '1', '0.5*m'
+        ];
+
+        // Lấy ngẫu nhiên một phần tử từ mảng
+        function randomItem(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        // Sinh ngẫu nhiên m (số thực) trong khoảng [min, max] (1 số lẻ)
+        function randomM(min = -5, max = 5) {
+            return Math.round((Math.random() * (max - min) + min) * 10) / 10;
+        }
+
+        // Hàm tạo bộ (aExpr, bExpr, cExpr, m) sao cho a ≠ 0
+        function generateRandomProblem() {
+            const MAX_TRIES = 50;
+            for (let tries = 0; tries < MAX_TRIES; tries++) {
+                const m = randomM();
+                const aExpr = randomItem(exprTemplates);
+                const bExpr = randomItem(exprTemplates);
+                const cExpr = randomItem(exprTemplates);
+
+                const a = evalExpr(aExpr, m);
+                // Đảm bảo a hợp lệ và khác 0
+                if (a === null || Math.abs(a) < 1e-12) continue;
+
+                const b = evalExpr(bExpr, m);
+                const c = evalExpr(cExpr, m);
+                if (b === null || c === null) continue;
+
+                // Nếu cả 3 đều hợp lệ thì trả về
+                return { aExpr, bExpr, cExpr, m, a, b, c };
+            }
+            // Nếu không tìm được (hiếm), trả về mặc định
+            return {
+                aExpr: 'm+1', bExpr: '-(m+1)', cExpr: 'm',
+                m: 2, a: 3, b: -3, c: 2
+            };
+        }
+
+        // ---------- HIỂN THỊ KẾT QUẢ CHI TIẾT ----------
+        function renderProblem(problem) {
+            const { aExpr, bExpr, cExpr, m, a, b, c } = problem;
+            let html = '';
+
+            // Bước 0: Thông tin đề bài
+            html += `<div class="step"><strong>Đề bài:</strong> Cho phương trình: <br>`;
+            html += `a(m) = ${aExpr} , b(m) = ${bExpr} , c(m) = ${cExpr} <br>`;
+            html += `Với m = <strong>${m}</strong></div>`;
+
+            // Bước 1: Thay m và phương trình cụ thể
+            let eqStr = `${a} x² ${b >= 0 ? '+ ' + b : '- ' + Math.abs(b)} x ${c >= 0 ? '+ ' + c : '- ' + Math.abs(c)} = 0`;
+            html += `<div class="step"><strong>Bước 1:</strong> Thay m = ${m} →<br> a = ${a}, b = ${b}, c = ${c}<br> Phương trình: ${eqStr}</div>`;
+
+            // Kiểm tra a = 0 (phòng ngừa)
+            if (Math.abs(a) < 1e-12) {
+                html += `<div class="error-message">Hệ số a quá nhỏ (gần 0), không phải phương trình bậc hai.</div>`;
+                return html;
+            }
+
+            // Bước 2: Tính delta
+            let delta = b * b - 4 * a * c;
+            html += `<div class="step"><strong>Bước 2:</strong> Δ = b² – 4ac = ${b}² – 4·${a}·${c} = ${delta.toFixed(6)}</div>`;
+
+            // Bước 3: Xét nghiệm
+            if (delta < 0) {
+                html += `<div class="step"><strong>Bước 3:</strong> Δ < 0 → Phương trình vô nghiệm thực.</div>`;
+                html += `<div class="step"><strong>Định lý Vi-ét:</strong> Không áp dụng (không có nghiệm thực).</div>`;
+            } else if (delta === 0) {
+                let x = -b / (2 * a);
+                html += `<div class="step"><strong>Bước 3:</strong> Δ = 0 → nghiệm kép:<br>`;
+                html += `x₁ = x₂ = –b/(2a) = ${x.toFixed(4)}</div>`;
+                let S = -b / a;
+                let P = c / a;
+                html += `<div class="step"><strong>Định lý Vi-ét:</strong> S = –b/a = ${S.toFixed(4)} , P = c/a = ${P.toFixed(4)}</div>`;
+            } else {
+                let sqrtDelta = Math.sqrt(delta);
+                let x1 = (-b - sqrtDelta) / (2 * a);
+                let x2 = (-b + sqrtDelta) / (2 * a);
+                html += `<div class="step"><strong>Bước 3:</strong> Δ > 0 → hai nghiệm phân biệt:<br>`;
+                html += `x₁ = [–b – √Δ] / (2a) = ${x1.toFixed(4)} <br>`;
+                html += `x₂ = [–b + √Δ] / (2a) = ${x2.toFixed(4)}</div>`;
+                let S = -b / a;
+                let P = c / a;
+                html += `<div class="step"><strong>Định lý Vi-ét:</strong> S = –b/a = ${S.toFixed(4)} , P = c/a = ${P.toFixed(4)}</div>`;
+            }
+            return html;
+        }
+
+        // ---------- XỬ LÝ SỰ KIỆN NÚT ----------
+        const btn = document.getElementById('randomBtn');
+        const resultDiv = document.getElementById('resultArea');
+
+        btn.addEventListener('click', () => {
+            const problem = generateRandomProblem();
+            resultDiv.innerHTML = renderProblem(problem);
+        });
+
+        // Tạo một đề ngay khi tải trang (tùy chọn)
+        window.onload = () => {
+            const problem = generateRandomProblem();
+            resultDiv.innerHTML = renderProblem(problem);
+        };
+    </script>
+</body>
+</html>
