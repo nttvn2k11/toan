@@ -288,13 +288,70 @@
             const editor = document.getElementById('editor');
             const loadingOverlay = document.getElementById('loadingOverlay');
 
-            const SYSTEM_PROMPT = `Bạn là chuyên gia giáo dục Toán học Việt Nam.
-            NHIỆM VỤ: Biên soạn 50 câu hỏi trắc nghiệm Toán 10 thi tuyển sinh (Ma trận 2026-2027).
-            PHÂN BỔ:
-            - 24 câu Đại số (Căn thức, Hệ PT, y=ax^2, Vi-ét, BĐT Cô-si).
-            - 19 câu Hình học (Hệ thức lượng, Tiếp tuyến, Tứ giác nội tiếp, Diện tích/Thể tích khối).
-            - 7 câu Thống kê & Xác suất (Bảng số liệu, biểu đồ, xác suất đơn giản).
-            ĐỊNH DẠNG TOÁN HỌC: Không dùng $. Dùng văn bản rõ ràng (x^2, căn bậc hai của x, delta...).
+            const SYSTEM_PROMPT = `Hãy tạo khác nhau đề thi tuyển sinh lớp 10 môn Toán theo đúng ma trận cấu trúc sau:
+
+Tổng số câu: 50 câu
+Tổng điểm: 10 điểm
+
+Phân bố mức độ:
+
+Biết: 40% (20 câu – 4 điểm)
+
+Hiểu: 30% (15 câu – 3 điểm)
+
+Vận dụng: 30% (15 câu – 3 điểm)
+
+I. Số và Đại số (48% – 4,8 điểm)
+
+Phương trình và hệ phương trình
+
+Phương trình quy về bậc nhất
+
+Hệ phương trình bậc nhất hai ẩn
+
+Hàm số y = ax² (a ≠ 0), phương trình bậc hai
+
+Đồ thị hàm số
+
+Định lý Viète
+
+Bất đẳng thức và bất phương trình bậc nhất một ẩn
+
+Căn thức (căn bậc hai, căn bậc ba, biến đổi biểu thức chứa căn)
+
+II. Hình học và đo lường (38% – 3,8 điểm)
+
+Hệ thức lượng trong tam giác vuông
+
+Đường tròn
+
+Tiếp tuyến
+
+Góc nội tiếp
+
+Hình quạt tròn
+
+Tứ giác nội tiếp, đa giác đều
+
+Hình khối thực tiễn (hình trụ, hình nón, hình cầu)
+
+III. Thống kê và xác suất (14% – 1,4 điểm)
+
+Bảng tần số, biểu đồ
+
+Xác suất cơ bản
+
+Yêu cầu:
+
+Mỗi đề phải khác nhau (thay đổi số liệu, ngữ cảnh, tham số)
+
+Không lặp lại đề
+
+Câu hỏi rõ ràng, đúng chương trình lớp 9
+
+Không ghi đáp án
+
+Xuất mỗi đề theo định dạng:
             ĐỊNH DẠNG PHẢN HỒI: Chỉ trả về duy nhất mã JSON theo cấu trúc:
             { "exam": [ { "q": "Câu hỏi số x: [Nội dung]", "options": ["A", "B", "C", "D"], "correct": 0, "explain": "Giải thích chi tiết" } ] }`;
 
