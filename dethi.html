@@ -18,15 +18,10 @@
             padding: 40px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .header-table {
-            width: 100%;
-            margin-bottom: 30px;
-        }
         .question {
             margin-bottom: 25px;
             padding: 15px;
             border-bottom: 1px dashed #eee;
-            transition: all 0.3s;
         }
         .options {
             display: grid;
@@ -98,8 +93,8 @@
 </div>
 
 <script>
-    // ==================== NGÂN HÀNG CÂU HỎI (500 CÂU - TỪ 100 ĐẾN 599) ====================
-    const bankQuestions = [
+    // ==================== NGÂN HÀNG CÂU HỎI MỞ RỘNG (500 CÂU) ====================
+    const bankQuestions = [  // <--- Đã đổi tên từ bankQuestions_extension thành bankQuestions
         // 100-129: CĂN THỨC (30 câu)
         { q: "Rút gọn \\(\\sqrt{18} + \\sqrt{50} - \\sqrt{32}\\) được kết quả:", options: ["\\(5\\sqrt{2}\\)", "\\(4\\sqrt{2}\\)", "\\(3\\sqrt{2}\\)", "\\(2\\sqrt{2}\\)"], correct: 1, hint: "\\(\\sqrt{18}=3\\sqrt{2},\\sqrt{50}=5\\sqrt{2},\\sqrt{32}=4\\sqrt{2}\\); tổng: \\(3+5-4=4\\sqrt{2}\\)." },
         { q: "Giá trị của \\(\\sqrt{0,25} + \\sqrt{1,44}\\) là:", options: ["1,7", "1,9", "1,3", "0,7"], correct: 0, hint: "0,5 + 1,2 = 1,7." },
@@ -641,6 +636,7 @@
         { q: "Một thửa ruộng hình thang có đáy lớn 20m, đáy bé 15m, chiều cao 10m. Tính diện tích.", options: ["175 m²", "350 m²", "200 m²", "150 m²"], correct: 0, hint: "S = (20+15)*10/2 = 175." },
         { q: "Một hình tròn có diện tích 28,26 cm². Tính bán kính (lấy π=3,14).", options: ["3 cm", "4 cm", "2 cm", "5 cm"], correct: 0, hint: "πR^2=28,26 ⇒ R^2=9 ⇒ R=3." }
     ];
+    // <--- Đã xóa dòng comment không cần thiết
 
     // ==================== CHỌN 50 CÂU NGẪU NHIÊN TỪ NGÂN HÀNG ====================
     let currentQuestions = [];
