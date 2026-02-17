@@ -383,6 +383,22 @@ Xuất mỗi đề theo định dạng:
             document.getElementById('introHeader').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
+        
+<audio id="bgMusic" src="music.mp3" loop></audio>
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.5; // chỉnh âm lượng 0 -> 1
+
+    // Cố gắng tự bật khi vào web
+    window.addEventListener("load", () => {
+        music.play().catch(() => {
+            console.log("Trình duyệt chặn autoplay");
+        });
+    });
+
+    // Nếu bị chặn thì click bất kỳ sẽ bật
+    document.addEventListener("click", () => {
+        music.play();
+    }, { once: true });
 
         async function fetchExam() {
             let retryCount = 0;
