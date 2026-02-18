@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ôn Thi Tuyển Sinh 10 (2026) - Nguyễn Tấn Tài</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
         body {
@@ -25,6 +27,29 @@
             transform: translate(-6px, -6px);
             box-shadow: 10px 10px 0px #000;
         }
+        /* Nút nhạc cố định dưới góc phải */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .music-panel {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border: 3px solid black;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .music-panel.hidden {
+            display: none;
+        }
         @media print {
             .no-print {
                 display: none !important;
@@ -34,8 +59,37 @@
 </head>
 <body class="antialiased">
 
-    <!-- Nhạc nền (autoplay với fallback) -->
-    <audio id="bgMusic" src="mp.mp3" loop></audio>
+    <!-- Nhạc nền YouTube (ẩn) -->
+    <div id="youtube-player" style="display: none;"></div>
+
+    <!-- Nút mở/đóng bảng điều khiển nhạc -->
+    <div class="music-control no-print">
+        <button id="toggleMusicBtn" class="bg-black text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Bảng điều khiển nhạc -->
+    <div id="musicPanel" class="music-panel hidden no-print">
+        <h3 class="font-black text-lg mb-3 flex items-center">
+            <span class="bg-black text-white px-2 py-1 text-xs rounded mr-2">TỰ CHỌN</span>
+            Nhạc nền YouTube
+        </h3>
+        <p class="text-xs text-gray-500 mb-2">Dán link YouTube (video) vào ô dưới:</p>
+        <input type="text" id="youtubeLink" placeholder="https://youtu.be/... hoặc https://www.youtube.com/watch?v=..." 
+               class="w-full border-2 border-black p-2 text-sm rounded-lg mb-3">
+        <div class="flex gap-2">
+            <button id="playBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-blue-700 transition">▶ Phát</button>
+            <button id="pauseBtn" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-gray-700 transition">⏸️ Tạm dừng</button>
+            <button id="stopBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">⏹ Dừng</button>
+        </div>
+        <div class="mt-3 text-xs text-gray-400 flex items-center">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
+            Sẵn sàng
+        </div>
+    </div>
 
     <!-- Navbar -->
     <nav class="no-print sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-gray-100 z-50 px-6 py-4 flex items-center justify-between">
@@ -56,16 +110,16 @@
     </nav>
 
     <main class="max-w-5xl mx-auto px-6 py-10">
-        <!-- MAIN MENU (toàn bộ nội dung) -->
+        <!-- MAIN MENU -->
         <div id="mainMenu">
             <div class="text-center mb-10">
                 <h1 class="text-5xl font-black mb-4 tracking-tighter italic">Hệ Thống Ôn Thi Thông Minh</h1>
                 <p class="text-xl text-gray-500 font-medium tracking-tight">Phát triển bởi Nguyễn Tấn Tài</p>
             </div>
 
-            <!-- Grid chức năng (đã loại bỏ AI Gemini) -->
+            <!-- Grid chức năng (giữ nguyên) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                <!-- 1. Giải PT & HPT -->
+                <!-- Các menu card giống như đã có, không thay đổi -->
                 <div class="menu-card" onclick="window.location.href = 'code1.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Giải Phương Trình & Hệ Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-blue-500 font-bold tracking-widest">Đại số cơ bản</div>
@@ -76,7 +130,6 @@
                         <p>• Phương trình quy về bậc hai</p>
                     </div>
                 </div>
-                <!-- 2. Đồ thị hàm số y = ax² -->
                 <div class="menu-card" onclick="window.location.href = 'code2.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Đồ Thị Hàm Số y = ax²</div>
                     <div class="text-sm mb-4 font-mono text-purple-500 font-bold tracking-widest">Hàm số bậc hai</div>
@@ -87,7 +140,6 @@
                         <p>• Bài toán thực tế về parabol</p>
                     </div>
                 </div>
-                <!-- 3. Bất đẳng thức & Bất PT -->
                 <div class="menu-card" onclick="window.location.href = 'code3.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Bất Đẳng Thức & Bất Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-green-500 font-bold tracking-widest">Đại số nâng cao</div>
@@ -98,7 +150,6 @@
                         <p>• Phương pháp khoảng, bảng xét dấu</p>
                     </div>
                 </div>
-                <!-- 4. Hình học -->
                 <div class="menu-card" onclick="window.location.href = 'code5.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Hình Học</div>
                     <div class="text-sm mb-4 font-mono text-orange-500 font-bold tracking-widest">hình học căn bản</div>
@@ -109,7 +160,6 @@
                         <p>• Chứng minh hình học</p>
                     </div>
                 </div>
-                <!-- 5. Thống kê & Xác suất -->
                 <div class="menu-card" onclick="window.location.href = 'code6.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Thống Kê & Xác Suất</div>
                     <div class="text-sm mb-4 font-mono text-emerald-500 font-bold tracking-widest">Thống kê và xác suất cơ bản</div>
@@ -120,7 +170,6 @@
                         <p>• Biểu đồ, bảng tần số</p>
                     </div>
                 </div>
-                <!-- 6. Định lí Vi-ét -->
                 <div class="menu-card" onclick="window.location.href = 'code7.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Định lí Vi-ét</div>
                     <div class="text-sm mb-4 font-mono text-emerald-500 font-bold tracking-widest">Phương trình bậc hai</div>
@@ -176,19 +225,90 @@
     </main>
 
     <script>
-        // Tự động phát nhạc nền (kèm fallback khi trình duyệt chặn autoplay)
-        const music = document.getElementById("bgMusic");
-        if (music) {
-            music.volume = 0.5;
-            // Thử phát tự động
-            music.play().catch(() => {
-                console.log("Trình duyệt chặn autoplay, sẽ phát sau khi người dùng click");
-                // Nếu bị chặn, chỉ cần click bất kỳ đâu cũng phát
-                document.addEventListener("click", () => {
-                    music.play();
-                }, { once: true });
+        // YouTube IFrame API: khởi tạo player
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                playerVars: {
+                    autoplay: 0,
+                    controls: 0,
+                    disablekb: 1,
+                    fs: 0,
+                    modestbranding: 1
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
             });
         }
+        function onPlayerReady(event) {
+            console.log('YouTube player ready');
+        }
+
+        // Hàm lấy video ID từ link YouTube
+        function extractVideoId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/,
+                /youtube\.com\/embed\/([^/?]+)/,
+                /youtube\.com\/v\/([^/?]+)/
+            ];
+            for (let pattern of patterns) {
+                const match = url.match(pattern);
+                if (match) return match[1];
+            }
+            return null;
+        }
+
+        // Xử lý bật/tắt panel
+        const toggleBtn = document.getElementById('toggleMusicBtn');
+        const panel = document.getElementById('musicPanel');
+        toggleBtn.addEventListener('click', () => {
+            panel.classList.toggle('hidden');
+        });
+
+        // Nút Phát
+        document.getElementById('playBtn').addEventListener('click', () => {
+            const link = document.getElementById('youtubeLink').value.trim();
+            if (!link) {
+                alert('Vui lòng dán link YouTube!');
+                return;
+            }
+            const videoId = extractVideoId(link);
+            if (!videoId) {
+                alert('Link YouTube không hợp lệ!');
+                return;
+            }
+            if (player && player.loadVideoById) {
+                player.loadVideoById(videoId);
+                // Tự động phát (có thể bị chặn nếu chưa có tương tác trước)
+                player.playVideo();
+            } else {
+                alert('Player chưa sẵn sàng, vui lòng thử lại sau giây lát.');
+            }
+        });
+
+        // Nút Tạm dừng
+        document.getElementById('pauseBtn').addEventListener('click', () => {
+            if (player && player.pauseVideo) {
+                player.pauseVideo();
+            }
+        });
+
+        // Nút Dừng (dừng và giải phóng)
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            if (player && player.stopVideo) {
+                player.stopVideo();
+            }
+        });
+
+        // Đóng panel khi click ra ngoài? (tùy chọn)
+        document.addEventListener('click', (e) => {
+            if (!panel.contains(e.target) && !toggleBtn.contains(e.target) && !panel.classList.contains('hidden')) {
+                panel.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>
