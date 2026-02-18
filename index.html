@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ôn Thi Tuyển Sinh 10 (2026) - Nguyễn Tấn Tài - Tết Ất Tỵ</title>
+    <title>Ôn Thi Tuyển Sinh 10 (2026) - Nguyễn Tấn Tài - Năm Bính Ngọ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- YouTube IFrame API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
@@ -18,7 +16,7 @@
             position: relative;
             overflow-x: hidden;
         }
-        /* Hoa rơi */
+        /* Hoa rơi (giữ nhẹ nhàng) */
         .petal {
             position: fixed;
             top: -10%;
@@ -32,9 +30,9 @@
         @keyframes fall {
             to { transform: translateY(100vh) rotate(360deg); }
         }
-        /* Menu card style Tết (không icon) */
+        /* Menu card đẹp, tối giản */
         .menu-card {
-            border: 3px solid #b91c1c;
+            border: 3px solid #b45309; /* nâu đỏ (màu ngựa) */
             padding: 30px;
             transition: all 0.3s ease;
             background: white;
@@ -44,60 +42,11 @@
         }
         .menu-card:hover {
             transform: translate(-6px, -6px);
-            box-shadow: 12px 12px 0 #eab308;
+            box-shadow: 12px 12px 0 #d97706; /* vàng nâu */
         }
-        /* Đã xóa pseudo-element chứa icon */
         .cau-doi {
             font-family: 'Great Vibes', cursive;
-            color: #b91c1c;
-        }
-        .music-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        .music-panel {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 340px;
-            background: #fff8e7;
-            border: 3px solid #eab308;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 8px 8px 0 #b91c1c;
-            transition: all 0.3s ease;
-            z-index: 999;
-        }
-        .music-panel.hidden {
-            display: none;
-        }
-        .error-message {
-            color: #b91c1c;
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-        .yt-hidden {
-            position: absolute;
-            width: 0;
-            height: 0;
-            overflow: hidden;
-            left: -9999px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 8px;
-            font-weight: bold;
-            border: 2px solid #b91c1c;
-            background: #fff0d9;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .tab-btn.active {
-            background: #b91c1c;
-            color: white;
+            color: #b45309;
         }
         @media print {
             .no-print {
@@ -108,116 +57,56 @@
 </head>
 <body class="antialiased relative">
 
-    <!-- Hiệu ứng hoa rơi (có thể tắt bằng nút) -->
+    <!-- Hiệu ứng hoa rơi nhẹ (có thể tắt bằng nút) -->
     <div id="petal-container" class="no-print"></div>
 
-    <!-- Container cho YouTube player (ẩn) -->
-    <div id="youtube-player" class="yt-hidden"></div>
-
-    <!-- Nút mở/đóng bảng điều khiển nhạc -->
-    <div class="music-control no-print">
-        <button id="toggleMusicBtn" class="bg-red-700 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform border-2 border-yellow-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-            </svg>
-        </button>
-    </div>
-
-    <!-- Bảng điều khiển nhạc (YouTube + MP3) -->
-    <div id="musicPanel" class="music-panel hidden no-print">
-        <!-- Tabs -->
-        <div class="flex mb-4 border-2 border-red-700">
-            <button id="tabYoutube" class="tab-btn active">YouTube</button>
-            <button id="tabMp3" class="tab-btn">MP3 từ máy</button>
-        </div>
-
-        <!-- Nội dung YouTube -->
-        <div id="youtubeContent">
-            <h3 class="font-black text-lg mb-3 flex items-center">
-                <span class="bg-red-700 text-white px-2 py-1 text-xs rounded mr-2">🧧 TẾT</span>
-                Nhạc Tết YouTube
-            </h3>
-            <p class="text-xs text-gray-600 mb-2">Dán link YouTube (video) vào ô dưới:</p>
-            <input type="text" id="youtubeLink" placeholder="https://youtu.be/... hoặc https://www.youtube.com/watch?v=..." 
-                   class="w-full border-2 border-red-700 p-2 text-sm rounded-lg mb-3" value="https://www.youtube.com/watch?v=3RjD7m1yE9o">
-            <div class="flex gap-2">
-                <button id="playBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">▶ Phát</button>
-                <button id="pauseBtn" class="bg-yellow-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-yellow-700 transition">⏸️ Tạm dừng</button>
-                <button id="stopBtn" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-gray-700 transition">⏹ Dừng</button>
-            </div>
-            <div id="musicError" class="error-message mt-2 text-red-600 text-xs font-bold"></div>
-            <div class="mt-3 text-xs text-gray-400 flex items-center">
-                <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse mr-2" id="statusIndicator"></span>
-                <span id="statusText">Đang tải player...</span>
-            </div>
-        </div>
-
-        <!-- Nội dung MP3 -->
-        <div id="mp3Content" style="display: none;">
-            <h3 class="font-black text-lg mb-3 flex items-center">
-                <span class="bg-red-700 text-white px-2 py-1 text-xs rounded mr-2">🎵 TẢI LÊN</span>
-                Nhạc MP3 Tết
-            </h3>
-            <p class="text-xs text-gray-600 mb-2">Chọn file MP3 từ máy tính của bạn:</p>
-            <input type="file" id="mp3File" accept="audio/mpeg" class="w-full border-2 border-red-700 p-2 text-sm rounded-lg mb-3">
-            <audio id="mp3Player" controls class="w-full mb-3" style="height: 40px;"></audio>
-            <div class="flex gap-2">
-                <button id="playMp3Btn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-green-700 transition">▶ Phát</button>
-                <button id="pauseMp3Btn" class="bg-yellow-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-yellow-700 transition">⏸️ Tạm dừng</button>
-                <button id="stopMp3Btn" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-gray-700 transition">⏹ Dừng</button>
-            </div>
-            <div class="mt-2 text-xs text-gray-500">Âm lượng: <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" class="w-full"></div>
-        </div>
-    </div>
-
-    <!-- Navbar -->
-    <nav class="no-print sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-red-200 z-50 px-6 py-4 flex items-center justify-between">
+    <!-- Navbar đơn giản -->
+    <nav class="no-print sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-amber-200 z-50 px-6 py-4 flex items-center justify-between">
         <div class="flex items-center space-x-3">
-            <div class="bg-red-700 text-white p-2 rounded-xl">
+            <div class="bg-amber-800 text-white p-2 rounded-xl">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2v20m-7-15 14 10M5 17l14-10"/></svg>
             </div>
             <div>
-                <span class="font-black text-xl block leading-tight tracking-tight">TOÁN 10 <span class="text-red-600">TẾT ẤT TỴ</span></span>
+                <span class="font-black text-xl block leading-tight tracking-tight">TOÁN 10 <span class="text-amber-700">BÍNH NGỌ 2026</span></span>
                 <span class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em]">Tuyển sinh 2026-2027</span>
             </div>
         </div>
         <div class="flex items-center space-x-3">
-            <button onclick="window.print()" class="p-2.5 bg-gray-50 hover:bg-yellow-200 rounded-xl transition-all" title="In tài liệu">
+            <button onclick="window.print()" class="p-2.5 bg-gray-50 hover:bg-amber-200 rounded-xl transition-all" title="In tài liệu">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2m-2 4H8v-4h8v4z"/></svg>
             </button>
             <!-- Nút bật/tắt hoa rơi -->
-            <button id="togglePetalBtn" class="p-2.5 bg-red-50 hover:bg-red-200 rounded-xl transition-all" title="Bật/tắt hiệu ứng hoa đào">
+            <button id="togglePetalBtn" class="p-2.5 bg-amber-50 hover:bg-amber-200 rounded-xl transition-all" title="Bật/tắt hiệu ứng hoa đào">
                 🌸
             </button>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-6 py-10 relative">
-        <!-- Lời chúc Tết -->
+        <!-- Lời chúc Tết Bính Ngọ -->
         <div class="text-center mb-8">
-            <div class="inline-block bg-red-700 text-white px-6 py-3 rounded-full text-2xl font-bold shadow-lg border-4 border-yellow-400 transform rotate-1">
-                🐍 Chúc mừng năm mới Ất Tỵ 2026 🐍
+            <div class="inline-block bg-amber-800 text-white px-6 py-3 rounded-full text-2xl font-bold shadow-lg border-4 border-amber-400 transform rotate-1">
+                🐴 Chúc mừng năm mới Bính Ngọ 2026 🐴
             </div>
             <div class="mt-4 flex justify-center gap-4 text-4xl cau-doi">
-                <span>🍊 Thịt mỡ dưa hành câu đối đỏ 🍊</span>
+                <span>🌾 Mã đáo thành công 🌾</span>
             </div>
-            <div class="flex justify-center gap-4 text-4xl cau-doi text-red-600">
-                <span>🌸 Cây nêu tràng pháo bánh chưng xanh 🌸</span>
+            <div class="flex justify-center gap-4 text-4xl cau-doi text-amber-700">
+                <span>🍀 Vạn sự như ý 🍀</span>
             </div>
         </div>
 
-        <!-- MAIN MENU -->
+        <!-- MAIN MENU (giữ nguyên nội dung) -->
         <div id="mainMenu">
             <div class="text-center mb-10">
-                <h1 class="text-5xl font-black mb-4 tracking-tighter italic bg-gradient-to-r from-red-700 to-yellow-500 text-transparent bg-clip-text">Hệ Thống Ôn Thi Thông Minh</h1>
+                <h1 class="text-5xl font-black mb-4 tracking-tighter italic bg-gradient-to-r from-amber-800 to-amber-500 text-transparent bg-clip-text">Hệ Thống Ôn Thi Thông Minh</h1>
                 <p class="text-xl text-gray-500 font-medium tracking-tight">Phát triển bởi Nguyễn Tấn Tài</p>
             </div>
 
-            <!-- Grid chức năng -->
+            <!-- Grid chức năng (không icon) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                <!-- Các menu card (đã bỏ icon) -->
                 <div class="menu-card" onclick="window.location.href = 'code1.html'">
-                    <div class="text-xl font-bold mb-2 text-red-700 uppercase">Giải Phương Trình & Hệ Phương Trình</div>
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Giải Phương Trình & Hệ Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-blue-500 font-bold tracking-widest">Đại số cơ bản</div>
                     <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
                         <p>• Giải phương trình bậc nhất, bậc hai</p>
@@ -227,7 +116,7 @@
                     </div>
                 </div>
                 <div class="menu-card" onclick="window.location.href = 'code2.html'">
-                    <div class="text-xl font-bold mb-2 text-red-700 uppercase">Đồ Thị Hàm Số y = ax²</div>
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Đồ Thị Hàm Số y = ax²</div>
                     <div class="text-sm mb-4 font-mono text-purple-500 font-bold tracking-widest">Hàm số bậc hai</div>
                     <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
                         <p>• Vẽ đồ thị parabol y = ax²</p>
@@ -237,7 +126,7 @@
                     </div>
                 </div>
                 <div class="menu-card" onclick="window.location.href = 'code3.html'">
-                    <div class="text-xl font-bold mb-2 text-red-700 uppercase">Bất Đẳng Thức & Bất Phương Trình</div>
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Bất Đẳng Thức & Bất Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-green-500 font-bold tracking-widest">Đại số nâng cao</div>
                     <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
                         <p>• Bất đẳng thức Cô-si, Bunhiacopxki</p>
@@ -247,7 +136,7 @@
                     </div>
                 </div>
                 <div class="menu-card" onclick="window.location.href = 'code5.html'">
-                    <div class="text-xl font-bold mb-2 text-red-700 uppercase">Hình Học</div>
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Hình Học</div>
                     <div class="text-sm mb-4 font-mono text-orange-500 font-bold tracking-widest">hình học căn bản</div>
                     <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
                         <p>• Tam giác (đồng dạng, vuông, cân)</p>
@@ -257,7 +146,7 @@
                     </div>
                 </div>
                 <div class="menu-card" onclick="window.location.href = 'code6.html'">
-                    <div class="text-xl font-bold mb-2 text-red-700 uppercase">Thống Kê & Xác Suất</div>
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Thống Kê & Xác Suất</div>
                     <div class="text-sm mb-4 font-mono text-emerald-500 font-bold tracking-widest">Thống kê và xác suất cơ bản</div>
                     <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
                         <p>• Các số đặc trưng mẫu số liệu</p>
@@ -267,7 +156,7 @@
                     </div>
                 </div>
                 <div class="menu-card" onclick="window.location.href = 'code7.html'">
-                    <div class="text-xl font-bold mb-2 text-red-700 uppercase">Định lí Vi-ét</div>
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Định lí Vi-ét</div>
                     <div class="text-sm mb-4 font-mono text-emerald-500 font-bold tracking-widest">Phương trình bậc hai</div>
                     <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
                         <p>• Hệ thức Vi-ét cơ bản</p>
@@ -278,9 +167,9 @@
                 </div>
             </div>
 
-            <!-- Ghi chú quan trọng + footer (giữ nguyên) -->
-            <div class="bg-gray-50 border-2 border-red-700 p-8 rounded-2xl">
-                <h2 class="text-2xl font-black mb-8 border-b-2 border-red-700 pb-4 flex items-center uppercase italic">
+            <!-- Ghi chú quan trọng (giữ nguyên) -->
+            <div class="bg-gray-50 border-2 border-amber-800 p-8 rounded-2xl">
+                <h2 class="text-2xl font-black mb-8 border-b-2 border-amber-800 pb-4 flex items-center uppercase italic">
                     <svg class="mr-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                     Ghi chú quan trọng
                 </h2>
@@ -321,243 +210,7 @@
     </main>
 
     <script>
-        // ==================== BIẾN TOÀN CỤC ====================
-        var player;
-        var playerReady = false;
-
-        // ==================== YOUTUBE API ====================
-        window.onYouTubeIframeAPIReady = function() {
-            console.log('API YouTube đã sẵn sàng, khởi tạo player...');
-            try {
-                player = new YT.Player('youtube-player', {
-                    height: '0',
-                    width: '0',
-                    playerVars: {
-                        autoplay: 0,
-                        controls: 0,
-                        disablekb: 1,
-                        fs: 0,
-                        modestbranding: 1,
-                        playsinline: 1
-                    },
-                    events: {
-                        'onReady': function(event) {
-                            console.log('Player đã sẵn sàng');
-                            playerReady = true;
-                            clearError();
-                            document.getElementById('statusIndicator').className = 'w-2 h-2 bg-green-500 rounded-full mr-2';
-                            document.getElementById('statusText').innerText = 'Sẵn sàng';
-                        },
-                        'onError': function(event) {
-                            console.error('Lỗi player:', event.data);
-                            let msg = 'Lỗi không xác định';
-                            switch(event.data) {
-                                case 2: msg = 'ID video không hợp lệ'; break;
-                                case 5: msg = 'Lỗi HTML5 player'; break;
-                                case 100: msg = 'Video không tồn tại hoặc bị ẩn'; break;
-                                case 101: case 150: msg = 'Video không cho phép phát nhúng'; break;
-                            }
-                            showError(msg);
-                            playerReady = false;
-                        },
-                        'onStateChange': function(event) {
-                            if (event.data === YT.PlayerState.PLAYING) {
-                                document.getElementById('statusText').innerText = 'Đang phát...';
-                                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-blue-500 rounded-full mr-2';
-                            } else if (event.data === YT.PlayerState.PAUSED) {
-                                document.getElementById('statusText').innerText = 'Tạm dừng';
-                                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-yellow-500 rounded-full mr-2';
-                            } else if (event.data === YT.PlayerState.ENDED) {
-                                document.getElementById('statusText').innerText = 'Kết thúc';
-                                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-gray-500 rounded-full mr-2';
-                            }
-                        }
-                    }
-                });
-            } catch (e) {
-                console.error('Lỗi khởi tạo player:', e);
-                showError('Không thể khởi tạo player');
-            }
-        };
-
-        function showError(msg) {
-            const errorDiv = document.getElementById('musicError');
-            if (errorDiv) {
-                errorDiv.style.display = 'block';
-                errorDiv.innerText = ' ' + msg;
-            }
-            document.getElementById('statusIndicator').className = 'w-2 h-2 bg-red-500 rounded-full mr-2';
-            document.getElementById('statusText').innerText = 'Lỗi: ' + msg;
-        }
-
-        function clearError() {
-            const errorDiv = document.getElementById('musicError');
-            if (errorDiv) {
-                errorDiv.style.display = 'none';
-                errorDiv.innerText = '';
-            }
-        }
-
-        function extractVideoId(url) {
-            const patterns = [
-                /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/,
-                /youtube\.com\/embed\/([^/?]+)/,
-                /youtube\.com\/v\/([^/?]+)/
-            ];
-            for (let pattern of patterns) {
-                const match = url.match(pattern);
-                if (match) return match[1];
-            }
-            return null;
-        }
-
-        // ==================== XỬ LÝ GIAO DIỆN ====================
-        const toggleBtn = document.getElementById('toggleMusicBtn');
-        const panel = document.getElementById('musicPanel');
-        toggleBtn.addEventListener('click', () => {
-            panel.classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!panel.contains(e.target) && !toggleBtn.contains(e.target) && !panel.classList.contains('hidden')) {
-                panel.classList.add('hidden');
-            }
-        });
-
-        const tabYoutube = document.getElementById('tabYoutube');
-        const tabMp3 = document.getElementById('tabMp3');
-        const youtubeContent = document.getElementById('youtubeContent');
-        const mp3Content = document.getElementById('mp3Content');
-
-        tabYoutube.addEventListener('click', () => {
-            tabYoutube.classList.add('active');
-            tabMp3.classList.remove('active');
-            youtubeContent.style.display = 'block';
-            mp3Content.style.display = 'none';
-        });
-
-        tabMp3.addEventListener('click', () => {
-            tabMp3.classList.add('active');
-            tabYoutube.classList.remove('active');
-            mp3Content.style.display = 'block';
-            youtubeContent.style.display = 'none';
-        });
-
-        // ==================== XỬ LÝ YOUTUBE ====================
-        document.getElementById('playBtn').addEventListener('click', () => {
-            clearError();
-            const link = document.getElementById('youtubeLink').value.trim();
-            if (!link) {
-                showError('Vui lòng dán link YouTube');
-                return;
-            }
-            const videoId = extractVideoId(link);
-            if (!videoId) {
-                showError('Link không hợp lệ. Cần dạng: https://youtu.be/... hoặc https://www.youtube.com/watch?v=...');
-                return;
-            }
-            if (!window.YT || !YT.Player) {
-                showError('API YouTube chưa được tải. Vui lòng đợi hoặc refresh trang.');
-                return;
-            }
-            if (!player) {
-                showError('Player chưa được khởi tạo. Đang thử khởi tạo lại...');
-                onYouTubeIframeAPIReady();
-                setTimeout(() => {
-                    if (player && playerReady) {
-                        try {
-                            player.loadVideoById(videoId);
-                            player.playVideo();
-                        } catch (e) {
-                            showError('Không thể phát sau khi khởi tạo: ' + e.message);
-                        }
-                    } else {
-                        showError('Player vẫn chưa sẵn sàng. Vui lòng thử lại sau.');
-                    }
-                }, 2000);
-                return;
-            }
-            if (!playerReady) {
-                showError('Player chưa sẵn sàng. Vui lòng đợi thêm.');
-                return;
-            }
-            try {
-                player.loadVideoById(videoId);
-                player.playVideo();
-                console.log('Đang phát video ID:', videoId);
-            } catch (e) {
-                console.error('Lỗi khi gọi play:', e);
-                showError('Lỗi khi phát: ' + e.message);
-            }
-        });
-
-        document.getElementById('pauseBtn').addEventListener('click', () => {
-            if (player && player.pauseVideo) {
-                player.pauseVideo();
-            } else {
-                showError('Player chưa sẵn sàng');
-            }
-        });
-
-        document.getElementById('stopBtn').addEventListener('click', () => {
-            if (player && player.stopVideo) {
-                player.stopVideo();
-                document.getElementById('statusText').innerText = 'Đã dừng';
-                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-gray-500 rounded-full mr-2';
-            } else {
-                showError('Player chưa sẵn sàng');
-            }
-        });
-
-        setTimeout(() => {
-            if (!window.YT) {
-                showError('Không thể tải API YouTube. Kiểm tra kết nối mạng hoặc AdBlock.');
-            } else if (!player) {
-                console.log('YT đã có nhưng player chưa được khởi tạo, thử khởi tạo thủ công');
-                onYouTubeIframeAPIReady();
-            }
-        }, 5000);
-
-        // ==================== XỬ LÝ MP3 ====================
-        const mp3File = document.getElementById('mp3File');
-        const mp3Player = document.getElementById('mp3Player');
-        const playMp3Btn = document.getElementById('playMp3Btn');
-        const pauseMp3Btn = document.getElementById('pauseMp3Btn');
-        const stopMp3Btn = document.getElementById('stopMp3Btn');
-        const volumeSlider = document.getElementById('volumeSlider');
-
-        mp3File.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                mp3Player.src = url;
-                mp3Player.load();
-                mp3Player.play().catch(() => {});
-            }
-        });
-
-        playMp3Btn.addEventListener('click', () => {
-            if (mp3Player.src) {
-                mp3Player.play();
-            } else {
-                alert('Vui lòng chọn file MP3 trước.');
-            }
-        });
-
-        pauseMp3Btn.addEventListener('click', () => {
-            mp3Player.pause();
-        });
-
-        stopMp3Btn.addEventListener('click', () => {
-            mp3Player.pause();
-            mp3Player.currentTime = 0;
-        });
-
-        volumeSlider.addEventListener('input', (e) => {
-            mp3Player.volume = e.target.value;
-        });
-
-        // ==================== HIỆU ỨNG HOA RƠI ====================
+        // Hiệu ứng hoa rơi (tùy chọn)
         const petalContainer = document.getElementById('petal-container');
         let petalInterval;
         let petalEnabled = true;
