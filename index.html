@@ -49,6 +49,12 @@
         .music-panel.hidden {
             display: none;
         }
+        .error-message {
+            color: #b91c1c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
         @media print {
             .no-print {
                 display: none !important;
@@ -84,8 +90,9 @@
             <button id="pauseBtn" class="bg-gray-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-gray-700 transition">⏸️ Tạm dừng</button>
             <button id="stopBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">⏹ Dừng</button>
         </div>
+        <div id="musicError" class="error-message mt-2 text-red-600 text-xs font-bold"></div>
         <div class="mt-3 text-xs text-gray-400 flex items-center">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2" id="statusIndicator"></span>
+            <span class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse mr-2" id="statusIndicator"></span>
             <span id="statusText">Đang tải player...</span>
         </div>
     </div>
@@ -109,7 +116,7 @@
     </nav>
 
     <main class="max-w-5xl mx-auto px-6 py-10">
-        <!-- MAIN MENU -->
+        <!-- MAIN MENU (giữ nguyên như cũ) -->
         <div id="mainMenu">
             <div class="text-center mb-10">
                 <h1 class="text-5xl font-black mb-4 tracking-tighter italic">Hệ Thống Ôn Thi Thông Minh</h1>
@@ -118,6 +125,7 @@
 
             <!-- Grid chức năng -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                <!-- Các menu card tương tự -->
                 <div class="menu-card" onclick="window.location.href = 'code1.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Giải Phương Trình & Hệ Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-blue-500 font-bold tracking-widest">Đại số cơ bản</div>
@@ -180,7 +188,7 @@
                 </div>
             </div>
 
-            <!-- Ghi chú quan trọng + footer -->
+            <!-- Ghi chú quan trọng + footer (giống cũ) -->
             <div class="bg-gray-50 border-2 border-black p-8 rounded-2xl">
                 <h2 class="text-2xl font-black mb-8 border-b-2 border-black pb-4 flex items-center uppercase italic">
                     <svg class="mr-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
@@ -223,47 +231,80 @@
     </main>
 
     <script>
-        // Biến toàn cục
+        // Khai báo biến toàn cục
         var player;
         var playerReady = false;
+        var loadAttempts = 0;
+
+        // Hàm hiển thị lỗi trên panel
+        function showError(msg) {
+            const errorDiv = document.getElementById('musicError');
+            errorDiv.style.display = 'block';
+            errorDiv.innerText = '❌ ' + msg;
+            document.getElementById('statusIndicator').className = 'w-2 h-2 bg-red-500 rounded-full mr-2';
+            document.getElementById('statusText').innerText = 'Lỗi: ' + msg;
+        }
+
+        function clearError() {
+            document.getElementById('musicError').style.display = 'none';
+            document.getElementById('musicError').innerText = '';
+        }
 
         // Hàm được gọi khi API YouTube sẵn sàng
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                playerVars: {
-                    autoplay: 0,
-                    controls: 0,
-                    disablekb: 1,
-                    fs: 0,
-                    modestbranding: 1
-                },
-                events: {
-                    'onReady': function(event) {
-                        console.log('YouTube player ready');
-                        playerReady = true;
-                        document.getElementById('statusText').innerText = 'Sẵn sàng';
-                        document.getElementById('statusIndicator').classList.remove('bg-green-500');
-                        document.getElementById('statusIndicator').classList.add('bg-green-500');
+        window.onYouTubeIframeAPIReady = function() {
+            console.log('API YouTube đã sẵn sàng, khởi tạo player...');
+            try {
+                player = new YT.Player('youtube-player', {
+                    height: '0',
+                    width: '0',
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 0,
+                        disablekb: 1,
+                        fs: 0,
+                        modestbranding: 1,
+                        playsinline: 1
                     },
-                    'onError': function(event) {
-                        console.error('YouTube player error:', event.data);
-                        let errorMsg = 'Lỗi không xác định';
-                        switch(event.data) {
-                            case 2: errorMsg = 'ID video không hợp lệ'; break;
-                            case 5: errorMsg = 'Lỗi HTML5 player'; break;
-                            case 100: errorMsg = 'Video không tồn tại hoặc bị ẩn'; break;
-                            case 101: errorMsg = 'Video không cho phép phát nhúng'; break;
+                    events: {
+                        'onReady': function(event) {
+                            console.log('Player đã sẵn sàng');
+                            playerReady = true;
+                            clearError();
+                            document.getElementById('statusIndicator').className = 'w-2 h-2 bg-green-500 rounded-full mr-2';
+                            document.getElementById('statusText').innerText = 'Sẵn sàng';
+                        },
+                        'onError': function(event) {
+                            console.error('Lỗi player:', event.data);
+                            let msg = 'Lỗi không xác định';
+                            switch(event.data) {
+                                case 2: msg = 'ID video không hợp lệ'; break;
+                                case 5: msg = 'Lỗi HTML5 player'; break;
+                                case 100: msg = 'Video không tồn tại hoặc bị ẩn'; break;
+                                case 101: msg = 'Video không cho phép phát nhúng'; break;
+                                case 150: msg = 'Video không cho phép phát nhúng'; break;
+                            }
+                            showError(msg);
+                            playerReady = false; // Tạm thời không sẵn sàng để phát tiếp
+                        },
+                        'onStateChange': function(event) {
+                            if (event.data === YT.PlayerState.PLAYING) {
+                                document.getElementById('statusText').innerText = 'Đang phát...';
+                                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-blue-500 rounded-full mr-2';
+                            } else if (event.data === YT.PlayerState.PAUSED) {
+                                document.getElementById('statusText').innerText = 'Tạm dừng';
+                                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-yellow-500 rounded-full mr-2';
+                            } else if (event.data === YT.PlayerState.ENDED) {
+                                document.getElementById('statusText').innerText = 'Kết thúc';
+                                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-gray-500 rounded-full mr-2';
+                            }
                         }
-                        alert('Lỗi phát nhạc: ' + errorMsg);
-                        document.getElementById('statusText').innerText = 'Lỗi: ' + errorMsg;
-                        document.getElementById('statusIndicator').classList.remove('bg-green-500');
-                        document.getElementById('statusIndicator').classList.add('bg-red-500');
                     }
-                }
-            });
-        }
+                });
+            } catch (e) {
+                console.error('Lỗi khởi tạo player:', e);
+                showError('Không thể khởi tạo player');
+            }
+        };
 
         // Hàm trích xuất video ID từ link YouTube
         function extractVideoId(url) {
@@ -284,32 +325,63 @@
         const panel = document.getElementById('musicPanel');
         toggleBtn.addEventListener('click', () => {
             panel.classList.toggle('hidden');
+            // Nếu mở panel và player chưa ready, kiểm tra lại
+            if (!panel.classList.contains('hidden') && !playerReady) {
+                if (window.YT && YT.Player) {
+                    // Nếu API đã load nhưng player chưa khởi tạo, thử khởi tạo lại?
+                    if (!player) {
+                        onYouTubeIframeAPIReady();
+                    }
+                }
+            }
         });
 
         // Nút Phát
         document.getElementById('playBtn').addEventListener('click', () => {
+            clearError();
             const link = document.getElementById('youtubeLink').value.trim();
             if (!link) {
-                alert('Vui lòng dán link YouTube!');
+                showError('Vui lòng dán link YouTube');
                 return;
             }
             const videoId = extractVideoId(link);
             if (!videoId) {
-                alert('Link YouTube không hợp lệ! Hãy dùng link dạng: https://youtu.be/... hoặc https://www.youtube.com/watch?v=...');
+                showError('Link không hợp lệ. Cần dạng: https://youtu.be/... hoặc https://www.youtube.com/watch?v=...');
+                return;
+            }
+            if (!window.YT || !YT.Player) {
+                showError('API YouTube chưa được tải. Vui lòng đợi hoặc refresh trang.');
+                return;
+            }
+            if (!player) {
+                showError('Player chưa được khởi tạo. Đang thử khởi tạo lại...');
+                onYouTubeIframeAPIReady();
+                // Thử lại sau 1 giây
+                setTimeout(() => {
+                    if (player && playerReady) {
+                        try {
+                            player.loadVideoById(videoId);
+                            player.playVideo();
+                        } catch (e) {
+                            showError('Không thể phát sau khi khởi tạo: ' + e.message);
+                        }
+                    } else {
+                        showError('Player vẫn chưa sẵn sàng. Vui lòng thử lại sau.');
+                    }
+                }, 1500);
                 return;
             }
             if (!playerReady) {
-                alert('Player chưa sẵn sàng, vui lòng đợi vài giây rồi thử lại.');
+                showError('Player chưa sẵn sàng. Vui lòng đợi thêm.');
                 return;
             }
             try {
                 player.loadVideoById(videoId);
                 player.playVideo();
                 console.log('Đang phát video ID:', videoId);
-                document.getElementById('statusText').innerText = 'Đang phát...';
             } catch (e) {
-                console.error('Lỗi khi phát:', e);
-                alert('Không thể phát nhạc. Xem console để biết thêm chi tiết.');
+                console.error('Lỗi khi gọi play:', e);
+                showError('Lỗi khi phát: ' + e.message);
             }
         });
 
@@ -317,7 +389,8 @@
         document.getElementById('pauseBtn').addEventListener('click', () => {
             if (player && player.pauseVideo) {
                 player.pauseVideo();
-                document.getElementById('statusText').innerText = 'Tạm dừng';
+            } else {
+                showError('Player chưa sẵn sàng');
             }
         });
 
@@ -326,6 +399,9 @@
             if (player && player.stopVideo) {
                 player.stopVideo();
                 document.getElementById('statusText').innerText = 'Đã dừng';
+                document.getElementById('statusIndicator').className = 'w-2 h-2 bg-gray-500 rounded-full mr-2';
+            } else {
+                showError('Player chưa sẵn sàng');
             }
         });
 
@@ -336,8 +412,16 @@
             }
         });
 
-        // Cập nhật trạng thái ban đầu
-        document.getElementById('statusText').innerText = 'Đang tải player...';
+        // Kiểm tra sau 5 giây nếu API không tải
+        setTimeout(() => {
+            if (!window.YT) {
+                showError('Không thể tải API YouTube. Kiểm tra kết nối mạng hoặc AdBlock.');
+            } else if (!player) {
+                // Nếu YT có nhưng player chưa được khởi tạo (có thể onYouTubeIframeAPIReady chưa chạy)
+                console.log('YT đã có nhưng player chưa được khởi tạo, thử khởi tạo thủ công');
+                onYouTubeIframeAPIReady();
+            }
+        }, 5000);
     </script>
 </body>
 </html>
