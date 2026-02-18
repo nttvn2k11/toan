@@ -27,7 +27,6 @@
             transform: translate(-6px, -6px);
             box-shadow: 10px 10px 0px #000;
         }
-        /* Nút nhạc cố định dưới góc phải */
         .music-control {
             position: fixed;
             bottom: 20px;
@@ -59,7 +58,7 @@
 </head>
 <body class="antialiased">
 
-    <!-- Nhạc nền YouTube (ẩn) -->
+    <!-- Ẩn player YouTube -->
     <div id="youtube-player" style="display: none;"></div>
 
     <!-- Nút mở/đóng bảng điều khiển nhạc -->
@@ -86,8 +85,8 @@
             <button id="stopBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">⏹ Dừng</button>
         </div>
         <div class="mt-3 text-xs text-gray-400 flex items-center">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2"></span>
-            Sẵn sàng
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2" id="statusIndicator"></span>
+            <span id="statusText">Đang tải player...</span>
         </div>
     </div>
 
@@ -117,9 +116,8 @@
                 <p class="text-xl text-gray-500 font-medium tracking-tight">Phát triển bởi Nguyễn Tấn Tài</p>
             </div>
 
-            <!-- Grid chức năng (giữ nguyên) -->
+            <!-- Grid chức năng -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-                <!-- Các menu card giống như đã có, không thay đổi -->
                 <div class="menu-card" onclick="window.location.href = 'code1.html'">
                     <div class="text-xl font-bold mb-2 text-black uppercase">Giải Phương Trình & Hệ Phương Trình</div>
                     <div class="text-sm mb-4 font-mono text-blue-500 font-bold tracking-widest">Đại số cơ bản</div>
@@ -221,12 +219,15 @@
                 <div class="text-lg font-black italic">NGUYỄN TẤN TÀI</div>
                 <div class="mt-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">© 2026 - Công cụ hỗ trợ ôn tập Toán học Việt Nam</div>
             </div>
-        </div> <!-- end mainMenu -->
+        </div>
     </main>
 
     <script>
-        // YouTube IFrame API: khởi tạo player
+        // Biến toàn cục
         var player;
+        var playerReady = false;
+
+        // Hàm được gọi khi API YouTube sẵn sàng
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
                 height: '0',
@@ -239,15 +240,32 @@
                     modestbranding: 1
                 },
                 events: {
-                    'onReady': onPlayerReady
+                    'onReady': function(event) {
+                        console.log('YouTube player ready');
+                        playerReady = true;
+                        document.getElementById('statusText').innerText = 'Sẵn sàng';
+                        document.getElementById('statusIndicator').classList.remove('bg-green-500');
+                        document.getElementById('statusIndicator').classList.add('bg-green-500');
+                    },
+                    'onError': function(event) {
+                        console.error('YouTube player error:', event.data);
+                        let errorMsg = 'Lỗi không xác định';
+                        switch(event.data) {
+                            case 2: errorMsg = 'ID video không hợp lệ'; break;
+                            case 5: errorMsg = 'Lỗi HTML5 player'; break;
+                            case 100: errorMsg = 'Video không tồn tại hoặc bị ẩn'; break;
+                            case 101: errorMsg = 'Video không cho phép phát nhúng'; break;
+                        }
+                        alert('Lỗi phát nhạc: ' + errorMsg);
+                        document.getElementById('statusText').innerText = 'Lỗi: ' + errorMsg;
+                        document.getElementById('statusIndicator').classList.remove('bg-green-500');
+                        document.getElementById('statusIndicator').classList.add('bg-red-500');
+                    }
                 }
             });
         }
-        function onPlayerReady(event) {
-            console.log('YouTube player ready');
-        }
 
-        // Hàm lấy video ID từ link YouTube
+        // Hàm trích xuất video ID từ link YouTube
         function extractVideoId(url) {
             const patterns = [
                 /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&]+)/,
@@ -277,15 +295,21 @@
             }
             const videoId = extractVideoId(link);
             if (!videoId) {
-                alert('Link YouTube không hợp lệ!');
+                alert('Link YouTube không hợp lệ! Hãy dùng link dạng: https://youtu.be/... hoặc https://www.youtube.com/watch?v=...');
                 return;
             }
-            if (player && player.loadVideoById) {
+            if (!playerReady) {
+                alert('Player chưa sẵn sàng, vui lòng đợi vài giây rồi thử lại.');
+                return;
+            }
+            try {
                 player.loadVideoById(videoId);
-                // Tự động phát (có thể bị chặn nếu chưa có tương tác trước)
                 player.playVideo();
-            } else {
-                alert('Player chưa sẵn sàng, vui lòng thử lại sau giây lát.');
+                console.log('Đang phát video ID:', videoId);
+                document.getElementById('statusText').innerText = 'Đang phát...';
+            } catch (e) {
+                console.error('Lỗi khi phát:', e);
+                alert('Không thể phát nhạc. Xem console để biết thêm chi tiết.');
             }
         });
 
@@ -293,6 +317,7 @@
         document.getElementById('pauseBtn').addEventListener('click', () => {
             if (player && player.pauseVideo) {
                 player.pauseVideo();
+                document.getElementById('statusText').innerText = 'Tạm dừng';
             }
         });
 
@@ -300,15 +325,19 @@
         document.getElementById('stopBtn').addEventListener('click', () => {
             if (player && player.stopVideo) {
                 player.stopVideo();
+                document.getElementById('statusText').innerText = 'Đã dừng';
             }
         });
 
-        // Đóng panel khi click ra ngoài? (tùy chọn)
+        // Đóng panel khi click ra ngoài
         document.addEventListener('click', (e) => {
             if (!panel.contains(e.target) && !toggleBtn.contains(e.target) && !panel.classList.contains('hidden')) {
                 panel.classList.add('hidden');
             }
         });
+
+        // Cập nhật trạng thái ban đầu
+        document.getElementById('statusText').innerText = 'Đang tải player...';
     </script>
 </body>
 </html>
