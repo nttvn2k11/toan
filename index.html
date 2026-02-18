@@ -32,7 +32,7 @@
         }
         /* Menu card đẹp, tối giản */
         .menu-card {
-            border: 3px solid #b45309; /* nâu đỏ (màu ngựa) */
+            border: 3px solid #b45309;
             padding: 30px;
             transition: all 0.3s ease;
             background: white;
@@ -42,11 +42,34 @@
         }
         .menu-card:hover {
             transform: translate(-6px, -6px);
-            box-shadow: 12px 12px 0 #d97706; /* vàng nâu */
+            box-shadow: 12px 12px 0 #d97706;
         }
         .cau-doi {
             font-family: 'Great Vibes', cursive;
             color: #b45309;
+        }
+        /* Music panel */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .music-panel {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 340px;
+            background: #fff8e7;
+            border: 3px solid #d97706;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 8px 8px 0 #b45309;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+        .music-panel.hidden {
+            display: none;
         }
         @media print {
             .no-print {
@@ -60,7 +83,34 @@
     <!-- Hiệu ứng hoa rơi nhẹ (có thể tắt bằng nút) -->
     <div id="petal-container" class="no-print"></div>
 
-    <!-- Navbar đơn giản -->
+    <!-- Nút mở bảng điều khiển nhạc (chỉ MP3) -->
+    <div class="music-control no-print">
+        <button id="toggleMusicBtn" class="bg-amber-800 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform border-2 border-amber-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Bảng điều khiển nhạc MP3 (hỗ trợ nhiều định dạng) -->
+    <div id="musicPanel" class="music-panel hidden no-print">
+        <h3 class="font-black text-lg mb-3 flex items-center">
+            <span class="bg-amber-800 text-white px-2 py-1 text-xs rounded mr-2">🎵 TẢI NHẠC</span>
+            MP3 & các định dạng khác
+        </h3>
+        <p class="text-xs text-gray-600 mb-2">Chọn file âm thanh (MP3, WAV, OGG, M4A, FLAC,...):</p>
+        <input type="file" id="audioFile" accept="audio/*" class="w-full border-2 border-amber-800 p-2 text-sm rounded-lg mb-3">
+        <audio id="audioPlayer" controls class="w-full mb-3" style="height: 40px;"></audio>
+        <div class="flex gap-2">
+            <button id="playAudioBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-green-700 transition">▶ Phát</button>
+            <button id="pauseAudioBtn" class="bg-yellow-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-yellow-700 transition">⏸️ Tạm dừng</button>
+            <button id="stopAudioBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">⏹ Dừng</button>
+        </div>
+        <div class="mt-2 text-xs text-gray-500">Âm lượng: <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" class="w-full"></div>
+        <p class="text-xs text-gray-400 mt-2 italic">Hỗ trợ hầu hết định dạng âm thanh phổ biến.</p>
+    </div>
+
+    <!-- Navbar -->
     <nav class="no-print sticky top-0 bg-white/95 backdrop-blur-md border-b-2 border-amber-200 z-50 px-6 py-4 flex items-center justify-between">
         <div class="flex items-center space-x-3">
             <div class="bg-amber-800 text-white p-2 rounded-xl">
@@ -96,14 +146,14 @@
             </div>
         </div>
 
-        <!-- MAIN MENU (giữ nguyên nội dung) -->
+        <!-- MAIN MENU (giữ nguyên) -->
         <div id="mainMenu">
             <div class="text-center mb-10">
                 <h1 class="text-5xl font-black mb-4 tracking-tighter italic bg-gradient-to-r from-amber-800 to-amber-500 text-transparent bg-clip-text">Hệ Thống Ôn Thi Thông Minh</h1>
                 <p class="text-xl text-gray-500 font-medium tracking-tight">Phát triển bởi Nguyễn Tấn Tài</p>
             </div>
 
-            <!-- Grid chức năng (không icon) -->
+            <!-- Grid chức năng -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                 <div class="menu-card" onclick="window.location.href = 'code1.html'">
                     <div class="text-xl font-bold mb-2 text-amber-800 uppercase">Giải Phương Trình & Hệ Phương Trình</div>
@@ -167,7 +217,7 @@
                 </div>
             </div>
 
-            <!-- Ghi chú quan trọng (giữ nguyên) -->
+            <!-- Ghi chú quan trọng -->
             <div class="bg-gray-50 border-2 border-amber-800 p-8 rounded-2xl">
                 <h2 class="text-2xl font-black mb-8 border-b-2 border-amber-800 pb-4 flex items-center uppercase italic">
                     <svg class="mr-3 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
@@ -210,7 +260,7 @@
     </main>
 
     <script>
-        // Hiệu ứng hoa rơi (tùy chọn)
+        // ==================== HIỆU ỨNG HOA RƠI ====================
         const petalContainer = document.getElementById('petal-container');
         let petalInterval;
         let petalEnabled = true;
@@ -241,6 +291,61 @@
             } else {
                 petalInterval = setInterval(createPetal, 500);
             }
+        });
+
+        // ==================== XỬ LÝ MP3 & AUDIO ====================
+        const toggleBtn = document.getElementById('toggleMusicBtn');
+        const panel = document.getElementById('musicPanel');
+
+        toggleBtn.addEventListener('click', () => {
+            panel.classList.toggle('hidden');
+        });
+
+        // Đóng panel khi click ra ngoài
+        document.addEventListener('click', (e) => {
+            if (!panel.contains(e.target) && !toggleBtn.contains(e.target) && !panel.classList.contains('hidden')) {
+                panel.classList.add('hidden');
+            }
+        });
+
+        const audioFile = document.getElementById('audioFile');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playBtn = document.getElementById('playAudioBtn');
+        const pauseBtn = document.getElementById('pauseAudioBtn');
+        const stopBtn = document.getElementById('stopAudioBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        // Khi chọn file
+        audioFile.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audioPlayer.src = url;
+                audioPlayer.load();
+                // Tự động phát sau khi chọn (có thể bỏ nếu muốn)
+                audioPlayer.play().catch(() => {});
+            }
+        });
+
+        playBtn.addEventListener('click', () => {
+            if (audioPlayer.src) {
+                audioPlayer.play();
+            } else {
+                alert('Vui lòng chọn file âm thanh trước.');
+            }
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+        });
+
+        stopBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audioPlayer.volume = e.target.value;
         });
     </script>
 </body>
