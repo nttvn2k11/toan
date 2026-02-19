@@ -95,16 +95,16 @@
     <!-- Bảng điều khiển nhạc MP3 (hỗ trợ nhiều định dạng) -->
     <div id="musicPanel" class="music-panel hidden no-print">
         <h3 class="font-black text-lg mb-3 flex items-center">
-            <span class="bg-amber-800 text-white px-2 py-1 text-xs rounded mr-2">🎵 TẢI NHẠC</span>
+            <span class="bg-amber-800 text-white px-2 py-1 text-xs rounded mr-2">TẢI NHẠC</span>
             MP3 & các định dạng khác
         </h3>
         <p class="text-xs text-gray-600 mb-2">Chọn file âm thanh (MP3, WAV, OGG, M4A, FLAC,...):</p>
         <input type="file" id="audioFile" accept="audio/*" class="w-full border-2 border-amber-800 p-2 text-sm rounded-lg mb-3">
         <audio id="audioPlayer" controls class="w-full mb-3" style="height: 40px;"></audio>
         <div class="flex gap-2">
-            <button id="playAudioBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-green-700 transition">▶ Phát</button>
-            <button id="pauseAudioBtn" class="bg-yellow-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-yellow-700 transition">⏸️ Tạm dừng</button>
-            <button id="stopAudioBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">⏹ Dừng</button>
+            <button id="playAudioBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-green-700 transition">Phát</button>
+            <button id="pauseAudioBtn" class="bg-yellow-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-yellow-700 transition">Tạm dừng</button>
+            <button id="stopAudioBtn" class="bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm flex-1 hover:bg-red-700 transition">Dừng</button>
         </div>
         <div class="mt-2 text-xs text-gray-500">Âm lượng: <input type="range" id="volumeSlider" min="0" max="1" step="0.1" value="0.5" class="w-full"></div>
         <p class="text-xs text-gray-400 mt-2 italic">Hỗ trợ hầu hết định dạng âm thanh phổ biến.</p>
@@ -215,7 +215,14 @@
                         <p>• Ứng dụng giải bài nâng cao</p>
                     </div>
                 </div>
-            </div>
+                 <div class="menu-card" onclick="window.location.href = 'dethi.html'">
+                    <div class="text-xl font-bold mb-2 text-amber-800 uppercase"Đề thi minh họa</div>
+                    <div class="text-sm mb-4 font-mono text-emerald-500 font-bold tracking-widest">TAnonymous</div>
+                    <div class="text-xs text-gray-500 leading-relaxed text-left space-y-1">
+                        <p>• Theo cấu trúc đề thi đồng tháp 2026</p
+                    </div>
+                </div>
+                 </div>
 
             <!-- Ghi chú quan trọng -->
             <div class="bg-gray-50 border-2 border-amber-800 p-8 rounded-2xl">
