@@ -3,926 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề Thi Tuyển Sinh Lớp 10 Minh Họa</title>
+    <title>Đề Thi Tuyển Sinh Lớp 10 - Đồng Tháp (Đề Minh Họa)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body { background-color: #f1f5f9; font-family: 'Times New Roman', Times, serif; }
+        .exam-paper { max-width: 210mm; margin: 20px auto; background: white; padding: 15mm; box-shadow: 0 0 20px rgba(0,0,0,0.1); min-height: 297mm; position: relative; }
+        .question-block { margin-bottom: 18px; page-break-inside: avoid; border-bottom: 1px dashed #eee; padding-bottom: 10px; }
+        .opt-label { font-weight: bold; margin-right: 4px; }
+        .option-item { cursor: pointer; padding: 6px 10px; border-radius: 6px; transition: all 0.2s; border: 1px solid transparent; }
+        .option-item:hover { background-color: #f8fafc; border-color: #cbd5e1; }
+        .selected-correct { background-color: #dcfce7 !important; color: #15803d; border-color: #22c55e !important; font-weight: bold; }
+        .selected-wrong { background-color: #fee2e2 !important; color: #b91c1c; border-color: #ef4444 !important; }
+        .section-title { font-weight: bold; text-transform: uppercase; margin-top: 25px; margin-bottom: 15px; color: #1e293b; border-left: 4px solid #1e293b; padding-left: 10px; }
         
-        body {
-            background-color: #f0f2f5;
-            font-family: 'Times New Roman', Times, serif;
-        }
-        .exam-container {
-            max-width: 950px;
-            margin: 20px auto;
-            background: white;
-            padding: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        .header-table {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        .question {
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #edf2f7;
-            transition: all 0.3s;
-        }
-        .question:hover {
-            border-color: #cbd5e0;
-            background-color: #fcfcfc;
-        }
-        .options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-        }
-        .option-btn {
-            text-align: left;
-            padding: 12px 15px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            transition: all 0.2s;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        .option-btn:hover {
-            background-color: #edf2f7;
-            border-color: #a0aec0;
-        }
-        .correct {
-            background-color: #def7ec !important;
-            border-color: #31c48d !important;
-            color: #03543f !important;
-            font-weight: bold;
-        }
-        .incorrect {
-            background-color: #fde8e8 !important;
-            border-color: #f05252 !important;
-            color: #9b1c1c !important;
-        }
-        .hint-box {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            background-color: #ebf5ff;
-            border-left: 4px solid #1c64f2;
-            font-size: 0.95em;
-            color: #1e429f;
-        }
-        .sticky-nav {
-            position: sticky;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-            z-index: 50;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        @media (max-width: 640px) {
-            .options { grid-template-columns: 1fr; }
-            .exam-container { padding: 15px; margin: 10px; }
-        }
+        .key-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin-top: 20px; }
+        .key-item { text-align: center; border: 1px solid #e2e8f0; padding: 4px; font-size: 13px; background: #f8fafc; }
+
         @media print {
-            .no-print { display: none !important; }
-            .exam-container { box-shadow: none; width: 100%; margin: 0; padding: 0; }
-            .question { page-break-inside: avoid; border: none; border-bottom: 1px solid #eee; }
             body { background: white; }
+            .exam-paper { box-shadow: none; margin: 0; width: 100%; padding: 10mm; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
 <body>
 
-<nav class="no-print sticky-nav py-3 px-4 shadow-sm">
-    <div class="max-w-5xl mx-auto flex flex-wrap justify-between items-center gap-4">
-        <div class="flex space-x-2">
-            <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition">Xuất PDF</button>
-            <button onclick="toggleTimer()" id="timerBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-emerald-700 transition">Bắt đầu</button>
-            <button onclick="confirmReset()" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 transition">Làm lại</button>
+<div class="no-print fixed top-0 left-0 w-full bg-white/90 backdrop-blur shadow-md p-3 z-50 flex justify-center gap-4 items-center">
+    <button onclick="location.reload()" class="bg-indigo-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-indigo-700 transition shadow-lg">🔄 Tạo Đề Ngẫu Nhiên Mới</button>
+    <button onclick="window.print()" class="bg-slate-700 text-white px-5 py-2 rounded-lg font-bold hover:bg-slate-800 transition shadow-lg">🖨️ In Đề (PDF)</button>
+    <div class="text-xl font-mono font-bold text-red-600 px-4 py-1 border-2 border-red-200 rounded-full bg-red-50" id="timer">90:00</div>
+    <div class="text-xl font-bold text-indigo-800 px-4 py-1 border-2 border-indigo-200 rounded-full bg-indigo-50" id="score">Điểm: 0.0</div>
+</div>
+
+<div class="exam-paper mt-24" id="exam-container">
+    <!-- Tiêu đề -->
+    <div class="flex justify-between mb-8">
+        <div class="text-center w-5/12">
+            <p class="font-bold text-sm uppercase">SỞ GIÁO DỤC VÀ ĐÀO TẠO</p>
+            <p class="font-bold text-sm uppercase underline underline-offset-4">ĐỒNG THÁP</p>
+            <p class="mt-4 text-xs font-semibold text-red-600">ĐỀ MINH HỌA TUYỂN SINH</p>
+            <p class="text-[10px] italic">(Mã đề: 2026-DT-FIX)</p>
         </div>
-        <div class="flex items-center space-x-6">
-            <div id="score-box" class="text-blue-700 font-bold text-lg">Điểm: 0.0/10</div>
-            <div id="timerDisplay" class="bg-gray-100 px-3 py-1 rounded font-mono text-xl font-bold text-gray-800">90:00</div>
-        </div>
-    </div>
-</nav>
-
-<div class="exam-container">
-    <table class="header-table">
-        <tr>
-            <td class="text-center w-1/2 align-top">
-                <h2 class="font-bold text-sm uppercase">Ủy ban nhân dân tỉnh Đồng Tháp</h2>
-                <h1 class="font-bold text-base uppercase border-b-2 border-black inline-block px-2">Sở Giáo dục và Đào tạo</h1>
-                <p class="mt-2 text-xs">ĐỀ THI CHÍNH THỨC</p>
-            </td>
-            <td class="text-center w-1/2 align-top">
-                <h2 class="font-bold text-base uppercase">Kỳ thi tuyển sinh lớp 10 THPT</h2>
-                <h2 class="font-bold text-base">Năm học: 2026 – 2027</h2>
-                <p class="font-bold mt-1">Môn thi: TOÁN</p>
-                <p class="text-sm">Ngày thi: .../.../2026</p>
-                <p class="text-sm italic">Thời gian: 90 phút (không kể thời gian phát đề)</p>
-            </td>
-        </tr>
-    </table>
-
-    <div class="bg-gray-50 p-4 rounded-lg mb-8 text-sm text-gray-600 border-l-4 border-gray-400">
-        <strong>Lưu ý:</strong> Đề thi gồm 50 câu trắc nghiệm khách quan được chọn ngẫu nhiên từ ngân hàng hơn 5000 câu hỏi. Mỗi câu trả lời đúng được 0.2 điểm. Học sinh có thể nhấp trực tiếp vào đáp án để nhận phản hồi ngay lập tức hoặc in ra để luyện tập.
-    </div>
-
-    <div id="exam-content">
-        <div class="flex justify-center items-center py-20 text-gray-400">
-            <p>Đang tải câu hỏi...</p>
+        <div class="text-center w-7/12">
+            <p class="font-bold text-base uppercase text-gray-800">KỲ THI TUYỂN SINH LỚP 10 THPT</p>
+            <p class="font-bold text-base uppercase text-gray-800">NĂM HỌC 2026 - 2027</p>
+            <p class="font-bold text-blue-700">Môn thi: TOÁN</p>
+            <p class="italic text-sm">Thời gian: 90 phút (Không kể thời gian phát đề)</p>
         </div>
     </div>
 
-    <div class="mt-12 text-center border-t border-gray-200 pt-8 pb-4">
-        <p class="font-bold tracking-widest text-gray-400 uppercase">--- Hết ---</p>
-        <p class="text-xs text-gray-400 mt-2">Cán bộ coi thi không giải thích gì thêm.</p>
+    <!-- Thông tin thí sinh -->
+    <div class="border-y border-black py-2 mb-6 flex justify-between text-sm italic">
+        <span>Họ và tên thí sinh: ...........................................................</span>
+        <span>Số báo danh: ...........................</span>
+    </div>
+
+    <!-- Nội dung câu hỏi -->
+    <div id="quiz-body"></div>
+
+    <div class="text-center font-bold mt-10 border-t-2 border-black pt-4 uppercase">--- HẾT ---</div>
+
+    <!-- Bảng đáp án -->
+    <div class="mt-16 page-break-before no-print">
+        <h3 class="font-bold text-center uppercase mb-4 text-lg text-slate-700">BẢNG ĐÁP ÁN THAM KHẢO</h3>
+        <div id="answer-key-display" class="key-grid"></div>
     </div>
 </div>
 
 <script>
-    // ======================== NGÂN HÀNG 5000+ CÂU HỎI ========================
-    function generateQuestionBank(size = 5000) {
-        const bank = [];
+    const QuestionsDB = {
+        algebra: {
+            radicals: [
+                { q: "Điều kiện xác định của biểu thức \\(\\sqrt{x-5}\\) là:", a: ["\\(x \\geq 5\\)", "\\(x > 5\\)", "\\(x < 5\\)", "\\(x \\leq 5\\)"], c: 0 },
+                { q: "Giá trị của biểu thức \\(\\sqrt{121}\\) bằng:", a: ["11", "-11", "22", "121"], c: 0 },
+                { q: "Trục căn thức ở mẫu của biểu thức \\(\\frac{2}{\\sqrt{3}-1}\\):", a: ["\\(\\sqrt{3}+1\\)", "\\(\\frac{\\sqrt{3}+1}{2}\\)", "\\(\\sqrt{3}-1\\)", "\\(2(\\sqrt{3}+1)\\)"], c: 0 },
+                { q: "Kết quả của phép tính \\(\\sqrt{2} \\cdot \\sqrt{18}\\) là:", a: ["6", "4", "36", "10"], c: 0 },
+                { q: "Rút gọn biểu thức \\(\\sqrt{48} - \\sqrt{27} + \\sqrt{3}\\) là:", a: ["\\(2\\sqrt{3}\\)", "\\(3\\sqrt{3}\\)", "\\(\\sqrt{3}\\)", "0"], c: 0 },
+                { q: "So sánh \\(3\\sqrt{2}\\) và \\(\\sqrt{17}\\) ta có:", a: ["\\(3\\sqrt{2} > \\sqrt{17}\\)", "\\(3\\sqrt{2} < \\sqrt{17}\\)", "\\(3\\sqrt{2} = \\sqrt{17}\\)", "Không so sánh được"], c: 0 },
+                { q: "Rút gọn biểu thức \\(P = \\frac{x-1}{\\sqrt{x}+1}\\) với \\(x \\geq 0\\):", a: ["\\(\\sqrt{x}-1\\)", "\\(\\sqrt{x}+1\\)", "x-1", "1"], c: 0 },
+                { q: "Giá trị của biểu thức \\(\\sqrt{(\\sqrt{2}-2)^2}\\) là:", a: ["\\(2-\\sqrt{2}\\)", "\\(\\sqrt{2}-2\\)", "2", "0"], c: 0 },
+                { q: "Tìm x biết \\(\\sqrt{x} = 4\\):", a: ["x = 16", "x = 2", "x = 4", "x = 8"], c: 0 },
+                { q: "Điều kiện xác định của \\(\\sqrt{\\frac{1}{x-2}}\\):", a: ["x > 2", "x \\geq 2", "x \\neq 2", "x < 2"], c: 0 }
+            ],
+            eqSystems: [
+                { q: "Phương trình nào sau đây là phương trình bậc nhất một ẩn?", a: ["2x - 1 = 0", "x^2 - 1 = 0", "0x + 3 = 0", "1/x + 2 = 0"], c: 0 },
+                { q: "Nghiệm của hệ phương trình \\(\\begin{cases} x+y=3 \\\\ x-y=1 \\end{cases}\\) là:", a: ["(2; 1)", "(1; 2)", "(3; 0)", "(0; 3)"], c: 0 },
+                { q: "Tìm m để đường thẳng \\(y = (m-2)x + 3\\) đi qua điểm A(1; 2):", a: ["m = 1", "m = 2", "m = 3", "m = 0"], c: 0 },
+                { q: "Mua 5kg xoài và quýt hết 170k. Biết giá xoài 30k/kg, quýt 40k/kg. Số kg xoài là:", a: ["3kg", "2kg", "4kg", "1kg"], c: 0 },
+                { q: "Hệ phương trình \\(\\begin{cases} ax+y=2 \\\\ x+y=1 \\end{cases}\\) vô nghiệm khi a bằng:", a: ["1", "0", "-1", "2"], c: 0 },
+                { q: "Nghiệm của phương trình \\(\\frac{x}{x-1} + \\frac{1}{x} = 1\\) là:", a: ["x = -1", "x = 1", "x = 0", "Vô nghiệm"], c: 0 }
+            ],
+            functions: [
+                { q: "Hàm số \\(y = -3x^2\\) đồng biến khi:", a: ["x < 0", "x > 0", "x \\in R", "x \\neq 0"], c: 0 },
+                { q: "Tìm m để phương trình \\(x^2 - 2x + m = 0\\) có nghiệm kép:", a: ["m = 1", "m = -1", "m = 0", "m = 4"], c: 0 },
+                { q: "Cho phương trình \\(x^2 - 5x + 6 = 0\\). Tổng hai nghiệm S là:", a: ["5", "-5", "6", "-6"], c: 0 },
+                { q: "Tìm m để đồ thị hàm số \\(y = mx^2\\) đi qua điểm M(-1; 2):", a: ["m = 2", "m = -2", "m = 1", "m = 4"], c: 0 },
+                { q: "Tìm m để phương trình \\(x^2 - (m+1)x + m = 0\\) có hai nghiệm phân biệt:", a: ["m \\neq 1", "m = 1", "m > 1", "Mọi m"], c: 0 },
+                { q: "Viète vận dụng: Tìm m để \\(x^2 - 2x + m - 3 = 0\\) có nghiệm thỏa mãn \\(x_1^2 + x_2^2 = 10\\):", a: ["m = 0", "m = 1", "m = 3", "m = -1"], c: 0 }
+            ],
+            inequalities: [
+                { q: "Nghiệm của bất phương trình \\(2x - 4 > 0\\) là:", a: ["x > 2", "x < 2", "x \\geq 2", "x \\leq 2"], c: 0 },
+                { q: "Số nguyên dương x nhỏ nhất thỏa mãn \\(3x + 1 \\geq 10\\) là:", a: ["3", "4", "2", "1"], c: 0 },
+                { q: "Cho a < b, khẳng định nào đúng?", a: ["-2a > -2b", "2a > 2b", "a - 1 > b", "a/2 > b/2"], c: 0 },
+                { q: "Hình biểu diễn tập nghiệm \\(x \\leq 3\\) trên trục số là:", a: ["Nửa bên trái số 3, ngoặc vuông", "Nửa bên phải số 3", "Nửa bên trái, ngoặc tròn", "Đoạn 0 đến 3"], c: 0 }
+            ]
+        },
+        geometry: {
+            rightTriangle: [
+                { q: "Cho tam giác ABC vuông tại A, AH là đường cao. Hệ thức nào đúng?", a: ["AH^2 = BH.CH", "AB^2 = AH.BC", "BC^2 = AB.AC", "AH^2 = AB.AC"], c: 0 },
+                { q: "Trong tam giác vuông, sin của góc 30 độ bằng:", a: ["1/2", "\\(\\sqrt{3}/2\\)", "1", "\\(\\sqrt{2}/2\\)"], c: 0 },
+                { q: "Cho tam giác ABC vuông tại A có AB=3, AC=4. Độ dài AH là:", a: ["2,4", "5", "12", "7"], c: 0 },
+                { q: "Một cái thang dài 4m dựa vào tường tạo góc 60 độ. Chân thang cách tường:", a: ["2m", "\\(2\\sqrt{3}m\\)", "4m", "3m"], c: 0 }
+            ],
+            circles: [
+                { q: "Góc nội tiếp chắn nửa đường tròn là góc:", a: ["90 độ", "60 độ", "180 độ", "45 độ"], c: 0 },
+                { q: "Đường thẳng và đường tròn có tối đa bao nhiêu điểm chung?", a: ["2", "1", "0", "Vô số"], c: 0 },
+                { q: "Số đo góc nội tiếp bằng:", a: ["1/2 số đo cung bị chắn", "Số đo cung bị chắn", "2 lần số đo cung", "90 độ"], c: 0 },
+                { q: "Khoảng cách từ tâm O đến dây AB là 3cm, R=5cm. AB bằng:", a: ["8cm", "4cm", "6cm", "10cm"], c: 0 }
+            ],
+            polygons: [
+                { q: "Tứ giác nội tiếp có tổng hai góc đối bằng:", a: ["180 độ", "90 độ", "360 độ", "270 độ"], c: 0 },
+                { q: "Đa giác đều có 6 cạnh thì mỗi góc ở đỉnh bằng:", a: ["120 độ", "60 độ", "90 độ", "108 độ"], c: 0 },
+                { q: "Phép quay tâm O góc 90 độ biến điểm A(1; 0) thành điểm:", a: ["(0; 1)", "(0; -1)", "(-1; 0)", "(1; 1)"], c: 0 },
+                { q: "Diện tích hình quạt tròn bán kính R, cung 60 độ là:", a: ["\\(\\frac{\\pi R^2}{6}\\)", "\\(\\frac{\\pi R}{3}\\)", "\\(\\frac{\\pi R^2}{3}\\)", "6\\pi R"], c: 0 },
+                { q: "Lục giác đều nội tiếp đường tròn (O; R) có cạnh bằng:", a: ["R", "R/2", "\\(R\\sqrt{3}\\)", "2R"], c: 0 },
+                { q: "Cho đường tròn (O), dây AB, M là trung điểm AB. Khẳng định đúng:", a: ["OM \\perp AB", "OM // AB", "OM = AB", "OA = AB"], c: 0 },
+                { q: "Hình nào luôn nội tiếp được đường tròn?", a: ["Hình chữ nhật", "Hình thoi", "Hình bình hành", "Hình thang"], c: 0 }
+            ],
+            spatial: [
+                { q: "Diện tích xung quanh hình trụ có bán kính r, cao h là:", a: ["\\(2\\pi rh\\)", "\\(\\pi r^2h\\)", "\\(\\pi rl\\)", "4\\pi r^2"], c: 0 },
+                { q: "Thể tích khối nón có bán kính đáy R, chiều cao h là:", a: ["\\(\\frac{1}{3} \\pi R^2 h\\)", "\\(\\pi R^2 h\\)", "\\(2 \\pi R h\\)", "\\(\\frac{4}{3} \\pi R^3\\)"], c: 0 },
+                { q: "Diện tích mặt cầu bán kính R=3cm là:", a: ["\\(36\\pi\\) cm^2", "9\\pi", "12\\pi", "108\\pi"], c: 0 },
+                { q: "Bồn hình trụ cao 2m, đường kính đáy 1m. Thể tích nước tối đa:", a: ["1,57 m^3", "3,14 m^3", "6,28 m^3", "0,78 m^3"], c: 0 }
+            ]
+        },
+        statsProb: {
+            stats: [
+                { q: "Số trung bình của dãy số 4, 6, 8, 10 là:", a: ["7", "8", "6", "28"], c: 0 },
+                { q: "Mốt của dãy số 2, 5, 8, 5, 3, 5 là:", a: ["5", "2", "8", "3"], c: 0 },
+                { q: "Giá trị đại diện của nhóm [10; 20) là:", a: ["15", "10", "20", "30"], c: 0 },
+                { q: "Biểu đồ nào sau đây biểu diễn tốt nhất sự thay đổi dân số?", a: ["Biểu đồ đường", "Biểu đồ quạt", "Bảng tần số", "Biểu đồ tranh"], c: 0 }
+            ],
+            prob: [
+                { q: "Gieo một con xúc xắc. Xác suất xuất hiện mặt chẵn là:", a: ["1/2", "1/6", "1/3", "2/3"], c: 0 },
+                { q: "Lấy ngẫu nhiên số từ 1 đến 10. Xác suất lấy được số nguyên tố:", a: ["0,4", "0,5", "0,3", "0,2"], c: 0 },
+                { q: "Hộp có 5 bông sen hồng, 3 bông sen trắng. Xác suất lấy được sen hồng:", a: ["5/8", "3/8", "1/2", "1/8"], c: 0 }
+            ]
+        }
+    };
+
+    function shuffle(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function getRandom(arr, n) {
+        return shuffle([...arr]).slice(0, n);
+    }
+
+    function selectOption(qIdx, sIdx, cIdx) {
+        const block = document.getElementById(`q-block-${qIdx}`);
+        if (block.dataset.answered === "true") return;
+
+        block.dataset.answered = "true";
+        const options = block.querySelectorAll('.option-item');
         
-        // Hàm random trong khoảng [min, max]
-        const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-        
-        // Danh sách các mẫu câu hỏi (template) kèm theo hàm sinh đáp án
-        const templates = [
-            // Căn bậc hai số học
-            {
-                gen: () => {
-                    const n = rand(1, 20);
-                    return {
-                        q: `Căn bậc hai số học của ${n*n} là:`,
-                        o: [`${n}`, `${-n}`, `±${n}`, `${n*n*n}`],
-                        c: 0,
-                        h: `Căn bậc hai số học của một số không âm a là số không âm x sao cho x² = a.`
-                    };
-                }
-            },
-            // Điều kiện căn thức
-            {
-                gen: () => {
-                    const a = rand(1, 5);
-                    const b = rand(-5, 5);
-                    const c = rand(0, 10);
-                    return {
-                        q: `Điều kiện xác định của \\(\\sqrt{${a}x ${b >= 0 ? '+' : '-'} ${Math.abs(b)}}\\) là:`,
-                        o: [`x > ${-b/a}`, `x \\geq ${-b/a}`, `x < ${-b/a}`, `x \\leq ${-b/a}`],
-                        c: 1,
-                        h: `Điều kiện: biểu thức dưới căn ≥ 0.`
-                    };
-                }
-            },
-            // Rút gọn căn thức
-            {
-                gen: () => {
-                    const n = rand(2, 10);
-                    const m = rand(2, 5);
-                    return {
-                        q: `Rút gọn biểu thức \\(\\sqrt{${n*n*m}} - \\sqrt{${m}}\\) ta được:`,
-                        o: [`${n*m}`, `${n*n*m - m}`, `\\sqrt{${m}}`, `${n-1}\\sqrt{${m}}`],
-                        c: 3,
-                        h: `\\(\\sqrt{${n*n*m}} = ${n}\\sqrt{${m}}\\).`
-                    };
-                }
-            },
-            // Giá trị tuyệt đối trong căn
-            {
-                gen: () => {
-                    const a = rand(2, 5);
-                    const b = a + rand(1, 3);
-                    return {
-                        q: `Giá trị của \\(\\sqrt{(${a} - ${b})^2}\\) là:`,
-                        o: [`${a-b}`, `${b-a}`, `${a+b}`, `${-a-b}`],
-                        c: 1,
-                        h: `\\(\\sqrt{A^2} = |A|\\). Vì ${a} < ${b} nên ${a}-${b} âm.`
-                    };
-                }
-            },
-            // Trục căn thức
-            {
-                gen: () => {
-                    const n = rand(2, 7);
-                    return {
-                        q: `Trục căn thức ở mẫu \\(\\frac{${rand(1,5)}}{\\sqrt{${n}}}\\):`,
-                        o: [`\\(\\frac{${rand(1,5)}\\sqrt{${n}}}{${n}}\\)`, `\\(\\frac{\\sqrt{${n}}}{${n}}\\)`, `\\(${rand(1,5)}\\sqrt{${n}}\\)`, `\\(\\sqrt{${n*2}}\\)`],
-                        c: 0,
-                        h: `Nhân cả tử và mẫu với √${n}.`
-                    };
-                }
-            },
-            // Nhân căn bậc hai
-            {
-                gen: () => {
-                    const a = rand(2, 10);
-                    const b = rand(2, 10);
-                    return {
-                        q: `Kết quả phép tính \\(\\sqrt{${a*a} \\cdot ${b*b}}\\) là:`,
-                        o: [`${a*b}`, `${a+b}`, `${a*b*10}`, `${a+b*2}`],
-                        c: 0,
-                        h: `\\(\\sqrt{a \\cdot b} = \\sqrt{a} \\cdot \\sqrt{b} = ${a} \\cdot ${b}\\).`
-                    };
-                }
-            },
-            // Cộng trừ căn đồng dạng
-            {
-                gen: () => {
-                    const a = rand(2, 8);
-                    const b = rand(2, 8);
-                    const c = rand(2, 8);
-                    return {
-                        q: `Rút gọn \\(${a}\\sqrt{a} - ${b}\\sqrt{a} + ${c}\\sqrt{a}\\) (với \\(a \\geq 0\\)):`,
-                        o: [`${a+b+c}a`, `${a+b+c}`, `${a-b+c}`, `${a-b+c}\\sqrt{a}`],
-                        c: 3,
-                        h: `Cộng trừ các hệ số của các căn thức đồng dạng.`
-                    };
-                }
-            },
-            // Giải phương trình căn
-            {
-                gen: () => {
-                    const n = rand(2, 12);
-                    return {
-                        q: `Tìm x biết \\(\\sqrt{x} = ${n}\\):`,
-                        o: [`x = ${n}`, `x = -${n}`, `x = ${n*n}`, `x = ${n*2}`],
-                        c: 2,
-                        h: `Bình phương hai vế: x = ${n}².`
-                    };
-                }
-            },
-            // Hàm bậc nhất - cắt trục tung
-            {
-                gen: () => {
-                    const a = rand(-5, 5);
-                    const b = rand(-5, 5);
-                    return {
-                        q: `Đường thẳng \\(y = ${a}x ${b>=0 ? '+' : '-'} ${Math.abs(b)}\\) cắt trục tung tại điểm:`,
-                        o: [`(0; ${b})`, `(0; ${a})`, `(${-b/a}; 0)`, `(${b}; 0)`],
-                        c: 0,
-                        h: `Giao điểm với trục tung có x = 0.`
-                    };
-                }
-            },
-            // Giải hệ phương trình
-            {
-                gen: () => {
-                    const x = rand(1, 5);
-                    const y = rand(1, 5);
-                    const a = rand(1, 3);
-                    const b = rand(1, 3);
-                    return {
-                        q: `Hệ phương trình \\(\\begin{cases} x+y=${x+y} \\\\ x-y=${x-y} \\end{cases}\\) có nghiệm:`,
-                        o: [`(${x}; ${y})`, `(${y}; ${x})`, `(${x+y}; 0)`, `(0; ${x+y})`],
-                        c: 0,
-                        h: `Cộng hai phương trình ta được 2x = ${2*x}.`
-                    };
-                }
-            },
-            // Hệ số góc
-            {
-                gen: () => {
-                    const a = rand(-3, 3);
-                    const b = rand(-5, 5);
-                    return {
-                        q: `Hệ số góc của đường thẳng \\(y = ${a}x ${b>=0 ? '+' : '-'} ${Math.abs(b)}\\) là:`,
-                        o: [`${b}`, `${a}`, `${-a}`, `0`],
-                        c: 1,
-                        h: `Hệ số góc k trong y = kx + b là hệ số của x.`
-                    };
-                }
-            },
-            // Điểm thuộc đồ thị
-            {
-                gen: () => {
-                    const a = rand(1, 4);
-                    const b = rand(-3, 3);
-                    const x = rand(0, 3);
-                    const y = a*x + b;
-                    return {
-                        q: `Điểm nào sau đây thuộc đồ thị hàm số \\(y = ${a}x ${b>=0 ? '+' : '-'} ${Math.abs(b)}\\)?`,
-                        o: [`(${x}; ${y})`, `(${x+1}; ${y+1})`, `(${x-1}; ${y-1})`, `(${x+2}; ${y-2})`],
-                        c: 0,
-                        h: `Thay x vào tính y: ${a}·${x} ${b>=0 ? '+' : '-'} ${Math.abs(b)} = ${y}.`
-                    };
-                }
-            },
-            // Số nghiệm phương trình bậc nhất 2 ẩn
-            {
-                gen: () => {
-                    return {
-                        q: `Phương trình bậc nhất hai ẩn \\(ax + by = c\\) có bao nhiêu nghiệm?`,
-                        o: [`Vô số nghiệm`, `1 nghiệm duy nhất`, `2 nghiệm`, `Vô nghiệm`],
-                        c: 0,
-                        h: `Tập nghiệm là một đường thẳng trên mặt phẳng tọa độ.`
-                    };
-                }
-            },
-            // Hàm số nghịch biến
-            {
-                gen: () => {
-                    const m = rand(0, 5);
-                    return {
-                        q: `Với giá trị nào của m thì hàm số \\(y = (m-${m+2})x + 3\\) nghịch biến?`,
-                        o: [`m > ${m+2}`, `m < ${m+2}`, `m = ${m+2}`, `m > 0`],
-                        c: 1,
-                        h: `Hàm bậc nhất nghịch biến khi hệ số a < 0.`
-                    };
-                }
-            },
-            // Biệt thức delta phẩy
-            {
-                gen: () => {
-                    const a = 1;
-                    const b = rand(-5, 5);
-                    const c = rand(-5, 5);
-                    const delta = b*b - a*c;
-                    return {
-                        q: `Biệt thức \\(\\Delta'\\) của phương trình \\(x^2 ${b>=0 ? '+' : '-'} ${Math.abs(b)}x ${c>=0 ? '+' : '-'} ${Math.abs(c)} = 0\\) là:`,
-                        o: [`${delta}`, `${delta*4}`, `${b}`, `${c}`],
-                        c: 0,
-                        h: `\\(\\Delta' = (b')^2 - ac = (${b})^2 - 1·(${c}) = ${delta}\\).`
-                    };
-                }
-            },
-            // Tổng hai nghiệm
-            {
-                gen: () => {
-                    const a = 1;
-                    const b = rand(-7, 7);
-                    const c = rand(-5, 5);
-                    return {
-                        q: `Tổng hai nghiệm của phương trình \\(x^2 ${b>=0 ? '+' : '-'} ${Math.abs(b)}x ${c>=0 ? '+' : '-'} ${Math.abs(c)} = 0\\) là:`,
-                        o: [`${c}`, `${-b}`, `${-b}`, `${b}`],
-                        c: 2,
-                        h: `Theo Vi-ét: x1 + x2 = -b/a = ${-b}.`
-                    };
-                }
-            },
-            // Tích hai nghiệm
-            {
-                gen: () => {
-                    const a = 1;
-                    const b = rand(-7, 7);
-                    const c = rand(-5, 5);
-                    return {
-                        q: `Tích hai nghiệm của phương trình \\(x^2 ${b>=0 ? '+' : '-'} ${Math.abs(b)}x ${c>=0 ? '+' : '-'} ${Math.abs(c)} = 0\\) là:`,
-                        o: [`${b}`, `${-b}`, `${c}`, `${-c}`],
-                        c: 2,
-                        h: `Theo Vi-ét: x1·x2 = c/a = ${c}.`
-                    };
-                }
-            },
-            // Số nghiệm phương trình bậc hai
-            {
-                gen: () => {
-                    const a = 1;
-                    const b = rand(-4, 4);
-                    const c = b*b/4; // để delta = 0
-                    return {
-                        q: `Phương trình \\(x^2 ${b>=0 ? '+' : '-'} ${Math.abs(b)}x + ${c} = 0\\) có bao nhiêu nghiệm?`,
-                        o: [`Vô nghiệm`, `Có 1 nghiệm kép`, `Có 2 nghiệm phân biệt`, `Vô số nghiệm`],
-                        c: 1,
-                        h: `Tính Δ = (${b})² - 4·1·${c} = 0.`
-                    };
-                }
-            },
-            // Nhẩm nghiệm a+b+c=0
-            {
-                gen: () => {
-                    const a = rand(1, 3);
-                    const b = rand(-5, 5);
-                    const c = -(a+b);
-                    return {
-                        q: `Cho phương trình \\(${a}x^2 ${b>=0 ? '+' : '-'} ${Math.abs(b)}x ${c>=0 ? '+' : '-'} ${Math.abs(c)} = 0\\). Nếu \\(a + b + c = 0\\) thì nghiệm của nó là:`,
-                        o: [`1 và ${c/a}`, `-1 và ${-c/a}`, `1 và ${-c/a}`, `-1 và ${c/a}`],
-                        c: 0,
-                        h: `Đây là trường hợp nhẩm nghiệm đặc biệt: x1=1, x2=c/a.`
-                    };
-                }
-            },
-            // Điểm thuộc parabol
-            {
-                gen: () => {
-                    const a = rand(1, 3);
-                    const x = rand(0, 3);
-                    const y = a*x*x;
-                    return {
-                        q: `Đồ thị hàm số \\(y = ${a}x^2\\) đi qua điểm nào?`,
-                        o: [`(${x}; ${y})`, `(${x+1}; ${y+1})`, `(${-x}; ${-y})`, `(0; ${a})`],
-                        c: 0,
-                        h: `Thay x=${x} vào y = ${a}·${x}² = ${y}.`
-                    };
-                }
-            },
-            // Hệ thức lượng trong tam giác vuông
-            {
-                gen: () => {
-                    const a = rand(3, 5);
-                    const b = rand(4, 6);
-                    const c = Math.sqrt(a*a + b*b).toFixed(0);
-                    return {
-                        q: `Cho tam giác ABC vuông tại A, đường cao AH. Hệ thức nào SAI?`,
-                        o: [`\\(AH^2 = HB.HC\\)`, `\\(AB^2 = BH.BC\\)`, `\\(BC^2 = AB^2 + AC^2\\)`, `\\(AB^2 = CH.BC\\)`],
-                        c: 3,
-                        h: `Hệ thức đúng phải là AB² = BH.BC.`
-                    };
-                }
-            },
-            // Góc 30 độ trong tam giác vuông
-            {
-                gen: () => {
-                    return {
-                        q: `Trong tam giác vuông, cạnh đối diện góc 30 độ bằng:`,
-                        o: [`Nửa cạnh huyền`, `Nửa cạnh góc vuông kia`, `Cạnh huyền nhân √3`, `Bằng cạnh huyền`],
-                        c: 0,
-                        h: `Sử dụng sin 30° = 1/2.`
-                    };
-                }
-            },
-            // Tính cạnh tam giác vuông
-            {
-                gen: () => {
-                    const a = rand(3, 8);
-                    const b = rand(4, 9);
-                    const c = Math.sqrt(a*a + b*b).toFixed(0);
-                    return {
-                        q: `Cho tam giác ABC vuông tại A, AC = ${a}, BC = ${c}. Tính AB:`,
-                        o: [`${Math.sqrt(c*c - a*a).toFixed(0)}`, `${b}`, `${a+b}`, `${c-a}`],
-                        c: 1,
-                        h: `Dùng Pythagore: AB² = ${c}² - ${a}² = ${b*b}.`
-                    };
-                }
-            },
-            // Tỉ số lượng giác góc đặc biệt
-            {
-                gen: () => {
-                    const angle = rand(0, 1) ? 45 : 60;
-                    const val = angle == 45 ? 1 : Math.sqrt(3);
-                    return {
-                        q: `Giá trị của \\(\\tan ${angle}^\\circ\\) bằng:`,
-                        o: [`0`, `1`, `\\(\\sqrt{2}\\)`, `\\(\\sqrt{3}\\)`],
-                        c: angle==45 ? 1 : 3,
-                        h: `Góc đặc biệt: tan${angle}° = ${angle==45 ? 1 : '√3'}.`
-                    };
-                }
-            },
-            // Tiếp xúc đường tròn
-            {
-                gen: () => {
-                    return {
-                        q: `Đường thẳng tiếp xúc với đường tròn khi khoảng cách d từ tâm đến đường thẳng bằng:`,
-                        o: [`Bán kính R`, `Đường kính 2R`, `0`, `Lớn hơn R`],
-                        c: 0,
-                        h: `Điều kiện tiếp xúc là d = R.`
-                    };
-                }
-            },
-            // Góc ở tâm
-            {
-                gen: () => {
-                    const deg = rand(30, 150);
-                    return {
-                        q: `Góc ở tâm chắn cung ${deg} độ có số đo là:`,
-                        o: [`${deg/2} độ`, `${2*deg} độ`, `${deg} độ`, `${180-deg} độ`],
-                        c: 2,
-                        h: `Số đo góc ở tâm bằng số đo cung bị chắn.`
-                    };
-                }
-            },
-            // Góc nội tiếp
-            {
-                gen: () => {
-                    const deg = rand(30, 150);
-                    return {
-                        q: `Góc nội tiếp chắn cung ${deg} độ có số đo là:`,
-                        o: [`${deg/2} độ`, `${2*deg} độ`, `${deg} độ`, `${180-deg} độ`],
-                        c: 0,
-                        h: `Góc nội tiếp bằng nửa số đo cung bị chắn.`
-                    };
-                }
-            },
-            // Tứ giác nội tiếp
-            {
-                gen: () => {
-                    return {
-                        q: `Tứ giác nội tiếp được đường tròn khi có:`,
-                        o: [`Hai góc kề bù`, `Tổng hai góc đối bằng 180 độ`, `Bốn góc vuông`, `Hai cạnh đối song song`],
-                        c: 1,
-                        h: `Dấu hiệu nhận biết cơ bản nhất của tứ giác nội tiếp.`
-                    };
-                }
-            },
-            // Độ dài cung tròn
-            {
-                gen: () => {
-                    const R = rand(3, 10);
-                    const n = rand(30, 120);
-                    return {
-                        q: `Độ dài cung ${n} độ của đường tròn bán kính R = ${R}cm là:`,
-                        o: [`${(Math.PI*R*n/180).toFixed(1)}π cm`, `${(Math.PI*R*n/90).toFixed(1)}π cm`, `${(Math.PI*R).toFixed(1)}π cm`, `${(Math.PI*R*n/360).toFixed(1)}π cm`],
-                        c: 0,
-                        h: `L = (πRn)/180 = (π·${R}·${n})/180.`
-                    };
-                }
-            },
-            // Diện tích hình tròn
-            {
-                gen: () => {
-                    const R = rand(2, 7);
-                    return {
-                        q: `Diện tích hình tròn có bán kính R = ${R}cm là:`,
-                        o: [`${R*2}π cm²`, `${R}π cm²`, `${R*R}π cm²`, `${R*R*2}π cm²`],
-                        c: 2,
-                        h: `S = πR².`
-                    };
-                }
-            },
-            // Số tiếp tuyến từ điểm ngoài
-            {
-                gen: () => {
-                    return {
-                        q: `Số tiếp tuyến kẻ từ 1 điểm ngoài đường tròn đến đường tròn đó là:`,
-                        o: [`1`, `2`, `3`, `Vô số`],
-                        c: 1,
-                        h: `Tính chất của hai tiếp tuyến cắt nhau.`
-                    };
-                }
-            },
-            // Thể tích hình trụ
-            {
-                gen: () => {
-                    const r = rand(2, 5);
-                    const h = rand(3, 7);
-                    return {
-                        q: `Thể tích hình trụ có bán kính r=${r}, cao h=${h} là:`,
-                        o: [`${r*r*h}π`, `${r*h}π`, `${2*r*h}π`, `${r*r*h/3}π`],
-                        c: 0,
-                        h: `V = πr²h = π·${r}²·${h} = ${r*r*h}π.`
-                    };
-                }
-            },
-            // Thể tích hình nón
-            {
-                gen: () => {
-                    const r = rand(2, 5);
-                    const h = rand(3, 7);
-                    return {
-                        q: `Thể tích hình nón có bán kính r=${r}, cao h=${h} là:`,
-                        o: [`${r*r*h}π`, `${r*h}π`, `${r*r*h/3}π`, `${2*r*h}π`],
-                        c: 2,
-                        h: `V = (1/3)πr²h = (1/3)π·${r}²·${h} = ${(r*r*h/3).toFixed(1)}π.`
-                    };
-                }
-            },
-            // Diện tích mặt cầu
-            {
-                gen: () => {
-                    const R = rand(2, 5);
-                    return {
-                        q: `Diện tích mặt cầu bán kính R=${R} là:`,
-                        o: [`${4*R}π`, `${R*R}π`, `${4*R*R}π`, `${(4/3)*R*R*R}π`],
-                        c: 2,
-                        h: `S = 4πR² = 4π·${R}² = ${4*R*R}π.`
-                    };
-                }
-            },
-            // Thể tích hình cầu
-            {
-                gen: () => {
-                    const d = rand(4, 12);
-                    const r = d/2;
-                    return {
-                        q: `Hình cầu có đường kính ${d}cm thì thể tích là:`,
-                        o: [`${(4/3)*Math.PI*Math.pow(r,3)}π cm³`.substring(0,5), `${4*Math.PI*r*r}π cm³`.substring(0,5), `${Math.PI*r*r}π cm³`.substring(0,5), `${(2/3)*Math.PI*Math.pow(r,3)}π cm³`.substring(0,5)],
-                        c: 0,
-                        h: `Bán kính r=${r}. V = (4/3)πr³.`
-                    };
-                }
-            },
-            // Trung bình cộng
-            {
-                gen: () => {
-                    const a = rand(5, 20);
-                    const b = rand(5, 20);
-                    const c = rand(5, 20);
-                    const tb = Math.round((a+b+c)/3);
-                    return {
-                        q: `Trung bình cộng của ${a}, ${b}, ${c} là:`,
-                        o: [`${tb-1}`, `${tb}`, `${tb+1}`, `${a+b+c}`],
-                        c: 1,
-                        h: `(${a}+${b}+${c})/3 = ${tb}.`
-                    };
-                }
-            },
-            // Xác suất xúc xắc
-            {
-                gen: () => {
-                    return {
-                        q: `Gieo con xúc xắc, xác suất xuất hiện mặt lẻ là:`,
-                        o: [`1/6`, `1/2`, `1/3`, `2/3`],
-                        c: 1,
-                        h: `Các mặt lẻ là {1, 3, 5}, tổng 3 mặt trên 6 mặt.`
-                    };
-                }
-            },
-            // Xác suất rút bài
-            {
-                gen: () => {
-                    return {
-                        q: `Lấy ngẫu nhiên 1 lá bài từ bộ bài 52 lá, xác suất lấy được lá Át (Ace) là:`,
-                        o: [`1/52`, `1/4`, `1/13`, `4/13`],
-                        c: 2,
-                        h: `Có 4 lá Át trong 52 lá: 4/52 = 1/13.`
-                    };
-                }
-            },
-            // Mốt (Mode)
-            {
-                gen: () => {
-                    const mode = rand(2, 9);
-                    const data = [mode, mode, mode, rand(1,10), rand(1,10), rand(1,10)];
-                    return {
-                        q: `Mốt của dãy số ${data.join(', ')} là:`,
-                        o: [`${mode}`, `${mode+1}`, `${mode-1}`, `8`],
-                        c: 0,
-                        h: `Giá trị xuất hiện nhiều lần nhất.`
-                    };
-                }
-            },
-            // Bất đẳng thức
-            {
-                gen: () => {
-                    return {
-                        q: `Cho a > b, khẳng định nào sau đây SAI?`,
-                        o: [`a - 3 > b - 3`, `2a > 2b`, `-a > -b`, `a + b > 2b`],
-                        c: 2,
-                        h: `Khi nhân/chia với số âm, bất đẳng thức phải đổi chiều.`
-                    };
-                }
-            },
-            // Căn bậc ba
-            {
-                gen: () => {
-                    const n = rand(2, 4);
-                    return {
-                        q: `Tìm x thỏa mãn \\(\\sqrt[3]{x} = -${n}\\):`,
-                        o: [`x = -${n*n*n}`, `x = ${n*n*n}`, `x = -${n*3}`, `x = ${n*3}`],
-                        c: 0,
-                        h: `Lập phương hai vế: x = (-${n})³ = -${n*n*n}.`
-                    };
-                }
-            },
-            // Hai đường thẳng song song
-            {
-                gen: () => {
-                    const a = rand(2, 5);
-                    const b1 = rand(-3, 3);
-                    const b2 = rand(-3, 3);
-                    return {
-                        q: `Đường thẳng \\(y = ${a}x + ${b1}\\) song song với đường thẳng:`,
-                        o: [`y = ${a}x + ${b2}`, `y = ${-a}x + 1`, `y = x + ${b1}`, `y = 1/${a}x + 1`],
-                        c: 0,
-                        h: `Hai đường thẳng song song khi có cùng hệ số góc a.`
-                    };
-                }
-            },
-            // Tâm đường tròn ngoại tiếp tam giác vuông
-            {
-                gen: () => {
-                    return {
-                        q: `Tâm đường tròn ngoại tiếp tam giác vuông là:`,
-                        o: [`Trọng tâm`, `Trực tâm`, `Trung điểm cạnh huyền`, `Giao 3 đường phân giác`],
-                        c: 2,
-                        h: `Tính chất góc nội tiếp chắn nửa đường tròn.`
-                    };
-                }
-            },
-            // Số đo cung cả đường tròn
-            {
-                gen: () => {
-                    return {
-                        q: `Số đo cung của cả đường tròn là:`,
-                        o: [`90 độ`, `180 độ`, `270 độ`, `360 độ`],
-                        c: 3,
-                        h: `Một vòng tròn khép kín tương ứng 360 độ.`
-                    };
-                }
-            },
-            // Rút gọn biểu thức chứa căn và bình phương
-            {
-                gen: () => {
-                    const a = rand(2, 6);
-                    return {
-                        q: `Biểu thức \\(\\sqrt{x^2 - ${2*a}x + ${a*a}}\\) bằng:`,
-                        o: [`x - ${a}`, `${a} - x`, `|x - ${a}|`, `x + ${a}`],
-                        c: 2,
-                        h: `\\(\\sqrt{(x-${a})^2} = |x-${a}|\\).`
-                    };
-                }
-            },
-            // Xác suất lấy bi
-            {
-                gen: () => {
-                    const x = rand(3, 10);
-                    const d = rand(2, 8);
-                    return {
-                        q: `Trong một hộp có ${x} bi xanh, ${d} bi đỏ. Xác suất lấy được bi xanh là:`,
-                        o: [`${x}/${x+d}`, `${d}/${x+d}`, `1/2`, `${x}/15`],
-                        c: 0,
-                        h: `${x} / (${x}+${d}) = ${x}/${x+d}.`
-                    };
-                }
-            },
-            // Diện tích tam giác đều
-            {
-                gen: () => {
-                    const a = rand(2, 7);
-                    return {
-                        q: `Tam giác đều cạnh ${a} có diện tích là:`,
-                        o: [`\\(${a*a}\\sqrt{3}/4\\)`, `\\(${a*a}/2\\)`, `\\(${a*a}\\sqrt{3}/2\\)`, `\\(${a*a}\\)`],
-                        c: 0,
-                        h: `Công thức diện tích tam giác đều: (a²√3)/4.`
-                    };
-                }
-            },
-            // Phương trình vô nghiệm
-            {
-                gen: () => {
-                    const a = 1;
-                    const b = -1;
-                    const delta = rand(1, 5);
-                    return {
-                        q: `Giá trị m để phương trình \\(x^2 - x + m = 0\\) vô nghiệm là:`,
-                        o: [`m > 1/4`, `m < 1/4`, `m = 1/4`, `m > 0`],
-                        c: 0,
-                        h: `Vô nghiệm khi Δ = (-1)² - 4m < 0 => m > 1/4.`
-                    };
-                }
-            },
-            // Tập hợp con
-            {
-                gen: () => {
-                    const n = rand(2, 3);
-                    const set = Array.from({length: n}, (_, i) => i+1);
-                    return {
-                        q: `Số các tập hợp con của tập {${set.join('; ')}} là:`,
-                        o: [`${n}`, `${n+1}`, `${Math.pow(2, n)}`, `1`],
-                        c: 2,
-                        h: `Số tập con = 2^${n} = ${Math.pow(2, n)}.`
-                    };
-                }
-            }
+        if (sIdx === cIdx) {
+            options[sIdx].classList.add('selected-correct');
+            window.userScore += 0.2;
+        } else {
+            options[sIdx].classList.add('selected-wrong');
+            options[cIdx].classList.add('selected-correct');
+        }
+        document.getElementById('score').innerText = `Điểm: ${window.userScore.toFixed(1)}`;
+    }
+
+    function renderExam() {
+        window.userScore = 0;
+        const body = document.getElementById('quiz-body');
+        const keyDisplay = document.getElementById('answer-key-display');
+        body.innerHTML = "";
+        keyDisplay.innerHTML = "";
+
+        const qList = [
+            ...getRandom(QuestionsDB.algebra.radicals, 8),
+            ...getRandom(QuestionsDB.algebra.eqSystems, 6),
+            ...getRandom(QuestionsDB.algebra.functions, 6),
+            ...getRandom(QuestionsDB.algebra.inequalities, 4),
+            ...getRandom(QuestionsDB.geometry.rightTriangle, 4),
+            ...getRandom(QuestionsDB.geometry.circles, 4),
+            ...getRandom(QuestionsDB.geometry.polygons, 7),
+            ...getRandom(QuestionsDB.geometry.spatial, 4),
+            ...getRandom(QuestionsDB.statsProb.stats, 4),
+            ...getRandom(QuestionsDB.statsProb.prob, 3)
         ];
 
-        // Sinh size câu hỏi từ templates
-        for (let i = 0; i < size; i++) {
-            const template = templates[Math.floor(Math.random() * templates.length)];
-            bank.push(template.gen());
-        }
-        return bank;
-    }
+        qList.forEach((item, idx) => {
+            if (idx === 0) body.innerHTML += `<h3 class="section-title">PHẦN I. SỐ VÀ ĐẠI SỐ</h3>`;
+            if (idx === 24) body.innerHTML += `<h3 class="section-title">PHẦN II. HÌNH HỌC VÀ ĐO LƯỜNG</h3>`;
+            if (idx === 43) body.innerHTML += `<h3 class="section-title">PHẦN III. THỐNG KÊ VÀ XÁC SUẤT</h3>`;
 
-    // Tạo ngân hàng 5000 câu
-    const questionBank = generateQuestionBank(5000);
+            let opts = item.a.map((t, i) => ({ t, isC: i === 0 }));
+            shuffle(opts);
+            const correctIdx = opts.findIndex(o => o.isC);
 
-    // ======================== LẤY NGẪU NHIÊN 50 CÂU ========================
-    function getRandomQuestions(bank, count = 50) {
-        const shuffled = [...bank];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled.slice(0, count);
-    }
-
-    // ======================== BIẾN TOÀN CỤC ========================
-    let currentQuestions = [];
-    let score = 0;
-    let answeredCount = 0;
-    let timeLeft = 90 * 60;
-    let timerInterval;
-    let isTimerRunning = false;
-
-    // ======================== HÀM HIỂN THỊ ========================
-    function renderExam() {
-        const container = document.getElementById('exam-content');
-        container.innerHTML = "";
-        
-        currentQuestions.forEach((item, qIdx) => {
-            const qDiv = document.createElement('div');
-            qDiv.className = 'question';
-            qDiv.id = `q-block-${qIdx}`;
+            const qBlock = document.createElement('div');
+            qBlock.className = "question-block";
+            qBlock.id = `q-block-${idx}`;
             
-            let optionsHtml = "";
-            item.o.forEach((opt, oIdx) => {
-                const label = String.fromCharCode(65 + oIdx);
-                optionsHtml += `
-                    <div class="option-btn" onclick="handleChoice(${qIdx}, ${oIdx})" id="opt-${qIdx}-${oIdx}">
-                        <span class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full mr-3 text-xs font-bold text-gray-500 label">${label}</span>
-                        <span>${opt}</span>
-                    </div>
-                `;
+            let optionsHtml = `<div class="grid grid-cols-2 gap-2 mt-2">`;
+            opts.forEach((o, oi) => {
+                const char = String.fromCharCode(65 + oi);
+                optionsHtml += `<div class="option-item" onclick="selectOption(${idx}, ${oi}, ${correctIdx})">
+                    <span class="opt-label">${char}.</span> ${o.t}
+                </div>`;
             });
+            optionsHtml += `</div>`;
 
-            qDiv.innerHTML = `
-                <p class="font-bold text-gray-800 leading-relaxed">Câu ${qIdx + 1}: <span class="font-normal">${item.q}</span></p>
-                <div class="options">${optionsHtml}</div>
-                <div class="hint-box" id="hint-${qIdx}">
-                    <div class="flex items-start">
-                        <svg class="w-5 h-5 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM5.884 6.68a1 1 0 10-1.404-1.427l-.707.707a1 1 0 101.414 1.414l.707-.707zm1.18 8.512a1 1 0 10-1.414-1.414l-.707.707a1 1 0 101.414 1.414l.707-.707zm5.243.293a1 1 0 101.414-1.414l-.707-.707a1 1 0 10-1.414 1.414l.707.707zm1.707-11.207a1 1 0 00-1.414 1.414l.707.707a1 1 0 001.414-1.414l-.707-.707zM9 11a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1z"></path><path fill-rule="evenodd" d="M4 8a6 6 0 0111.457-2.434 3 3 0 013.351 5.511 6 6 0 01-11.808 0A3 3 0 014 8z" clip-rule="evenodd"></path></svg>
-                        <span><strong>Hướng dẫn:</strong> ${item.h}</span>
-                    </div>
-                </div>
+            qBlock.innerHTML = `
+                <p><strong>Câu ${idx + 1}:</strong> ${item.q}</p>
+                ${optionsHtml}
             `;
-            container.appendChild(qDiv);
+            body.appendChild(qBlock);
+            keyDisplay.innerHTML += `<div class="key-item"><strong>${idx + 1}</strong>: ${String.fromCharCode(65 + correctIdx)}</div>`;
         });
 
         if (window.MathJax) MathJax.typeset();
     }
 
-    // ======================== XỬ LÝ CHỌN ĐÁP ÁN ========================
-    function handleChoice(qIdx, oIdx) {
-        const qBlock = document.getElementById(`q-block-${qIdx}`);
-        if (qBlock.hasAttribute('data-done')) return;
-        
-        qBlock.setAttribute('data-done', 'true');
-        answeredCount++;
-        
-        const correctIdx = currentQuestions[qIdx].c;
-        const selectedEl = document.getElementById(`opt-${qIdx}-${oIdx}`);
-        const correctEl = document.getElementById(`opt-${qIdx}-${correctIdx}`);
-        
-        if (oIdx === correctIdx) {
-            selectedEl.classList.add('correct');
-            score += 0.2;
-        } else {
-            selectedEl.classList.add('incorrect');
-            correctEl.classList.add('correct');
-            document.getElementById(`hint-${qIdx}`).style.display = 'block';
-        }
-        
-        updateStats();
-        
-        if (answeredCount === 50) {
-            clearInterval(timerInterval);
-            finishExam();
-        }
-    }
+    let seconds = 90 * 60;
+    setInterval(() => {
+        if (seconds <= 0) return;
+        seconds--;
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        document.getElementById('timer').innerText = `${m}:${s < 10 ? '0' + s : s}`;
+    }, 1000);
 
-    function updateStats() {
-        document.getElementById('score-box').innerText = `Điểm: ${score.toFixed(1)}/10`;
-    }
-
-    function toggleTimer() {
-        const btn = document.getElementById('timerBtn');
-        if (!isTimerRunning) {
-            isTimerRunning = true;
-            btn.innerText = "Tạm dừng";
-            btn.classList.replace('bg-emerald-600', 'bg-orange-500');
-            
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                const m = Math.floor(timeLeft / 60);
-                const s = timeLeft % 60;
-                document.getElementById('timerDisplay').innerText = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    finishExam();
-                }
-            }, 1000);
-        } else {
-            isTimerRunning = false;
-            btn.innerText = "Tiếp tục";
-            btn.classList.replace('bg-orange-500', 'bg-emerald-600');
-            clearInterval(timerInterval);
-        }
-    }
-
-    function finishExam() {
-        alert(`Hoàn thành! \nSố câu đã làm: ${answeredCount}/50 \nTổng điểm: ${score.toFixed(1)}`);
-    }
-
-    function confirmReset() {
-        if (confirm("Bạn muốn làm lại đề thi mới với các câu hỏi được chọn ngẫu nhiên từ ngân hàng 5000+ câu?")) {
-            location.reload();
-        }
-    }
-
-    // ======================== KHỞI TẠO ========================
-    window.onload = function() {
-        currentQuestions = getRandomQuestions(questionBank, 50);
-        renderExam();
-    };
+    window.onload = renderExam;
 </script>
 
 </body>
